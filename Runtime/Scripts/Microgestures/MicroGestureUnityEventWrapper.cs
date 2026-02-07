@@ -20,10 +20,13 @@
 
 using UnityEngine;
 using UnityEngine.Events;
-using Oculus.Interaction.Input;
 
 namespace Oculus.Interaction
 {
+    /// <summary>
+    /// Wraps a <see cref="OVRMicrogestureEventSource"/> using UnityEvents
+    /// so they can be wired in the inspector.
+    /// </summary>
     class MicroGestureUnityEventWrapper : MonoBehaviour
     {
         [SerializeField]
@@ -41,13 +44,6 @@ namespace Oculus.Interaction
         private UnityEvent _whenSwipeDown;
         public UnityEvent WhenSwipeDown => _whenSwipeDown;
 
-        [SerializeField, Interface(typeof(IHand))]
-        [Optional(OptionalAttribute.Flag.DontHide)]
-        [Tooltip("Reference a Hand if you want to emit swipe events that disambiguate" +
-            " between the left and the right direction.")]
-        private UnityEngine.Object _hand;
-        private IHand Hand { get; set; }
-
         [SerializeField]
         private UnityEvent _whenSwipeLeft;
         public UnityEvent WhenSwipeLeft => _whenSwipeLeft;
@@ -58,31 +54,29 @@ namespace Oculus.Interaction
 
         private bool _started = false;
 
-        private void Awake()
-        {
-            Hand = _hand as IHand;
-        }
-
         protected virtual void Start()
         {
             this.BeginStart(ref _started);
 
-            if (_hand != null)
-            {
-                this.AssertField(Hand, nameof(_hand));
-            }
             this.AssertField(_ovrMicrogestureEventSource, nameof(_ovrMicrogestureEventSource));
 
             this.EndStart(ref _started);
         }
-        private void OnEnable()
+
+        protected virtual void OnEnable()
         {
-            _ovrMicrogestureEventSource.GestureRecognizedEvent.AddListener(HandleGesture);
+            if (_started)
+            {
+                _ovrMicrogestureEventSource.WhenGestureRecognized += HandleGesture;
+            }
         }
 
-        private void OnDisable()
+        protected virtual void OnDisable()
         {
-            _ovrMicrogestureEventSource.GestureRecognizedEvent.RemoveListener(HandleGesture);
+            if (_started)
+            {
+                _ovrMicrogestureEventSource.WhenGestureRecognized -= HandleGesture;
+            }
         }
 
         private void HandleGesture(OVRHand.MicrogestureType gesture)
@@ -110,7 +104,6 @@ namespace Oculus.Interaction
         }
 
         #region Inject
-
         public void InjectAllMicroGestureUnityEventWrapper(
             OVRMicrogestureEventSource ovrMicrogestureEventSource)
         {
@@ -120,12 +113,6 @@ namespace Oculus.Interaction
         public void InjectOvrMicrogestureEventSource(OVRMicrogestureEventSource ovrMicrogestureEventSource)
         {
             _ovrMicrogestureEventSource = ovrMicrogestureEventSource;
-        }
-
-        public void InjectOptionalHand(IHand hand)
-        {
-            _hand = hand as UnityEngine.Object;
-            Hand = hand;
         }
         #endregion
     }

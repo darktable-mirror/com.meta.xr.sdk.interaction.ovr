@@ -59,12 +59,16 @@ namespace Oculus.Interaction.Input
         private OVRCameraRig _ovrCameraRig;
 
         [SerializeField]
+        private OVRHand _leftHand;
+
+        [SerializeField]
+        private OVRHand _rightHand;
+
+        [SerializeField]
         private bool _requireOvrHands = true;
 
         public OVRCameraRig CameraRig => _ovrCameraRig;
 
-        private OVRHand _leftHand;
-        private OVRHand _rightHand;
         public OVRHand LeftHand => GetHandCached(ref _leftHand, _ovrCameraRig.leftHandAnchor);
         public OVRHand RightHand => GetHandCached(ref _rightHand, _ovrCameraRig.rightHandAnchor);
 

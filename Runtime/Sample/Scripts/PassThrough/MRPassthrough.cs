@@ -70,7 +70,7 @@ namespace Oculus.Interaction.Samples
         protected virtual void Reset()
         {
 #pragma warning disable CS0618 // Type or member is obsolete
-            _layer = FindObjectOfType<OVRPassthroughLayer>();
+            _layer = Object.FindFirstObjectByType<OVRPassthroughLayer>();
 #pragma warning restore CS0618 // Type or member is obsolete
             _camera = OVRManager.FindMainCamera();
         }
@@ -100,6 +100,7 @@ namespace Oculus.Interaction.Samples
         {
             if (OVRManager.HasInsightPassthroughInitFailed())
             {
+                _camera.clearFlags = CameraClearFlags.Skybox;
                 _passThroughToggle.enabled = false;
             }
             else
@@ -156,12 +157,21 @@ namespace Oculus.Interaction.Samples
 
         private void TurnPassThroughOn()
         {
-            PassThrough.IsPassThroughOn = true;
-            _layer.textureOpacity = 1;
-            _camera.clearFlags = CameraClearFlags.SolidColor;
-            foreach (GameObject obj in _objects)
+            if (OVRManager.IsInsightPassthroughInitialized())
             {
-                obj.SetActive(false);
+                PassThrough.IsPassThroughOn = true;
+                _layer.textureOpacity = 1;
+                _camera.clearFlags = CameraClearFlags.SolidColor;
+                foreach (GameObject obj in _objects)
+                {
+                    obj.SetActive(false);
+                }
+            }
+            else
+            {
+                Debug.LogError("Failed to initialize Passthrough please " +
+                    "check the OVRManager in the Hierarchy and check if " +
+                    "Passthrough is supported and enabled.");
             }
         }
 

@@ -37,6 +37,14 @@ namespace Oculus.Interaction.Editor
                     new ComponentWiringStrategyConfig("_ovrCameraRig", new FieldWiringStrategy[]
                         {
                             FieldWiringStrategies.WireFieldToAncestors
+                        }),
+                    new ComponentWiringStrategyConfig("_leftHand", new FieldWiringStrategy[]
+                        {
+                            (m,f,t) => WireToOVRHandWithHandedness(m, f, t, OVRPlugin.Hand.HandLeft)
+                        }),
+                    new ComponentWiringStrategyConfig("_rightHand", new FieldWiringStrategy[]
+                        {
+                            (m,f,t) => WireToOVRHandWithHandedness(m, f, t, OVRPlugin.Hand.HandRight)
                         })
                 }
             );
@@ -95,6 +103,18 @@ namespace Oculus.Interaction.Editor
 
             OVRPlugin.Hand ovrHandedness = handedness == Handedness.Left ?
                 OVRPlugin.Hand.HandLeft : OVRPlugin.Hand.HandRight;
+
+            return WireToOVRHandWithHandedness(monoBehaviour, field, targetType, ovrHandedness);
+        }
+
+        public static bool WireToOVRHandWithHandedness(MonoBehaviour monoBehaviour,
+            FieldInfo field, System.Type targetType, OVRPlugin.Hand ovrHandedness)
+        {
+            if (targetType != typeof(OVRHand))
+            {
+                return false;
+            }
+
             OVRHand hand = Object.FindObjectsByType<OVRHand>(FindObjectsSortMode.InstanceID)
                  .FirstOrDefault(hand => hand.GetHand() == ovrHandedness);
             if (hand != null)
