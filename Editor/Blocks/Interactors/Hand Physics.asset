@@ -16,13 +16,15 @@ MonoBehaviour:
   version: 1
   blockName: Hand Phyiscs
   description: Internal block for enabling hand phyiscs
-  sdk: 0
+  tags:
+    array:
+    - name: Interaction
+    - name: Hidden
   thumbnail: {fileID: 0}
-  displayOnContentTab: 0
-  experimental: 1
   order: 0
   prefab: {fileID: 7147530562734519490, guid: 5fc002002ecb74800b33f4b96a147701, type: 3}
   dependencies:
   - 4187448e-9c2a-4021-ad92-fb65840f2721
   isSingleton: 1
+  usageInstructions: 
   _handsBlockId: 0393ca30-f2a9-4865-a40f-f9a68d01c3a9

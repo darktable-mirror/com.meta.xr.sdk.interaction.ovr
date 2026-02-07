@@ -16,13 +16,15 @@ MonoBehaviour:
   version: 1
   blockName: Interaction
   description: Integration SDK internal hooks
-  sdk: 0
+  tags:
+    array:
+    - name: Interaction
+    - name: Hidden
   thumbnail: {fileID: 0}
-  displayOnContentTab: 0
-  experimental: 1
   order: 0
   prefab: {fileID: 4690643509526015020, guid: 7652d8eea2e03a44d9bf9fa63eed745b, type: 3}
   dependencies:
   - e47682b9-c270-40b1-b16d-90b627a5ce1b
   isSingleton: 1
+  usageInstructions: 
   _cameraRigBlockId: e47682b9-c270-40b1-b16d-90b627a5ce1b

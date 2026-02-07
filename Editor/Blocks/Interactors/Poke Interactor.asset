@@ -16,14 +16,16 @@ MonoBehaviour:
   version: 1
   blockName: Hand Poke Interactor
   description: Internal poking logic for hands
-  sdk: 0
+  tags:
+    array:
+    - name: Interaction
+    - name: Hidden
   thumbnail: {fileID: 0}
-  displayOnContentTab: 0
-  experimental: 1
   order: 0
   prefab: {fileID: 5419937293532398298, guid: 62a3c5a0973fc4f48a1039ab80b76232, type: 3}
   dependencies:
   - 6b67162c-2460-4766-a931-980388647573
   isSingleton: 1
+  usageInstructions: 
   _handsBlockId: 0393ca30-f2a9-4865-a40f-f9a68d01c3a9
   _interactorName: Poke

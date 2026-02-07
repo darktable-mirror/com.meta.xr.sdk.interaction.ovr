@@ -16,13 +16,15 @@ MonoBehaviour:
   version: 1
   blockName: Hand Poke Limiter
   description: Internal block for hand poke limiting.
-  sdk: 0
+  tags:
+    array:
+    - name: Interaction
+    - name: Hidden
   thumbnail: {fileID: 0}
-  displayOnContentTab: 0
-  experimental: 1
   order: 0
   prefab: {fileID: 0}
   dependencies:
   - f61a01e5-61c7-4589-bd2d-107bccae8f02
   isSingleton: 1
+  usageInstructions: 
   _handsBlockId: 0393ca30-f2a9-4865-a40f-f9a68d01c3a9

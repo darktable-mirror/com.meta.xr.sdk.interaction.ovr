@@ -16,14 +16,16 @@ MonoBehaviour:
   version: 1
   blockName: Hand Ray Interactor
   description: Add ray to your hands
-  sdk: 0
+  tags:
+    array:
+    - name: Interaction
+    - name: Hidden
   thumbnail: {fileID: 0}
-  displayOnContentTab: 0
-  experimental: 1
   order: 0
   prefab: {fileID: 8030197382645210609, guid: ab143fb33d1c042989fb5b744cd67a2e, type: 3}
   dependencies:
   - 0393ca30-f2a9-4865-a40f-f9a68d01c3a9
   isSingleton: 1
+  usageInstructions: 
   _handsBlockId: 0393ca30-f2a9-4865-a40f-f9a68d01c3a9
   _interactorName: Ray

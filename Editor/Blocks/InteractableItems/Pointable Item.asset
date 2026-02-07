@@ -16,12 +16,14 @@ MonoBehaviour:
   version: 1
   blockName: Pointable Item
   description: Point to an item with your hands
-  sdk: 0
+  tags:
+    array:
+    - name: Interaction
+    - name: Experimental
   thumbnail: {fileID: 2800000, guid: a52e4695e8816e7469e599e85dfae681, type: 3}
-  displayOnContentTab: 1
-  experimental: 1
   order: 0
   prefab: {fileID: 2578649584656450288, guid: 09afcf33928494372befbc553eb0fc43, type: 3}
   dependencies:
   - bc3f7b21-a55c-4cf7-b9c6-78d4341573a4
   isSingleton: 0
+  usageInstructions: 

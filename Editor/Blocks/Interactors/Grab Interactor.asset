@@ -16,14 +16,16 @@ MonoBehaviour:
   version: 1
   blockName: Grab Interactor
   description: Internal grab logic for hands
-  sdk: 0
+  tags:
+    array:
+    - name: Hidden
+    - name: Interaction
   thumbnail: {fileID: 0}
-  displayOnContentTab: 0
-  experimental: 1
   order: 0
   prefab: {fileID: 1528814639904349777, guid: cd2af620b985a894881abfc004e150ec, type: 3}
   dependencies:
   - 0393ca30-f2a9-4865-a40f-f9a68d01c3a9
   isSingleton: 1
+  usageInstructions: 
   _handsBlockId: 0393ca30-f2a9-4865-a40f-f9a68d01c3a9
   _interactorName: Grab
