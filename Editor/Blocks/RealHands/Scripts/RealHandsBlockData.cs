@@ -30,13 +30,15 @@ namespace Meta.XR.BuildingBlocks.Editor
     {
         protected override List<GameObject> InstallRoutine(GameObject selectedGameObject)
         {
+#pragma warning disable CS0618 // Flexible layering is being deprecated
             if (!OVRPassthroughHelper.IsAnyPassthroughLayerUnderlay())
             {
                 var pt = new GameObject("OVRPassthroughLayer").AddComponent<OVRPassthroughLayer>();
+
                 pt.overlayType = OVROverlay.OverlayType.Underlay;
                 Undo.RegisterCreatedObjectUndo(pt.gameObject, "Instantiate PT layer.");
             }
-
+#pragma warning restore CS0618
             var handMeshRenderers = new List<SkinnedMeshRenderer>();
             Utils.GetBlocksWithType<SyntheticHand>().ForEach(block =>
                 handMeshRenderers.AddRange(block.GetComponentsInChildren<SkinnedMeshRenderer>(true)));

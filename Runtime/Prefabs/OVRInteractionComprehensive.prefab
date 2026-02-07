@@ -359,16 +359,11 @@ PrefabInstance:
       propertyPath: _hand
       value: 
       objectReference: {fileID: 2032031666409119128}
-    - target: {fileID: 697476699345571459, guid: fac1b34d244291e409464389de307e81,
+    - target: {fileID: 665828160680259326, guid: fac1b34d244291e409464389de307e81,
         type: 3}
-      propertyPath: _monoBehaviours.Array.size
-      value: 1
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 697476699345571459, guid: fac1b34d244291e409464389de307e81,
-        type: 3}
-      propertyPath: _monoBehaviours.Array.data[0]
-      value: 
-      objectReference: {fileID: 876019485324780581}
     - target: {fileID: 818731491404013920, guid: fac1b34d244291e409464389de307e81,
         type: 3}
       propertyPath: _handler
@@ -414,6 +409,16 @@ PrefabInstance:
       propertyPath: _hmd
       value: 
       objectReference: {fileID: 2922565180446635899}
+    - target: {fileID: 4302339535688480838, guid: fac1b34d244291e409464389de307e81,
+        type: 3}
+      propertyPath: _whenSwipeUp.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302339535688480840, guid: fac1b34d244291e409464389de307e81,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4871089835330585555, guid: fac1b34d244291e409464389de307e81,
         type: 3}
       propertyPath: m_IsActive
@@ -449,6 +454,11 @@ PrefabInstance:
       propertyPath: _iModifyDataFromSourceMono
       value: 
       objectReference: {fileID: 3492006442675507247}
+    - target: {fileID: 5620037387646376333, guid: fac1b34d244291e409464389de307e81,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5817078623304334761, guid: fac1b34d244291e409464389de307e81,
         type: 3}
       propertyPath: _handedness
@@ -524,6 +534,11 @@ PrefabInstance:
       propertyPath: _handlers.Array.data[0]
       value: 
       objectReference: {fileID: 6744807187139327233}
+    - target: {fileID: 8790951959936191375, guid: fac1b34d244291e409464389de307e81,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8945518246439380565, guid: fac1b34d244291e409464389de307e81,
         type: 3}
       propertyPath: m_RootOrder
@@ -577,6 +592,21 @@ PrefabInstance:
     - target: {fileID: 8945518246439380565, guid: fac1b34d244291e409464389de307e81,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9034888068714139609, guid: fac1b34d244291e409464389de307e81,
+        type: 3}
+      propertyPath: _whenSwipeDown.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9034888068714139609, guid: fac1b34d244291e409464389de307e81,
+        type: 3}
+      propertyPath: _whenSwipeLeft.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9034888068714139609, guid: fac1b34d244291e409464389de307e81,
+        type: 3}
+      propertyPath: _whenSwipeRight.m_PersistentCalls.m_Calls.Array.size
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1531,7 +1561,17 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1804664176901660288, guid: fac1b34d244291e409464389de307e81,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2017662319688186209, guid: fac1b34d244291e409464389de307e81,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2312978158887747273, guid: fac1b34d244291e409464389de307e81,
         type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -1561,6 +1601,11 @@ PrefabInstance:
       propertyPath: _hmd
       value: 
       objectReference: {fileID: 2922565180446635899}
+    - target: {fileID: 4277859398622814931, guid: fac1b34d244291e409464389de307e81,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4448108623263436598, guid: fac1b34d244291e409464389de307e81,
         type: 3}
       propertyPath: m_IsActive
@@ -1621,6 +1666,11 @@ PrefabInstance:
       propertyPath: _trackingToWorldTransformer
       value: 
       objectReference: {fileID: 1817200970410550060}
+    - target: {fileID: 6395693853510960338, guid: fac1b34d244291e409464389de307e81,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7024874999677930950, guid: fac1b34d244291e409464389de307e81,
         type: 3}
       propertyPath: m_IsActive
@@ -2648,18 +2698,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 46fdef3df9a5a354caf7692f85e5eff2, type: 3}
---- !u!114 &876019485324780581 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8596244716211811157, guid: 46fdef3df9a5a354caf7692f85e5eff2,
-    type: 3}
-  m_PrefabInstance: {fileID: 8891161276512245616}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d2705674196dfc4da9c25fbacda72d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &3903482226883268839 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5568758619435239319, guid: 46fdef3df9a5a354caf7692f85e5eff2,

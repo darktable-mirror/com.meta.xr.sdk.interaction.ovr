@@ -40,17 +40,43 @@ namespace Oculus.Interaction.Editor.BuildingBlocks
         public static IEnumerable<Hand> GetHands()
         {
             var handsBlock = Meta.XR.BuildingBlocks.Editor.Utils.GetBlock(BlockDataIds.InteractionHandTracking);
+            if (handsBlock == null)
+            {
+                yield break;
+            }
+
             var handActiveStates = handsBlock.GetComponentsInChildren<HandActiveState>();
+            if (handActiveStates == null || handActiveStates.Length == 0)
+            {
+                yield break;
+            }
+
             foreach (var handActiveState in handActiveStates)
             {
-                yield return handActiveState.GetComponent<Hand>();
+                if (handActiveState == null)
+                {
+                    continue;
+                }
+
+                var hand = handActiveState.GetComponent<Hand>();
+                if (hand == null)
+                {
+                    continue;
+                }
+
+                yield return hand;
             }
         }
 
         public static IEnumerable<Controller> GetControllers()
         {
             var interactionBlock = Meta.XR.BuildingBlocks.Editor.Utils.GetBlock(BlockDataIds.InteractionControllerTracking);
-            return interactionBlock.GetComponentsInChildren<Controller>().ToList();
+            if (interactionBlock == null)
+            {
+                return Enumerable.Empty<Controller>();
+            }
+
+            return interactionBlock.GetComponentsInChildren<Controller>();
         }
     }
 }
