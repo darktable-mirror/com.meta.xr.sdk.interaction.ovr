@@ -18,11 +18,13 @@
  * limitations under the License.
  */
 
+using System;
 using TMPro;
 using UnityEngine;
 
 namespace Oculus.Interaction
 {
+    [Obsolete("Use " + nameof(VersionTextVisual) + " instead")]
     public class VersionTextGUI : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI _text;

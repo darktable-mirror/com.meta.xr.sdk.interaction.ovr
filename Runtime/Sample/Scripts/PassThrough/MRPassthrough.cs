@@ -124,11 +124,13 @@ namespace Oculus.Interaction.Samples
             }
         }
 
+        [System.Obsolete]
         public void TurnLocoMotionSceneOn()
         {
             PassThrough.IsPassThroughCompatible = true;
         }
 
+        [System.Obsolete]
         public void TurnLocoMotionSceneOff()
         {
             PassThrough.IsPassThroughCompatible = false;
