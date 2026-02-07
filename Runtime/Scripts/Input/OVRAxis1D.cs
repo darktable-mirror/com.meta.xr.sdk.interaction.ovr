@@ -20,10 +20,12 @@
 
 using Oculus.Interaction.Input;
 using System;
+using Meta.XR.Util;
 using UnityEngine;
 
 namespace Oculus.Interaction.OVR.Input
 {
+    [Feature(Feature.Interaction)]
     public class OVRAxis1D : MonoBehaviour, IAxis1D
     {
         [SerializeField]

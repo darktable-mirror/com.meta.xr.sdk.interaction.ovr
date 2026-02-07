@@ -18,10 +18,12 @@
  * limitations under the License.
  */
 
+using Meta.XR.Util;
 using UnityEngine;
 
 namespace Oculus.Interaction.Input.Visuals
 {
+    [Feature(Feature.Interaction)]
     public class OVRControllerVisual : MonoBehaviour
     {
         [SerializeField, Interface(typeof(IController))]

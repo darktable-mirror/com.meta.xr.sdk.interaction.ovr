@@ -18,11 +18,13 @@
  * limitations under the License.
  */
 
+using Meta.XR.Util;
 using Oculus.Interaction.Input;
 using UnityEngine;
 
 namespace Oculus.Interaction.OVR.Input
 {
+    [Feature(Feature.Interaction)]
     public class OVRAxis2D : MonoBehaviour, IAxis2D
     {
         [SerializeField]

@@ -19,6 +19,7 @@
  */
 
 using System;
+using Meta.XR.Util;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Serialization;
@@ -26,6 +27,7 @@ using UnityEngine.XR;
 
 namespace Oculus.Interaction.Input
 {
+    [Feature(Feature.Interaction)]
     public class FromOVRHmdDataSource : DataSource<HmdDataAsset>
     {
         [Header("OVR Data Source")]

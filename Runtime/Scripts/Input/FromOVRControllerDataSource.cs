@@ -18,6 +18,7 @@
  * limitations under the License.
  */
 
+using Meta.XR.Util;
 using UnityEngine;
 
 namespace Oculus.Interaction.Input
@@ -140,6 +141,7 @@ namespace Oculus.Interaction.Input
         }
     }
 
+    [Feature(Feature.Interaction)]
     public class FromOVRControllerDataSource : DataSource<ControllerDataAsset>
     {
         [Header("OVR Data Source")]

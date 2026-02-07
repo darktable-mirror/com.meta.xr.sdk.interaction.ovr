@@ -18,6 +18,7 @@
  * limitations under the License.
  */
 
+using Meta.XR.Util;
 using Oculus.Interaction.Input;
 using UnityEngine;
 
@@ -26,6 +27,7 @@ namespace Oculus.Interaction
     /// <summary>
     /// Takes a set of OVR Near, Touch and Button bools and remaps them to an Axis1D float.
     /// </summary>
+    [Feature(Feature.Interaction)]
     public class OVRButtonAxis1D : MonoBehaviour, IAxis1D
     {
         [SerializeField]

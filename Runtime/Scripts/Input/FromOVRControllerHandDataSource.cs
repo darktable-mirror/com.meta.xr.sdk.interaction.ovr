@@ -19,11 +19,13 @@
  */
 
 using System;
+using Meta.XR.Util;
 using UnityEngine;
 
 namespace Oculus.Interaction.Input
 {
     [Obsolete("Use " + nameof(ControllerHandDataSource) + " instead")]
+    [Feature(Feature.Interaction)]
     public class FromOVRControllerHandDataSource : DataSource<HandDataAsset>
     {
         [SerializeField]

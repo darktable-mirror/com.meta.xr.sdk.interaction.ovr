@@ -18,10 +18,12 @@
  * limitations under the License.
  */
 
+using Meta.XR.Util;
 using UnityEngine;
 
 namespace Oculus.Interaction.Input
 {
+    [Feature(Feature.Interaction)]
     public class OVRNearTouch : MonoBehaviour, IButton
     {
         [SerializeField]

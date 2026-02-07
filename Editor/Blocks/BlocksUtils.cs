@@ -22,6 +22,8 @@ using Oculus.Interaction.Input;
 using System.Collections.Generic;
 using Meta.XR.BuildingBlocks.Editor;
 using UnityEngine;
+using System.Linq;
+
 
 
 namespace Oculus.Interaction.Editor.BuildingBlocks
@@ -43,6 +45,12 @@ namespace Oculus.Interaction.Editor.BuildingBlocks
             {
                 yield return handActiveState.GetComponent<Hand>();
             }
+        }
+
+        public static IEnumerable<Controller> GetControllers()
+        {
+            var interactionBlock = Meta.XR.BuildingBlocks.Editor.Utils.GetBlock(BlockDataIds.InteractionControllerTracking);
+            return interactionBlock.GetComponentsInChildren<Controller>().ToList();
         }
     }
 }

@@ -19,6 +19,7 @@
  */
 
 using System.Collections.Generic;
+using Meta.XR.Util;
 
 /// <summary>
 /// Primitive type serialization
@@ -28,6 +29,7 @@ namespace Oculus.Interaction.Body.Input
     using OVRBoneId = OVRPlugin.BoneId;
     using BodyJointSet = OVRPlugin.BodyJointSet;
 
+    [Feature(Feature.Interaction)]
     public class OVRSkeletonMapping : BodySkeletonMapping<OVRBoneId>, ISkeletonMapping
     {
         [System.Obsolete("Use the parameterized constructor instead", true)]

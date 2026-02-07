@@ -18,6 +18,7 @@
  * limitations under the License.
  */
 
+using Meta.XR.Util;
 using UnityEngine;
 using Oculus.Interaction.Input;
 
@@ -26,6 +27,7 @@ namespace Oculus.Interaction.Body.Input
     using static OVRPlugin;
     using IOVRSkeletonDataProvider = OVRSkeleton.IOVRSkeletonDataProvider;
 
+    [Feature(Feature.Interaction)]
     public class FromOVRBodyDataSource : DataSource<BodyDataAsset>
     {
         [Header("OVR Data Source")]

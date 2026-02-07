@@ -18,11 +18,13 @@
  * limitations under the License.
  */
 
+using Meta.XR.Util;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace Oculus.Interaction.Input
 {
+    [Feature(Feature.Interaction)]
     public class HandSkeletonOVR : MonoBehaviour, IHandSkeletonProvider
     {
         private readonly HandSkeleton[] _skeletons = { new HandSkeleton(), new HandSkeleton() };

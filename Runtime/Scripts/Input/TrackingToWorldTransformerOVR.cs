@@ -19,11 +19,13 @@
  */
 
 using System;
+using Meta.XR.Util;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace Oculus.Interaction.Input
 {
+    [Feature(Feature.Interaction)]
     public class TrackingToWorldTransformerOVR : MonoBehaviour, ITrackingToWorldTransformer
     {
         [SerializeField, Interface(typeof(IOVRCameraRigRef))]

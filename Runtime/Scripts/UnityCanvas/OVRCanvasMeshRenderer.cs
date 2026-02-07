@@ -18,6 +18,7 @@
  * limitations under the License.
  */
 
+using Meta.XR.Util;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Profiling;
@@ -31,6 +32,7 @@ namespace Oculus.Interaction.UnityCanvas
     /// Uses <see cref="OVROverlay"/> to enable Underlay and Overlay
     /// rendering of a UI canvas.
     /// </summary>
+    [Feature(Feature.Interaction)]
     public class OVRCanvasMeshRenderer : CanvasMeshRenderer
     {
         [SerializeField]

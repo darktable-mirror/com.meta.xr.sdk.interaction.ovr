@@ -19,11 +19,14 @@
  */
 
 using System;
+using Meta.XR.Util;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace Oculus.Interaction.Input
 {
+
+    [Feature(Feature.Interaction)]
     public class AnimatedHandOVR : MonoBehaviour,
         IDeltaTimeConsumer
     {

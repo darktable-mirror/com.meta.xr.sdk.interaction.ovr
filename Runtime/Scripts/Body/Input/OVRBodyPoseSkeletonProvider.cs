@@ -18,6 +18,7 @@
  * limitations under the License.
  */
 
+using Meta.XR.Util;
 using UnityEngine;
 using Oculus.Interaction.Body.Input;
 
@@ -26,6 +27,7 @@ using OVRBoneId = OVRPlugin.BoneId;
 
 namespace Oculus.Interaction.Body.PoseDetection
 {
+    [Feature(Feature.Interaction)]
     public class OVRBodyPoseSkeletonProvider : MonoBehaviour, IOVRSkeletonDataProvider
     {
         private const int OVR_NUM_JOINTS =

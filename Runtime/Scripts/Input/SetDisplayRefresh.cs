@@ -19,10 +19,12 @@
  */
 
 using System.Linq;
+using Meta.XR.Util;
 using UnityEngine;
 
 namespace Oculus.Interaction.Input
 {
+    [Feature(Feature.Interaction)]
     public class SetDisplayRefresh : MonoBehaviour
     {
         [SerializeField]

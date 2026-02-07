@@ -19,6 +19,7 @@
  */
 
 using System.Collections.Generic;
+using Meta.XR.Util;
 using UnityEngine;
 
 namespace Oculus.Interaction.Input
@@ -29,6 +30,7 @@ namespace Oculus.Interaction.Input
     /// types set up in the inspector. OVRInput `Controllers` include
     /// types like Touch, L Touch, R TouchR, Hands, L Hand, R Hand
     /// </summary>
+    [Feature(Feature.Interaction)]
     public class OVRInputDeviceActiveState : MonoBehaviour, IActiveState
     {
         [SerializeField]

@@ -19,6 +19,7 @@
  */
 
 using System;
+using Meta.XR.Util;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -50,6 +51,7 @@ namespace Oculus.Interaction.Input
     /// initialized correctly and ready to use.
     /// </summary>
     [DefaultExecutionOrder(-90)]
+    [Feature(Feature.Interaction)]
     public class OVRCameraRigRef : MonoBehaviour, IOVRCameraRigRef
     {
         [Header("Configuration")]

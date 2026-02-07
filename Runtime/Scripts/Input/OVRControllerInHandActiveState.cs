@@ -18,11 +18,13 @@
  * limitations under the License.
  */
 
+using Meta.XR.Util;
 using UnityEngine;
 using static OVRInput;
 
 namespace Oculus.Interaction.OVR
 {
+    [Feature(Feature.Interaction)]
     public class OVRControllerInHandActiveState : MonoBehaviour, IActiveState
     {
         [SerializeField]

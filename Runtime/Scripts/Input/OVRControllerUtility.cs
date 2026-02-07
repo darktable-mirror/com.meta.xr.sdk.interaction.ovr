@@ -18,8 +18,11 @@
  * limitations under the License.
  */
 
+using Meta.XR.Util;
+
 namespace Oculus.Interaction.Input
 {
+    [Feature(Feature.Interaction)]
     public static class OVRControllerUtility
     {
         public static float GetPinchAmount(OVRInput.Controller ovrController)

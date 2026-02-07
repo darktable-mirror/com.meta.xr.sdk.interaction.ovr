@@ -18,6 +18,7 @@
  * limitations under the License.
  */
 
+using Meta.XR.Util;
 using UnityEngine;
 using static OVRSkeleton;
 
@@ -26,6 +27,7 @@ namespace Oculus.Interaction.Input
     /// <summary>
     /// An implementation of IHand that provides hand tracking data to Interaction SDK from a an OVRHand instance.
     /// </summary>
+    [Feature(Feature.Interaction)]
     public class FromOVRHandDataSource : DataSource<HandDataAsset>
     {
         [Header("OVR Data Source")]

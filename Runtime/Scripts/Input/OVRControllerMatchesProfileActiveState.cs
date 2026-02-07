@@ -18,6 +18,7 @@
  * limitations under the License.
  */
 
+using Meta.XR.Util;
 using UnityEngine;
 
 namespace Oculus.Interaction
@@ -25,6 +26,7 @@ namespace Oculus.Interaction
     /// <summary>
     /// An ActiveState that is active when the controller matches the interaction profile.
     /// </summary>
+    [Feature(Feature.Interaction)]
     public class OVRControllerMatchesProfileActiveState : MonoBehaviour, IActiveState
     {
         [SerializeField]
