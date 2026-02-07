@@ -29,7 +29,36 @@ namespace Oculus.Interaction.OVR.Editor
     {
         static ProjectSetupTasks()
         {
+            CheckHandTrackingSupportMode();
         }
 
+
+        private static void CheckHandTrackingSupportMode()
+        {
+            OVRProjectSetup.AddTask(
+                level: OVRProjectSetup.TaskLevel.Recommended,
+                group: OVRProjectSetup.TaskGroup.Compatibility,
+                isDone: _ =>
+                {
+                    OVRManager ovrManager = OVRProjectSetupUtils.FindComponentInScene<OVRManager>();
+                    if (ovrManager == null)
+                    {
+                        return true;
+                    }
+
+                    var projectConfig = OVRProjectConfig.CachedProjectConfig;
+                    return projectConfig.handTrackingSupport != OVRProjectConfig.HandTrackingSupport.ControllersOnly;
+
+                },
+                message: "Hand tracking support is set to \"Controllers Only\", hand tracking will not work in this mode.",
+                fix: _ =>
+                {
+                    var projectConfig = OVRProjectConfig.CachedProjectConfig;
+                    projectConfig.handTrackingSupport = OVRProjectConfig.HandTrackingSupport.ControllersAndHands;
+                    OVRProjectConfig.CommitProjectConfig(projectConfig);
+                },
+                fixMessage: "Set hand tracking support mode to \"Controllers And Hands\" in the OVR Manager."
+            );
+        }
     }
 }

@@ -20,7 +20,6 @@
 
 using Meta.XR.Util;
 using UnityEngine;
-
 using static OVRSkeleton;
 
 namespace Oculus.Interaction.Input
@@ -100,6 +99,8 @@ namespace Oculus.Interaction.Input
             this.AssertField(_ovrHand, nameof(_ovrHand));
 
             UpdateConfig();
+
+
             this.EndStart(ref _started);
         }
 
