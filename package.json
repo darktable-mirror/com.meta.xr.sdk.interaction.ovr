@@ -1,7 +1,7 @@
 {
   "name": "com.meta.xr.sdk.interaction.ovr",
   "displayName": "Meta XR Interaction \u200bSDK",
-  "version": "83.0.2",
+  "version": "83.0.3",
   "description": "This package allows Interaction SDK to interface with OVRPlugin. Use this package if you are using OVRPlugin or the Core SDK package.",
   "samples": [
     {
@@ -39,8 +39,8 @@
     "XR"
   ],
   "dependencies": {
-    "com.meta.xr.sdk.interaction": "83.0.2",
-    "com.meta.xr.sdk.core": "83.0.2"
+    "com.meta.xr.sdk.interaction": "83.0.3",
+    "com.meta.xr.sdk.core": "83.0.3"
   },
   "documentationUrl": "https://developer.oculus.com/documentation/unity/unity-isdk-interaction-sdk-overview/",
   "changelogUrl": "https://developer.oculus.com/downloads/package/meta-xr-interaction-sdk-ovr-integration/"
