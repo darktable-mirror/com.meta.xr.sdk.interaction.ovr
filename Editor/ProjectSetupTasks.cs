@@ -46,17 +46,15 @@ namespace Oculus.Interaction.OVR.Editor
             string message = $"When using Interaction SDK with the {handSkeletonVersion} hand skeleton, " +
                 $"the Hand Skeleton Version in OVRManager must be set to {handSkeletonVersion}";
 
-            var runtimeSettings = OVRRuntimeSettings.GetRuntimeSettings();
-
             OVRProjectSetup.AddTask(
                     level: OVRProjectSetup.TaskLevel.Required,
                     group: Group,
-                    isDone: buildTargetGroup => runtimeSettings.HandSkeletonVersion == handSkeletonVersion,
+                    isDone: buildTargetGroup => OVRRuntimeSettings.Instance.HandSkeletonVersion == handSkeletonVersion,
                     message: message,
                     fix: buildTargetGroup =>
                     {
-                        runtimeSettings.HandSkeletonVersion = handSkeletonVersion;
-                        OVRRuntimeSettings.CommitRuntimeSettings(runtimeSettings);
+                        OVRRuntimeSettings.Instance.HandSkeletonVersion = handSkeletonVersion;
+                        OVRRuntimeSettings.CommitRuntimeSettings(OVRRuntimeSettings.Instance);
                     },
                     fixMessage: $"Set the Hand Skeleton to the required version."
                 );

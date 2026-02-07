@@ -19,7 +19,10 @@
  */
 
 using Oculus.Interaction.Input;
+using System.Linq;
+using System.Reflection;
 using UnityEditor;
+using UnityEngine;
 
 namespace Oculus.Interaction.Editor
 {
@@ -65,6 +68,75 @@ namespace Oculus.Interaction.Editor
                         })
                 }
             );
+
+            AutoWiring.Register(
+                typeof(OVRMicrogestureEventSource),
+                new[] {
+                    new ComponentWiringStrategyConfig("_hand", new FieldWiringStrategy[]
+                        {
+                            WireToOVRHandWithHandedness
+                        })
+                }
+            );
+        }
+
+        public static bool WireToOVRHandWithHandedness(MonoBehaviour monoBehaviour,
+            FieldInfo field, System.Type targetType)
+        {
+            if (targetType != typeof(OVRHand))
+            {
+                return false;
+            }
+
+            if (!TryGetHandedness(monoBehaviour.gameObject, out Handedness handedness))
+            {
+                return FieldWiringStrategies.WireFieldToSceneComponent(monoBehaviour, field, targetType);
+            }
+
+            OVRPlugin.Hand ovrHandedness = handedness == Handedness.Left ?
+                OVRPlugin.Hand.HandLeft : OVRPlugin.Hand.HandRight;
+            OVRHand hand = Object.FindObjectsByType<OVRHand>(FindObjectsSortMode.InstanceID)
+                 .FirstOrDefault(hand => hand.GetHand() == ovrHandedness);
+            if (hand != null)
+            {
+                field.SetValue(monoBehaviour, hand);
+                EditorUtility.SetDirty(monoBehaviour);
+                return true;
+            }
+
+            return false;
+        }
+
+
+        private static bool TryGetHandedness(GameObject origin, out Handedness handedness)
+        {
+            handedness = Handedness.Right;
+            Transform transform = origin.transform;
+
+            while (transform != null)
+            {
+                if (transform.TryGetComponent(out Hand hand))
+                {
+                    //during editor time the Hand hierarchy has not been wired yet
+                    //so we can only "trust" the naming, as the Handedness value
+                    //is not initialised yet and will always return Left.
+                    string name = hand.name.ToLower();
+                    if (name.Contains("left"))
+                    {
+                        handedness = Handedness.Left;
+                        return true;
+                    }
+                    else if (name.Contains("right"))
+                    {
+                        handedness = Handedness.Right;
+                        return true;
+                    }
+                    return false;
+                }
+                transform = transform.parent;
+            }
+
+            return false;
         }
     }
 }

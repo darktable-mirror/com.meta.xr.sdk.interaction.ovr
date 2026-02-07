@@ -57,7 +57,9 @@ namespace Oculus.Interaction.Editor.BuildingBlocks
                 controllerHelpers.TryAdd(trackingHandedness, controllerHelper);
             }
 
+#pragma warning disable CS0618 // Type or member is obsolete
             foreach (var controllerVisual in blockObject.GetComponentsInChildren<OVRControllerVisual>())
+#pragma warning restore CS0618 // Type or member is obsolete
             {
                 var controller = controllerVisual.GetComponentInParent<Controller>();
                 if (controller == null)

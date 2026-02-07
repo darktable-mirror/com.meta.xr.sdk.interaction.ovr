@@ -24,4 +24,5 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("Meta.XR.MultiplayerBlocks.NGO.Editor")]
 [assembly: InternalsVisibleTo("Meta.XR.MultiplayerBlocks.Shared.Editor")]
 [assembly: InternalsVisibleTo("Oculus.Interaction.Tests.Editor.OVR")]
+[assembly: InternalsVisibleTo("meta.xr.mrutilitykit.editor")]
 

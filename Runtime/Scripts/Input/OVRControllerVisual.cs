@@ -20,9 +20,11 @@
 
 using Meta.XR.Util;
 using UnityEngine;
+using System;
 
 namespace Oculus.Interaction.Input.Visuals
 {
+    [Obsolete("Use " + nameof(ControllerVisual) + " instead.")]
     [Feature(Feature.Interaction)]
     public class OVRControllerVisual : MonoBehaviour
     {

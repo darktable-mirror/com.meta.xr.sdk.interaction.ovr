@@ -54,7 +54,9 @@ namespace Oculus.Interaction.Editor.BuildingBlocks
 
         private static bool TryGetPreexistingNonBlock(out GameObject nonBlockObject)
         {
+#pragma warning disable CS0618 // Type or member is obsolete
             var hmd = FindObjectOfType<Hmd>();
+#pragma warning restore CS0618 // Type or member is obsolete
             var interactions = hmd != null ? hmd.transform.parent : null;
             nonBlockObject = interactions != null ? interactions.gameObject : null;
             return nonBlockObject != null;

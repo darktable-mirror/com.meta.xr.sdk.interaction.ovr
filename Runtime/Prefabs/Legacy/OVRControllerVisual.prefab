@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1576363771377775485}
   - component: {fileID: 5827006584179910994}
+  - component: {fileID: 2040779102819228134}
   m_Layer: 0
   m_Name: OVRControllerVisual
   m_TagString: Untagged
@@ -47,6 +48,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _controller: {fileID: 0}
   _ovrControllerHelper: {fileID: 5687564809252939053}
+--- !u!114 &2040779102819228134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6432645210863653894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40fad7417847c0d488bea878535c9771, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _replacement: {fileID: 699218207496619424, guid: a3cb63fbc355e984e9e5c2ca9e016b73,
+    type: 3}
+  _supressWarning: 0
 --- !u!1001 &5687564809246575715
 PrefabInstance:
   m_ObjectHideFlags: 0

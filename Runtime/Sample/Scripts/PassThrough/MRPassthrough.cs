@@ -46,14 +46,6 @@ namespace Oculus.Interaction.Samples
         /// <summary>
         /// These are UI objects that should be toggled ON/OFF during passthrough
         /// </summary>
-        [Header("UI GameObjects to toggle ON/OFF")]
-        [Tooltip("These are UI objects that should be toggled ON/OFF during passthrough Locomotion")]
-        [SerializeField]
-        private Toggle _locomotionScene;
-
-        /// <summary>
-        /// These are UI objects that should be toggled ON/OFF during passthrough
-        /// </summary>
         [Tooltip("These are UI objects that should be toggled ON/OFF during passthrough button")]
         [SerializeField]
         private Toggle _passThroughToggle;
@@ -77,7 +69,9 @@ namespace Oculus.Interaction.Samples
         #region Editor Callbacks
         protected virtual void Reset()
         {
+#pragma warning disable CS0618 // Type or member is obsolete
             _layer = FindObjectOfType<OVRPassthroughLayer>();
+#pragma warning restore CS0618 // Type or member is obsolete
             _camera = OVRManager.FindMainCamera();
         }
         #endregion
@@ -89,7 +83,6 @@ namespace Oculus.Interaction.Samples
             this.AssertCollectionItems(_objects, nameof(_objects));
             this.AssertField(_layer, nameof(_layer));
             this.AssertField(_camera, nameof(_camera));
-            this.AssertField(_locomotionScene, nameof(_locomotionScene));
             this.AssertField(_passThroughToggle, nameof(_passThroughToggle));
 
             this.EndStart(ref _started);
@@ -165,7 +158,6 @@ namespace Oculus.Interaction.Samples
         {
             PassThrough.IsPassThroughOn = true;
             _layer.textureOpacity = 1;
-            _locomotionScene.enabled = false;
             _camera.clearFlags = CameraClearFlags.SolidColor;
             foreach (GameObject obj in _objects)
             {
@@ -177,7 +169,6 @@ namespace Oculus.Interaction.Samples
         {
             PassThrough.IsPassThroughOn = false;
             _layer.textureOpacity = 0;
-            _locomotionScene.enabled = true;
             _camera.clearFlags = CameraClearFlags.Skybox;
             foreach (GameObject obj in _objects)
             {
@@ -188,11 +179,9 @@ namespace Oculus.Interaction.Samples
         #region Injects
 
         public void InjectAllMRPassthrough(GameObject[] objects,
-            Toggle locomotionScene, Toggle passThroughToggle,
-            OVRPassthroughLayer layer, Camera camera)
+            Toggle passThroughToggle, OVRPassthroughLayer layer, Camera camera)
         {
             InjectObjects(objects);
-            InjectLocomotionScene(locomotionScene);
             InjectPassThroughToggle(passThroughToggle);
             InjectLayer(layer);
             InjectCamera(camera);
@@ -201,11 +190,6 @@ namespace Oculus.Interaction.Samples
         public void InjectObjects(GameObject[] objects)
         {
             _objects = objects;
-        }
-
-        public void InjectLocomotionScene(Toggle locomotionScene)
-        {
-            _locomotionScene = locomotionScene;
         }
 
         public void InjectPassThroughToggle(Toggle passThroughToggle)

@@ -23,20 +23,19 @@ using System.Collections.Generic;
 using Oculus.Interaction;
 using Oculus.Interaction.Editor.QuickActions;
 using Oculus.Interaction.Input;
-using Oculus.Interaction.Throw;
 using UnityEngine;
 
 namespace Meta.XR.BuildingBlocks.Editor
 {
     internal class TouchHandGrabBlockWizard : QuickActionsWizard
     {
-        public static readonly Template TouchHandGrabInteractable =
-            new Template(
+        public static readonly InteractorTemplate TouchHandGrabInteractable =
+            new InteractorTemplate(
                 "ISDKBlock_TouchHandGrabInteraction",
                 "99784e1a3225c9841bac1e563e0f92a2");
 
-        public static readonly Template TouchHandGrabInteractor =
-            new Template(
+        public static readonly InteractorTemplate TouchHandGrabInteractor =
+            new InteractorTemplate(
                 "TouchHandGrabInteractor",
                 "37318c26f22752d4c88f584585c490e5");
 
@@ -125,29 +124,22 @@ namespace Meta.XR.BuildingBlocks.Editor
             AddInteractorsToRig(typeof(TouchHandGrabInteractor), TouchHandGrabInteractor);
         }
 
-        private static void AddInteractorsToRig(Type expectedInteractorType, Template template)
+        private static void AddInteractorsToRig(Type expectedInteractorType, InteractorTemplate template)
         {
-            bool TryGetInteractorParent(Transform root, out Transform parent)
-            {
-                parent = InteractorUtils.FindInteractorsTransform(root);
-                return parent != null;
-            }
-
             if (InteractorUtils.CanAddHandInteractorsToRig())
             {
                 foreach (var hand in InteractorUtils.GetHands())
                 {
-                    if (TryGetInteractorParent(hand.transform, out Transform parent)
-                        && parent.GetComponentInChildren(expectedInteractorType, true) == null)
+                    if (InteractorUtils.TryFindInteractorsGroup(hand, out InteractorGroup group, out Transform holder)
+                        && holder.transform.GetComponentInChildren(expectedInteractorType, true) == null)
                     {
-                        var group = parent.GetComponent<InteractorGroup>();
-                        AddInteractorsToHand(template, hand, InteractorUtils.GetHmd(), parent, group);
+                        AddInteractorsToHand(template, hand, InteractorUtils.GetHmd(), holder, group);
                     }
                 }
             }
         }
 
-        private static void AddInteractorsToHand(Template template,
+        private static void AddInteractorsToHand(InteractorTemplate template,
             Hand hand, Hmd hmd, Transform parentTransform, InteractorGroup group = null)
         {
             var newInteractor = InteractorUtils.AddInteractor(template, hmd, parentTransform, group);

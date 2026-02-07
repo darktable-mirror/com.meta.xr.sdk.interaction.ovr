@@ -34,25 +34,31 @@ namespace Oculus.Interaction.Samples
     {
         [SerializeField]
         private List<Transform> _eyeAnchors;
-        private Ray[] _eyeRays;
+
         [SerializeField]
         private HandVisual _handVisual;
 
         [Header("Raycast Properties")]
         [SerializeField]
         private LayerMask _layer;
+
         [SerializeField]
         private float _sphereRadius;
+
         [SerializeField]
         private float _castDistance;
 
         [Header("Material Properties")]
+
         [SerializeField]
-        private MaterialPropertyBlockEditor _handMaterialPropertyBlock;
+        private MaterialPropertyBlockEditor[] _handMaterialPropertyBlocks;
+
         [SerializeField]
         private float _opacity;
+
         [SerializeField]
         private float _outlineOpacity;
+
         [SerializeField]
         private float _animationSpeed;
 
@@ -65,23 +71,26 @@ namespace Oculus.Interaction.Samples
         private (Vector3, float) _palmTarget;
         private readonly HandJointId[] _handJointTargets = new HandJointId[]
         {
-        HandJointId.HandIndex2,
-        HandJointId.HandIndex3,
-        HandJointId.HandThumb2,
-        HandJointId.HandThumb3,
-        HandJointId.HandMiddle2,
-        HandJointId.HandMiddle3,
-        HandJointId.HandRing2,
-        HandJointId.HandRing3,
-        HandJointId.HandPinky2,
-        HandJointId.HandPinky3,
+            HandJointId.HandIndex2,
+            HandJointId.HandIndex3,
+            HandJointId.HandThumb2,
+            HandJointId.HandThumb3,
+            HandJointId.HandMiddle2,
+            HandJointId.HandMiddle3,
+            HandJointId.HandRing2,
+            HandJointId.HandRing3,
+            HandJointId.HandPinky2,
+            HandJointId.HandPinky3,
         };
+
+        private Ray[] _eyeRays;
         private bool _started = false;
+
         private void Start()
         {
             this.BeginStart(ref _started);
             this.AssertField(_handVisual, nameof(_handVisual));
-            this.AssertField(_handMaterialPropertyBlock, nameof(_handMaterialPropertyBlock));
+            this.AssertCollectionField(_handMaterialPropertyBlocks, nameof(_handMaterialPropertyBlocks));
             this.EndStart(ref _started);
 
             _eyeRays = new Ray[_eyeAnchors.Count];
@@ -161,8 +170,11 @@ namespace Oculus.Interaction.Samples
             _currentOpacity = Mathf.Lerp(_currentOpacity, targetOpacity, animParam);
             _currentOutlineOpacity = Mathf.Lerp(_currentOutlineOpacity, targetOutlineOpacity, animParam);
 
-            _handMaterialPropertyBlock.MaterialPropertyBlock.SetFloat(_opacityId, _currentOpacity);
-            _handMaterialPropertyBlock.MaterialPropertyBlock.SetFloat(_outlineOpacityId, _currentOutlineOpacity);
+            foreach (var handMaterialPropertyBlock in _handMaterialPropertyBlocks)
+            {
+                handMaterialPropertyBlock.MaterialPropertyBlock.SetFloat(_opacityId, _currentOpacity);
+                handMaterialPropertyBlock.MaterialPropertyBlock.SetFloat(_outlineOpacityId, _currentOutlineOpacity);
+            }
         }
 
         private void Update()
@@ -177,8 +189,11 @@ namespace Oculus.Interaction.Samples
             }
             else
             {
-                _handMaterialPropertyBlock.MaterialPropertyBlock.SetFloat(_opacityId, _opacity);
-                _handMaterialPropertyBlock.MaterialPropertyBlock.SetFloat(_outlineOpacityId, _outlineOpacity);
+                foreach (var handMaterialPropertyBlock in _handMaterialPropertyBlocks)
+                {
+                    handMaterialPropertyBlock.MaterialPropertyBlock.SetFloat(_opacityId, _opacity);
+                    handMaterialPropertyBlock.MaterialPropertyBlock.SetFloat(_outlineOpacityId, _outlineOpacity);
+                }
             }
         }
     }

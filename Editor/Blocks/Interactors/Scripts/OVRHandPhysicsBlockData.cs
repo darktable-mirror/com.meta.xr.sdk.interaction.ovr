@@ -36,7 +36,9 @@ namespace Oculus.Interaction.Editor.BuildingBlocks
             {
                 var handPhysicsBlock = InstantiateHandPhysicsBlock(hand);
                 var grabInteractor = hand.GetComponentInChildren<HandGrabInteractor>();
+#pragma warning disable CS0618 // Type or member is obsolete
                 grabInteractor.InjectOptionalVelocityCalculator(handPhysicsBlock.GetComponent<RANSACVelocityCalculator>());
+#pragma warning restore CS0618 // Type or member is obsolete
                 handPhysicsBlocks.Add(handPhysicsBlock);
             }
             return handPhysicsBlocks;
