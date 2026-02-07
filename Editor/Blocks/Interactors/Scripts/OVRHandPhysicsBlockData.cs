@@ -29,15 +29,14 @@ namespace Oculus.Interaction.Editor.BuildingBlocks
 {
     public class OVRHandPhysicsBlockData : BlockData
     {
-        public string _handsBlockId;
         protected override List<GameObject> InstallRoutine()
         {
             var handPhysicsBlocks = new List<GameObject>();
-            foreach (var hand in BlocksUtils.GetHands(_handsBlockId))
+            foreach (var hand in BlocksUtils.GetHands())
             {
                 var handPhysicsBlock = InstantiateHandPhysicsBlock(hand);
                 var grabInteractor = hand.GetComponentInChildren<HandGrabInteractor>();
-                grabInteractor.InjectOptionalVelocityCalculator(handPhysicsBlock.GetComponent<StandardVelocityCalculator>());
+                grabInteractor.InjectOptionalVelocityCalculator(handPhysicsBlock.GetComponent<RANSACVelocityCalculator>());
                 handPhysicsBlocks.Add(handPhysicsBlock);
             }
             return handPhysicsBlocks;

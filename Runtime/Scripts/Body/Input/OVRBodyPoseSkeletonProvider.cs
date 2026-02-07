@@ -29,16 +29,19 @@ namespace Oculus.Interaction.Body.PoseDetection
     public class OVRBodyPoseSkeletonProvider : MonoBehaviour, IOVRSkeletonDataProvider
     {
         private const int OVR_NUM_JOINTS =
-            OVRBoneId.Body_End - OVRBoneId.Body_Start;
+            OVRBoneId.FullBody_End - OVRBoneId.FullBody_Start;
 
         [SerializeField, Interface(typeof(IBodyPose))]
         private UnityEngine.Object _bodyPose;
         private IBodyPose BodyPose;
 
+        [SerializeField]
+        private OVRPlugin.BodyJointSet _bodyJointSet;
+
         private OVRPlugin.Quatf[] _boneRotations = new OVRPlugin.Quatf[OVR_NUM_JOINTS];
         private OVRPlugin.Vector3f[] _boneTranslations = new OVRPlugin.Vector3f[OVR_NUM_JOINTS];
 
-        private readonly OVRSkeletonMapping _mapping = new OVRSkeletonMapping();
+        private OVRSkeletonMapping _mapping;
 
         protected virtual void Awake()
         {
@@ -48,6 +51,7 @@ namespace Oculus.Interaction.Body.PoseDetection
         protected virtual void Start()
         {
             this.AssertField(BodyPose, nameof(BodyPose));
+            _mapping = new OVRSkeletonMapping(_bodyJointSet);
         }
 
         OVRSkeleton.SkeletonPoseData OVRSkeleton.IOVRSkeletonDataProvider.GetSkeletonPoseData()
@@ -97,7 +101,12 @@ namespace Oculus.Interaction.Body.PoseDetection
 
         public OVRSkeleton.SkeletonType GetSkeletonType()
         {
-            return OVRSkeleton.SkeletonType.Body;
+            return _bodyJointSet switch
+            {
+                OVRPlugin.BodyJointSet.UpperBody => OVRSkeleton.SkeletonType.Body,
+                OVRPlugin.BodyJointSet.FullBody => OVRSkeleton.SkeletonType.FullBody,
+                _ => OVRSkeleton.SkeletonType.None,
+            };
         }
     }
 }

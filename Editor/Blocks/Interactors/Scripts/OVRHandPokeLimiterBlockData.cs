@@ -27,12 +27,10 @@ namespace Oculus.Interaction.Editor.BuildingBlocks
 {
     public class OVRHandPokeLimiterBlockData : BlockData
     {
-        public string _handsBlockId;
-
         protected override List<GameObject> InstallRoutine()
         {
             var pokeLimiters = new List<GameObject>();
-            foreach (var hand in BlocksUtils.GetHands(_handsBlockId))
+            foreach (var hand in BlocksUtils.GetHands())
             {
                 var syntheticHand = hand.GetComponentInChildren<SyntheticHand>();
                 var handPokeInteractor = hand.GetComponentInChildren<PokeInteractor>();

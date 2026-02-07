@@ -27,13 +27,12 @@ namespace Oculus.Interaction.Editor.BuildingBlocks
 {
     public class OVRInteractorBlockData : BlockData
     {
-        public string _handsBlockId;
         public string _interactorName;
 
         protected override List<GameObject> InstallRoutine()
         {
             var interactors = new List<GameObject>();
-            foreach (var hand in BlocksUtils.GetHands(_handsBlockId))
+            foreach (var hand in BlocksUtils.GetHands())
             {
                 var interactor = InstantiateInteractor(hand);
                 interactors.Add(interactor);

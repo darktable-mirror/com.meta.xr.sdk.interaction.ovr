@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Meta.XR.BuildingBlocks.Editor;
+using UnityEditor;
 
 namespace Oculus.Interaction.Editor.BuildingBlocks
 {
@@ -40,9 +41,11 @@ namespace Oculus.Interaction.Editor.BuildingBlocks
             }
 
             var interaction = Instantiate(Prefab, cameraRigBlock.transform, true);
+            Undo.RegisterCreatedObjectUndo(interaction, $"Create {BlockName}");
             interaction.SetActive(true);
             interaction.name = $"[BuildingBlock] {BlockName}";
             BlocksUtils.UpdateForAutoWiring(interaction);
+            Undo.RegisterFullObjectHierarchyUndo(interaction, $"Auto-Wiring {BlockName}");
 
             return  new List<GameObject>() { interaction };
         }

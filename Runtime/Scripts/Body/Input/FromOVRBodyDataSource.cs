@@ -23,6 +23,7 @@ using Oculus.Interaction.Input;
 
 namespace Oculus.Interaction.Body.Input
 {
+    using static OVRPlugin;
     using IOVRSkeletonDataProvider = OVRSkeleton.IOVRSkeletonDataProvider;
 
     public class FromOVRBodyDataSource : DataSource<BodyDataAsset>
@@ -43,7 +44,17 @@ namespace Oculus.Interaction.Body.Input
 
         private readonly BodyDataAsset _bodyDataAsset = new BodyDataAsset();
 
-        private readonly OVRSkeletonMapping _mapping = new OVRSkeletonMapping();
+        private OVRSkeletonMapping _mapping;
+
+        private static BodyJointSet GetJointSet(IOVRSkeletonDataProvider provider)
+        {
+            return provider.GetSkeletonType() switch
+            {
+                OVRSkeleton.SkeletonType.Body => OVRPlugin.BodyJointSet.UpperBody,
+                OVRSkeleton.SkeletonType.FullBody => OVRPlugin.BodyJointSet.FullBody,
+                _ => OVRPlugin.BodyJointSet.None,
+            };
+        }
 
         protected void Awake()
         {
@@ -57,6 +68,7 @@ namespace Oculus.Interaction.Body.Input
             this.AssertField(DataProvider, nameof(DataProvider));
             this.AssertField(CameraRigRef, nameof(CameraRigRef));
 
+            _mapping = new OVRSkeletonMapping(GetJointSet(DataProvider));
             _bodyDataAsset.SkeletonMapping = _mapping;
         }
 

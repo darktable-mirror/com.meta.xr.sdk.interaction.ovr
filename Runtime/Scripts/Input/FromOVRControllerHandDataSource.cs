@@ -18,11 +18,12 @@
  * limitations under the License.
  */
 
+using System;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace Oculus.Interaction.Input
 {
+    [Obsolete("Use " + nameof(ControllerHandDataSource) + " instead")]
     public class FromOVRControllerHandDataSource : DataSource<HandDataAsset>
     {
         [SerializeField]
@@ -67,7 +68,6 @@ namespace Oculus.Interaction.Input
 
         private readonly HandDataAsset _handDataAsset = new HandDataAsset();
         private OVRInput.Controller _ovrController;
-        private Transform _ovrControllerAnchor;
         private HandDataSourceConfig _config;
         private Pose _poseOffset;
 
@@ -95,13 +95,11 @@ namespace Oculus.Interaction.Input
             if (_handedness == Handedness.Left)
             {
                 this.AssertField(CameraRigRef.LeftHand, nameof(CameraRigRef.LeftHand));
-                _ovrControllerAnchor = CameraRigRef.LeftController;
                 _ovrController = OVRInput.Controller.LTouch;
             }
             else
             {
                 this.AssertField(CameraRigRef.RightHand, nameof(CameraRigRef.RightHand));
-                _ovrControllerAnchor = CameraRigRef.RightController;
                 _ovrController = OVRInput.Controller.RTouch;
             }
 
@@ -135,6 +133,8 @@ namespace Oculus.Interaction.Input
             }
 
             base.OnDisable();
+
+            MarkInputDataRequiresUpdate();
         }
 
         private void HandleInputDataDirtied(bool isLateUpdate)
@@ -188,7 +188,7 @@ namespace Oculus.Interaction.Input
             _handDataAsset.Config = Config;
             _handDataAsset.IsDataValid = true;
             _handDataAsset.IsConnected = (OVRInput.GetConnectedControllers() & _ovrController) > 0;
-            if (!_handDataAsset.IsConnected)
+            if (!_handDataAsset.IsConnected || !this.isActiveAndEnabled)
             {
                 // revert state fields to their defaults
                 _handDataAsset.IsTracked = default;
@@ -249,7 +249,10 @@ namespace Oculus.Interaction.Input
             _handDataAsset.Joints[0] = WristFixupRotation;
 
             // Convert controller pose from world to tracking space.
-            Pose pose = new Pose(_ovrControllerAnchor.position, _ovrControllerAnchor.rotation);
+            Pose pose = new Pose(
+                OVRInput.GetLocalControllerPosition(_ovrController),
+                OVRInput.GetLocalControllerRotation(_ovrController));
+
             if (Config.TrackingToWorldTransformer != null)
             {
                 pose = Config.TrackingToWorldTransformer.ToTrackingPose(pose);

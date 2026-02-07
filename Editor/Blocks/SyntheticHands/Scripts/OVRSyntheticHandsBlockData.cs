@@ -21,21 +21,20 @@
 using Oculus.Interaction.Input;
 using System.Collections.Generic;
 using Meta.XR.BuildingBlocks.Editor;
+using UnityEditor;
 using UnityEngine;
 
 namespace Oculus.Interaction.Editor.BuildingBlocks
 {
     public class OVRSyntheticHandsBlockData : BlockData
     {
-        public string _handsBlockId;
-        public string _uOIAssetsHandsBlockId;
         public GameObject _leftHand;
         public GameObject _rightHand;
 
         protected override List<GameObject> InstallRoutine()
         {
             var syntheticHands = new List<GameObject>();
-            foreach (var hand in BlocksUtils.GetHands(_handsBlockId))
+            foreach (var hand in BlocksUtils.GetHands())
             {
                 var syntheticHand = InstantiateHand(hand);
                 syntheticHands.Add(syntheticHand);
@@ -51,16 +50,18 @@ namespace Oculus.Interaction.Editor.BuildingBlocks
             var handedness = hand.Handedness;
             var prefab = handedness == Handedness.Left ? _leftHand : _rightHand;
             var syntheticHand = Instantiate(prefab, hand.transform, false);
+            Undo.RegisterCreatedObjectUndo(syntheticHand, "Create Synthetic Hand");
             syntheticHand.GetComponent<SyntheticHand>().InjectModifyDataFromSource(hand);
             syntheticHand.SetActive(true);
             syntheticHand.name = $"[BuildingBlock] Synthetic {handedness} Hand";
             BlocksUtils.UpdateForAutoWiring(syntheticHand);
+            Undo.RegisterFullObjectHierarchyUndo(syntheticHand, "Auto-Wiring Synthetic Hand");
             return syntheticHand;
         }
 
         private void DisableUOIAssetsHandVisual()
         {
-            var handsBlocks = Meta.XR.BuildingBlocks.Editor.Utils.GetBlocks(_uOIAssetsHandsBlockId);
+            var handsBlocks = Meta.XR.BuildingBlocks.Editor.Utils.GetBlocks(Meta.XR.BuildingBlocks.Editor.BlockDataIds.HandTracking);
             foreach (var hand in handsBlocks)
             {
                 var skeletonRenderer = hand.GetComponent<OVRSkeletonRenderer>();
@@ -69,6 +70,7 @@ namespace Oculus.Interaction.Editor.BuildingBlocks
                 if (skeletonRenderer && skeletonRenderer.enabled) skeletonRenderer.enabled = false;
                 if (meshRenderer && meshRenderer.enabled) meshRenderer.enabled = false;
                 if (skinnedMeshRenderer && skinnedMeshRenderer.enabled) skinnedMeshRenderer.enabled = false;
+                Undo.RegisterCompleteObjectUndo(hand, "Disable Hand Visual");
             }
         }
     }

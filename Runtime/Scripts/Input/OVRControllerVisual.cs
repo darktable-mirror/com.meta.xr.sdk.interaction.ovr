@@ -19,7 +19,6 @@
  */
 
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace Oculus.Interaction.Input.Visuals
 {
@@ -27,7 +26,6 @@ namespace Oculus.Interaction.Input.Visuals
     {
         [SerializeField, Interface(typeof(IController))]
         private UnityEngine.Object _controller;
-
         public IController Controller;
 
         [SerializeField]
@@ -35,7 +33,7 @@ namespace Oculus.Interaction.Input.Visuals
 
         public bool ForceOffVisibility { get; set; }
 
-        private bool _started = false;
+        protected bool _started = false;
 
         protected virtual void Awake()
         {

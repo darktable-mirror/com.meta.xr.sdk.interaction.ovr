@@ -19,31 +19,84 @@
  */
 
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace Oculus.Interaction.Input
 {
-    struct UsageMapping
+    interface IUsage
     {
-        public UsageMapping(ControllerButtonUsage usage, OVRInput.Touch touch)
+        void Apply(ControllerDataAsset controllerDataAsset, OVRInput.Controller controllerMask);
+    }
+
+    class UsageTouchMapping : IUsage
+    {
+        public ControllerButtonUsage Usage { get; }
+        public OVRInput.Touch Touch { get; }
+
+        public UsageTouchMapping(ControllerButtonUsage usage, OVRInput.Touch touch)
         {
             Usage = usage;
             Touch = touch;
-            Button = OVRInput.Button.None;
         }
 
-        public UsageMapping(ControllerButtonUsage usage, OVRInput.Button button)
+        public void Apply(ControllerDataAsset controllerDataAsset, OVRInput.Controller controllerMask)
+        {
+            bool value = OVRInput.Get(Touch, controllerMask);
+            controllerDataAsset.Input.SetButton(Usage, value);
+        }
+    }
+
+    class UsageButtonMapping : IUsage
+    {
+        public ControllerButtonUsage Usage { get; }
+        public OVRInput.Button Button { get; }
+
+        public UsageButtonMapping(ControllerButtonUsage usage, OVRInput.Button button)
         {
             Usage = usage;
-            Touch = OVRInput.Touch.None;
             Button = button;
         }
 
-        public bool IsTouch => Touch != OVRInput.Touch.None;
-        public bool IsButton => Button != OVRInput.Button.None;
-        public ControllerButtonUsage Usage { get; }
-        public OVRInput.Touch Touch { get; }
-        public OVRInput.Button Button { get; }
+        public void Apply(ControllerDataAsset controllerDataAsset, OVRInput.Controller controllerMask)
+        {
+            bool value = OVRInput.Get(Button, controllerMask);
+            controllerDataAsset.Input.SetButton(Usage, value);
+        }
+    }
+
+    class UsageAxis1DMapping : IUsage
+    {
+        public ControllerAxis1DUsage Usage { get; }
+        public OVRInput.Axis1D Axis1D { get; }
+
+        public UsageAxis1DMapping(ControllerAxis1DUsage usage, OVRInput.Axis1D axis1D)
+        {
+            Usage = usage;
+            Axis1D = axis1D;
+        }
+
+        public void Apply(ControllerDataAsset controllerDataAsset, OVRInput.Controller controllerMask)
+        {
+            float value = OVRInput.Get(Axis1D, controllerMask);
+            controllerDataAsset.Input.SetAxis1D(Usage, value);
+        }
+    }
+
+    class UsageAxis2DMapping : IUsage
+    {
+        public ControllerAxis2DUsage Usage { get; }
+        public OVRInput.Axis2D Axis2D { get; }
+
+        public UsageAxis2DMapping(ControllerAxis2DUsage usage, OVRInput.Axis2D axis2D)
+        {
+            Usage = usage;
+            Axis2D = axis2D;
+        }
+
+        public void Apply(ControllerDataAsset controllerDataAsset, OVRInput.Controller controllerMask)
+        {
+            Vector2 value = OVRInput.Get(Axis2D, controllerMask);
+            controllerDataAsset.Input.SetAxis2D(Usage, value);
+        }
     }
 
     /// <summary>
@@ -119,7 +172,6 @@ namespace Oculus.Interaction.Input
 
         private readonly ControllerDataAsset _controllerDataAsset = new ControllerDataAsset();
         private OVRInput.Controller _ovrController;
-        private Transform _ovrControllerAnchor;
         private ControllerDataSourceConfig _config;
 
         private OVRPointerPoseSelector _pointerPoseSelector;
@@ -127,22 +179,23 @@ namespace Oculus.Interaction.Input
         #region OVR Controller Mappings
 
         // Mappings from Unity XR CommonUsage to Oculus Button/Touch.
-        private static readonly UsageMapping[] ControllerUsageMappings =
+        private static readonly IUsage[] ControllerUsageMappings =
         {
-            new UsageMapping(ControllerButtonUsage.PrimaryButton, OVRInput.Button.One),
-            new UsageMapping(ControllerButtonUsage.PrimaryTouch, OVRInput.Touch.One),
-            new UsageMapping(ControllerButtonUsage.SecondaryButton, OVRInput.Button.Two),
-            new UsageMapping(ControllerButtonUsage.SecondaryTouch, OVRInput.Touch.Two),
-            new UsageMapping(ControllerButtonUsage.GripButton,
-                OVRInput.Button.PrimaryHandTrigger),
-            new UsageMapping(ControllerButtonUsage.TriggerButton,
-                OVRInput.Button.PrimaryIndexTrigger),
-            new UsageMapping(ControllerButtonUsage.MenuButton, OVRInput.Button.Start),
-            new UsageMapping(ControllerButtonUsage.Primary2DAxisClick,
-                OVRInput.Button.PrimaryThumbstick),
-            new UsageMapping(ControllerButtonUsage.Primary2DAxisTouch,
-                OVRInput.Touch.PrimaryThumbstick),
-            new UsageMapping(ControllerButtonUsage.Thumbrest, OVRInput.Touch.PrimaryThumbRest)
+            new UsageButtonMapping(ControllerButtonUsage.PrimaryButton, OVRInput.Button.One),
+            new UsageTouchMapping(ControllerButtonUsage.PrimaryTouch, OVRInput.Touch.One),
+            new UsageButtonMapping(ControllerButtonUsage.SecondaryButton, OVRInput.Button.Two),
+            new UsageTouchMapping(ControllerButtonUsage.SecondaryTouch, OVRInput.Touch.Two),
+            new UsageButtonMapping(ControllerButtonUsage.GripButton, OVRInput.Button.PrimaryHandTrigger),
+            new UsageButtonMapping(ControllerButtonUsage.TriggerButton, OVRInput.Button.PrimaryIndexTrigger),
+            new UsageButtonMapping(ControllerButtonUsage.MenuButton, OVRInput.Button.Start),
+            new UsageButtonMapping(ControllerButtonUsage.Primary2DAxisClick, OVRInput.Button.PrimaryThumbstick),
+            new UsageTouchMapping(ControllerButtonUsage.Primary2DAxisTouch, OVRInput.Touch.PrimaryThumbstick),
+            new UsageTouchMapping(ControllerButtonUsage.Thumbrest, OVRInput.Touch.PrimaryThumbRest),
+
+            new UsageAxis1DMapping(ControllerAxis1DUsage.Trigger, OVRInput.Axis1D.PrimaryIndexTrigger),
+            new UsageAxis1DMapping(ControllerAxis1DUsage.Grip, OVRInput.Axis1D.PrimaryHandTrigger),
+
+            new UsageAxis2DMapping(ControllerAxis2DUsage.Primary2DAxis, OVRInput.Axis2D.PrimaryThumbstick),
         };
 
         #endregion
@@ -162,14 +215,10 @@ namespace Oculus.Interaction.Input
             this.AssertField(TrackingToWorldTransformer, nameof(TrackingToWorldTransformer));
             if (_handedness == Handedness.Left)
             {
-                this.AssertField(CameraRigRef.LeftController, nameof(CameraRigRef.LeftController));
-                _ovrControllerAnchor = CameraRigRef.LeftController;
                 _ovrController = OVRInput.Controller.LTouch;
             }
             else
             {
-                this.AssertField(CameraRigRef.RightController, nameof(CameraRigRef.RightController));
-                _ovrControllerAnchor = CameraRigRef.RightController;
                 _ovrController = OVRInput.Controller.RTouch;
             }
             _pointerPoseSelector = new OVRPointerPoseSelector(_handedness);
@@ -195,6 +244,8 @@ namespace Oculus.Interaction.Input
             }
 
             base.OnDisable();
+
+            MarkInputDataRequiresUpdate();
         }
 
         private void HandleInputDataDirtied(bool isLateUpdate)
@@ -233,45 +284,32 @@ namespace Oculus.Interaction.Input
         protected override void UpdateData()
         {
             _controllerDataAsset.Config = Config;
-            var worldToTrackingSpace = TrackingToWorldTransformer.Transform.worldToLocalMatrix;
-            Transform ovrController = _ovrControllerAnchor;
-
             _controllerDataAsset.IsDataValid = true;
             _controllerDataAsset.IsConnected =
                 (OVRInput.GetConnectedControllers() & _ovrController) > 0;
-            if (!_controllerDataAsset.IsConnected)
+            if (!_controllerDataAsset.IsConnected && !this.isActiveAndEnabled)
             {
                 // revert state fields to their defaults
                 _controllerDataAsset.IsTracked = default;
-                _controllerDataAsset.ButtonUsageMask = default;
+                _controllerDataAsset.Input = default;
                 _controllerDataAsset.RootPoseOrigin = default;
                 return;
             }
 
             _controllerDataAsset.IsTracked = true;
 
+            OVRInput.Handedness dominantHand = OVRInput.GetDominantHand();
+            _controllerDataAsset.IsDominantHand =
+                (dominantHand == OVRInput.Handedness.LeftHanded && _handedness == Handedness.Left)
+                || (dominantHand == OVRInput.Handedness.RightHanded && _handedness == Handedness.Right);
+
             // Update button usages
-            _controllerDataAsset.ButtonUsageMask = ControllerButtonUsage.None;
+            _controllerDataAsset.Input.Clear();
+
             OVRInput.Controller controllerMask = _ovrController;
-            foreach (UsageMapping mapping in ControllerUsageMappings)
+            foreach (IUsage mapping in ControllerUsageMappings)
             {
-                bool usageActive;
-                if (mapping.IsTouch)
-                {
-                    usageActive = OVRInput.Get(mapping.Touch, controllerMask);
-                }
-                else
-                {
-                    this.AssertIsTrue(mapping.IsButton,
-                        $"Element in {AssertUtils.Nicify(nameof(ControllerUsageMappings))} has {AssertUtils.Nicify(nameof(mapping.IsButton))} set to false.");
-
-                    usageActive = OVRInput.Get(mapping.Button, controllerMask);
-                }
-
-                if (usageActive)
-                {
-                    _controllerDataAsset.ButtonUsageMask |= mapping.Usage;
-                }
+                mapping.Apply(_controllerDataAsset, controllerMask);
             }
 
             // Update poses

@@ -20,7 +20,9 @@
 
 using Oculus.Interaction.Input;
 using System.Collections.Generic;
+using Meta.XR.BuildingBlocks.Editor;
 using UnityEngine;
+
 
 namespace Oculus.Interaction.Editor.BuildingBlocks
 {
@@ -29,11 +31,13 @@ namespace Oculus.Interaction.Editor.BuildingBlocks
         public static void UpdateForAutoWiring(GameObject gameObject)
         {
             UnityObjectAddedBroadcaster.HandleObjectWasAdded(gameObject);
+
         }
 
-        public static IEnumerable<Hand> GetHands(string handsBlockId)
+
+        public static IEnumerable<Hand> GetHands()
         {
-            var handsBlock = Meta.XR.BuildingBlocks.Editor.Utils.GetBlock(handsBlockId);
+            var handsBlock = Meta.XR.BuildingBlocks.Editor.Utils.GetBlock(BlockDataIds.InteractionHandTracking);
             var handActiveStates = handsBlock.GetComponentsInChildren<HandActiveState>();
             foreach (var handActiveState in handActiveStates)
             {

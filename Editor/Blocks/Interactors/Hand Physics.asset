@@ -20,11 +20,13 @@ MonoBehaviour:
     array:
     - name: Interaction
     - name: Hidden
+    - name: Deprecated
   thumbnail: {fileID: 0}
   order: 0
   prefab: {fileID: 7147530562734519490, guid: 5fc002002ecb74800b33f4b96a147701, type: 3}
+  externalBlockDependencies: []
   dependencies:
   - 4187448e-9c2a-4021-ad92-fb65840f2721
+  packageDependencies: []
   isSingleton: 1
   usageInstructions: 
-  _handsBlockId: 0393ca30-f2a9-4865-a40f-f9a68d01c3a9

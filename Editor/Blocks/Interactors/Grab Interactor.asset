@@ -18,14 +18,16 @@ MonoBehaviour:
   description: Internal grab logic for hands
   tags:
     array:
-    - name: Hidden
     - name: Interaction
+    - name: Hidden
+    - name: Deprecated
   thumbnail: {fileID: 0}
   order: 0
   prefab: {fileID: 1528814639904349777, guid: cd2af620b985a894881abfc004e150ec, type: 3}
+  externalBlockDependencies: []
   dependencies:
   - 0393ca30-f2a9-4865-a40f-f9a68d01c3a9
+  packageDependencies: []
   isSingleton: 1
   usageInstructions: 
-  _handsBlockId: 0393ca30-f2a9-4865-a40f-f9a68d01c3a9
   _interactorName: Grab

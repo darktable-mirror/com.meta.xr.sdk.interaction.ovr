@@ -26,15 +26,36 @@ using System.Collections.Generic;
 namespace Oculus.Interaction.Body.Input
 {
     using OVRBoneId = OVRPlugin.BoneId;
+    using BodyJointSet = OVRPlugin.BodyJointSet;
 
     public class OVRSkeletonMapping : BodySkeletonMapping<OVRBoneId>, ISkeletonMapping
     {
-        protected override IReadOnlyDictionary<BodyJointId, JointInfo> GetJointMapping()
+        [System.Obsolete("Use the parameterized constructor instead", true)]
+        public OVRSkeletonMapping() : base(OVRBoneId.Body_Root, _upperBodyJoints) { }
+
+        public OVRSkeletonMapping(BodyJointSet skeletonType)
+            : base(GetRoot(), GetJointMapping(skeletonType))
+        { }
+
+        private static IReadOnlyDictionary<BodyJointId, JointInfo> GetJointMapping(BodyJointSet jointSet)
         {
-            return _jointMapping;
+            Dictionary<BodyJointId, JointInfo> mapping =
+                new Dictionary<BodyJointId, JointInfo>();
+            foreach (var map in _upperBodyJoints)
+            {
+                mapping.Add(map.Key, map.Value);
+            }
+            if (jointSet == BodyJointSet.FullBody)
+            {
+                foreach (var map in _lowerBodyJoints)
+                {
+                    mapping.Add(map.Key, map.Value);
+                }
+            }
+            return mapping;
         }
 
-        protected override OVRBoneId GetRoot()
+        private static OVRBoneId GetRoot()
         {
             return OVRBoneId.Body_Root;
         }
@@ -42,7 +63,7 @@ namespace Oculus.Interaction.Body.Input
         /// <summary>
         /// Mapping of <see cref="BodyJointId"/> to <see cref="OVRBoneId"/> and parent joint
         /// </summary>
-        private readonly Dictionary<BodyJointId, JointInfo> _jointMapping =
+        private static readonly Dictionary<BodyJointId, JointInfo> _upperBodyJoints =
             new Dictionary<BodyJointId, JointInfo>
         {
             [BodyJointId.Body_Root] =                           new JointInfo(OVRBoneId.Body_Root, OVRBoneId.Body_Root),
@@ -123,6 +144,31 @@ namespace Oculus.Interaction.Body.Input
             [BodyJointId.Body_RightHandLittleIntermediate] =    new JointInfo(OVRBoneId.Body_RightHandLittleIntermediate, OVRBoneId.Body_RightHandLittleProximal),
             [BodyJointId.Body_RightHandLittleDistal] =          new JointInfo(OVRBoneId.Body_RightHandLittleDistal, OVRBoneId.Body_RightHandLittleIntermediate),
             [BodyJointId.Body_RightHandLittleTip] =             new JointInfo(OVRBoneId.Body_RightHandLittleTip, OVRBoneId.Body_RightHandLittleDistal),
+        };
+
+        /// <summary>
+        /// Mapping of <see cref="BodyJointId"/> to <see cref="OVRBoneId"/> and parent joint
+        /// </summary>
+        private static readonly Dictionary<BodyJointId, JointInfo> _lowerBodyJoints =
+            new Dictionary<BodyJointId, JointInfo>
+        {
+            // Left Leg
+            [BodyJointId.Body_LeftLegUpper] = new JointInfo(OVRBoneId.FullBody_LeftUpperLeg, OVRBoneId.Body_Hips),
+            [BodyJointId.Body_LeftLegLower] = new JointInfo(OVRBoneId.FullBody_LeftLowerLeg, OVRBoneId.FullBody_LeftUpperLeg),
+            [BodyJointId.Body_LeftFootAnkleTwist] = new JointInfo(OVRBoneId.FullBody_LeftFootAnkleTwist, OVRBoneId.FullBody_LeftLowerLeg),
+            [BodyJointId.Body_LeftFootAnkle] = new JointInfo(OVRBoneId.FullBody_LeftFootAnkle, OVRBoneId.FullBody_LeftFootAnkleTwist),
+            [BodyJointId.Body_LeftFootSubtalar] = new JointInfo(OVRBoneId.FullBody_LeftFootSubtalar, OVRBoneId.FullBody_LeftFootAnkle),
+            [BodyJointId.Body_LeftFootTransverse] = new JointInfo(OVRBoneId.FullBody_LeftFootTransverse, OVRBoneId.FullBody_LeftFootSubtalar),
+            [BodyJointId.Body_LeftFootBall] = new JointInfo(OVRBoneId.FullBody_LeftFootBall, OVRBoneId.FullBody_LeftFootTransverse),
+
+            // Right Leg
+            [BodyJointId.Body_RightLegUpper] = new JointInfo(OVRBoneId.FullBody_RightUpperLeg, OVRBoneId.Body_Hips),
+            [BodyJointId.Body_RightLegLower] = new JointInfo(OVRBoneId.FullBody_RightLowerLeg, OVRBoneId.FullBody_RightUpperLeg),
+            [BodyJointId.Body_RightFootAnkleTwist] = new JointInfo(OVRBoneId.FullBody_RightFootAnkleTwist, OVRBoneId.FullBody_RightLowerLeg),
+            [BodyJointId.Body_RightFootAnkle] = new JointInfo(OVRBoneId.FullBody_RightFootAnkle, OVRBoneId.FullBody_RightFootAnkleTwist),
+            [BodyJointId.Body_RightFootSubtalar] = new JointInfo(OVRBoneId.FullBody_RightFootSubtalar, OVRBoneId.FullBody_RightFootAnkle),
+            [BodyJointId.Body_RightFootTransverse] = new JointInfo(OVRBoneId.FullBody_RightFootTransverse, OVRBoneId.FullBody_RightFootSubtalar),
+            [BodyJointId.Body_RightFootBall] = new JointInfo(OVRBoneId.FullBody_RightFootBall, OVRBoneId.FullBody_RightFootTransverse),
         };
     }
 }

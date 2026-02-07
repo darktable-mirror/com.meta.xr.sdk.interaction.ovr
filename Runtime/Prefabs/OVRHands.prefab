@@ -50,6 +50,7 @@ MonoBehaviour:
   _handedness: 0
   _trackingToWorldTransformer: {fileID: 0}
   _handSkeletonProvider: {fileID: 3152717309892369160}
+  _showState: 3
 --- !u!1 &8995142676830460177
 GameObject:
   m_ObjectHideFlags: 0
@@ -100,6 +101,7 @@ MonoBehaviour:
   _handedness: 1
   _trackingToWorldTransformer: {fileID: 0}
   _handSkeletonProvider: {fileID: 3152717309892369160}
+  _showState: 3
 --- !u!1001 &4625393064498610968
 PrefabInstance:
   m_ObjectHideFlags: 0

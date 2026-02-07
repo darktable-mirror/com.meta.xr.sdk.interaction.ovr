@@ -93,6 +93,8 @@ namespace Oculus.Interaction.Input
             }
 
             base.OnDisable();
+
+            MarkInputDataRequiresUpdate();
         }
 
         private void HandleInputDataDirtied(bool isLateUpdate)
@@ -125,7 +127,7 @@ namespace Oculus.Interaction.Input
         protected override void UpdateData()
         {
             _hmdDataAsset.Config = Config;
-            bool hmdPresent = OVRNodeStateProperties.IsHmdPresent();
+            bool hmdPresent = OVRNodeStateProperties.IsHmdPresent() && this.isActiveAndEnabled;
             ref var centerEyePose = ref _hmdDataAsset.Root;
             if (_useOvrManagerEmulatedPose)
             {

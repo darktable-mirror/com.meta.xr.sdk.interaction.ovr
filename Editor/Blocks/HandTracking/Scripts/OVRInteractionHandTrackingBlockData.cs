@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Meta.XR.BuildingBlocks.Editor;
+using UnityEditor;
 
 namespace Oculus.Interaction.Editor.BuildingBlocks
 {
@@ -44,6 +45,9 @@ namespace Oculus.Interaction.Editor.BuildingBlocks
             hands.name = $"[SBB] {BlockName}";
             hands.transform.parent = interactionBlock.transform;
             BlocksUtils.UpdateForAutoWiring(hands);
+
+            Undo.RegisterCreatedObjectUndo(hands, $"Instantiate {hands.name}");
+            Undo.SetTransformParent(hands.transform, interactionBlock.transform, true, $"Parent {hands.name} to {interactionBlock.name}");
 
             return  new List<GameObject>() { hands };
         }

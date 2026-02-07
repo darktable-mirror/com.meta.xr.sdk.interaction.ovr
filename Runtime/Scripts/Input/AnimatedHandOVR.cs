@@ -20,6 +20,7 @@
 
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Oculus.Interaction.Input
 {
@@ -32,26 +33,63 @@ namespace Oculus.Interaction.Input
             GripRequired,
             TriggerAndGripRequired,
         }
-        public const string ANIM_LAYER_NAME_POINT = "Point Layer";
-        public const string ANIM_LAYER_NAME_THUMB = "Thumb Layer";
-        public const string ANIM_PARAM_NAME_FLEX = "Flex";
-        public const string ANIM_PARAM_NAME_PINCH = "Pinch";
-        public const string ANIM_PARAM_NAME_INDEX_SLIDE = "IndexSlide";
 
         [SerializeField]
         private OVRInput.Controller _controller = OVRInput.Controller.None;
         [SerializeField]
         private Animator _animator = null;
+
         [SerializeField]
+        [Tooltip("Indicates the input needed in order to perform a thumbs-up when the fist is closed")]
         private AllowThumbUp _allowThumbUp = AllowThumbUp.TriggerAndGripRequired;
+        public AllowThumbUp AllowThumbUpMode
+        {
+            get => _allowThumbUp;
+            set => _allowThumbUp = value;
+        }
+
 
         [Header("Animation Speed")]
         [SerializeField]
-        private float _animFlexhGain = 35;
+        [FormerlySerializedAs("_animFlexhGain")]
+        [Tooltip("Speed of the index flex animation")]
+        private float _animFlexGain = 35;
+        public float AnimFlexGain
+        {
+            get => _animFlexGain;
+            set => _animFlexGain = value;
+        }
+
         [SerializeField]
+        [Tooltip("Speed of the pinch animation")]
         private float _animPinchGain = 35;
+        public float AnimPinchGain
+        {
+            get => _animPinchGain;
+            set => _animPinchGain = value;
+        }
+
         [SerializeField]
+        [Tooltip("Speed of the point, slide and thumbs up animation")]
         private float _animPointAndThumbsUpGain = 20;
+        public float AnimPointAndThumbsUpGain
+        {
+            get => _animPointAndThumbsUpGain;
+            set => _animPointAndThumbsUpGain = value;
+        }
+
+        public Func<float> DeltaTimeProvider
+        {
+            get; set;
+        } = () => Time.deltaTime;
+
+        private const string ANIM_LAYER_NAME_POINT = "Point Layer";
+        private const string ANIM_LAYER_NAME_THUMB = "Thumb Layer";
+        private const string ANIM_PARAM_NAME_FLEX = "Flex";
+        private const string ANIM_PARAM_NAME_PINCH = "Pinch";
+        private const string ANIM_PARAM_NAME_INDEX_SLIDE = "IndexSlide";
+
+        private const float TRIGGER_MAX = 0.95f;
 
         private int _animLayerIndexThumb = -1;
         private int _animLayerIndexPoint = -1;
@@ -70,14 +108,11 @@ namespace Oculus.Interaction.Input
         private float _animFlex = 0;
         private float _animPinch = 0;
 
-        private const float TRIGGER_MAX = 0.95f;
-
         private Func<float> _deltaTimeProvider = () => Time.deltaTime;
         public void SetDeltaTimeProvider(Func<float> deltaTimeProvider)
         {
             _deltaTimeProvider = deltaTimeProvider;
         }
-
 
         protected virtual void Start()
         {
@@ -110,14 +145,8 @@ namespace Oculus.Interaction.Input
                     && OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, _controller) >= TRIGGER_MAX
                     && OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, _controller) >= TRIGGER_MAX);
 
-            _isGivingThumbsUp = !OVRInput.Get(OVRInput.NearTouch.PrimaryThumbButtons, _controller)
-                && !OVRInput.Get(OVRInput.Button.One, _controller)
-                && !OVRInput.Get(OVRInput.Button.Two, _controller)
-                && !OVRInput.Get(OVRInput.Button.Three, _controller)
-                && !OVRInput.Get(OVRInput.Button.Four, _controller)
-                && !OVRInput.Get(OVRInput.Button.PrimaryThumbstick, _controller)
-                && OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick, _controller).magnitude == 0
-                && triggerThumbsUp;
+            _isGivingThumbsUp = triggerThumbsUp
+                && !OVRInput.Get(OVRInput.NearTouch.PrimaryThumbButtons, _controller);
         }
 
         private void UpdateAnimStates()
@@ -125,12 +154,12 @@ namespace Oculus.Interaction.Input
             // Flex
             // blend between open hand and fully closed fist
             float flex = OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, _controller);
-            _animFlex = Mathf.Lerp(_animFlex, flex, _animFlexhGain * Time.deltaTime);
+            _animFlex = Mathf.Lerp(_animFlex, flex, _animFlexGain * DeltaTimeProvider());
             _animator.SetFloat(_animParamIndexFlex, _animFlex);
 
             // Pinch
             float pinchAmount = OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, _controller);
-            _animPinch = Mathf.Lerp(_animPinch, pinchAmount, _animPinchGain * Time.deltaTime);
+            _animPinch = Mathf.Lerp(_animPinch, pinchAmount, _animPinchGain * DeltaTimeProvider());
             _animator.SetFloat(_animParamPinch, _animPinch);
 
             // Point
