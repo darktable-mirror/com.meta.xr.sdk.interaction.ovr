@@ -108,10 +108,11 @@ GameObject:
   - component: {fileID: 4815712199228594538}
   - component: {fileID: 4815712199228594536}
   - component: {fileID: 4815712199228594537}
+  - component: {fileID: -827657966926096483}
   m_Layer: 0
   m_Name: OVRTouchHandGrabInteractor
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -187,6 +188,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interactor: {fileID: 4815712199228594536}
   _syntheticHand: {fileID: 0}
+--- !u!114 &-827657966926096483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4815712199228594534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40fad7417847c0d488bea878535c9771, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _replacement: {fileID: 4815712199228594534, guid: 43d80bcd752bc6e4986f6b18e863db9f,
+    type: 3}
+  _supressWarning: 0
 --- !u!1001 &1237029013936745151
 PrefabInstance:
   m_ObjectHideFlags: 0
