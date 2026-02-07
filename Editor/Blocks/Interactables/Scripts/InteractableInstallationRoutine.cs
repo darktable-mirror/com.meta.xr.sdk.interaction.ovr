@@ -21,6 +21,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Oculus.Interaction;
 using Oculus.Interaction.Editor.QuickActions;
 using Oculus.Interaction.HandGrab;
@@ -29,25 +30,27 @@ using UnityEngine;
 
 namespace Meta.XR.BuildingBlocks.Editor
 {
-    public class InteractableBlockData : BlockData
+    public class InteractableInstallationRoutine : InstallationRoutine
     {
+        protected override bool UsesPrefab => false;
+        
         internal abstract class InteractableCreationDescriptionBase
         {
             public Type InteractableType;
             public Type InteractorType;
 
-            public abstract IEnumerable<GameObject> Create(GameObject target);
+            public abstract IEnumerable<GameObject> Create(InteractableInstallationRoutine routine, GameObject target);
         }
 
         internal class InteractableCreationDescription<TWizard> : InteractableCreationDescriptionBase
             where TWizard : QuickActionsWizard
         {
             public Func<GameObject, bool, Action<TWizard>, IEnumerable<GameObject>> CreationDelegate;
-            public Action<TWizard> Injections;
+            public Func<InteractableInstallationRoutine, Action<TWizard>> CreateInjectionsDelegate;
 
-            public override IEnumerable<GameObject> Create(GameObject target)
+            public override IEnumerable<GameObject> Create(InteractableInstallationRoutine routine, GameObject target)
             {
-                return CreationDelegate?.Invoke(target, false, Injections);
+                return CreationDelegate?.Invoke(target, false, CreateInjectionsDelegate?.Invoke(routine));
             }
         }
 
@@ -56,23 +59,32 @@ namespace Meta.XR.BuildingBlocks.Editor
             HandGrab,
             DistanceHandGrab,
             TouchHandGrab,
-            DistanceHandGrabAnchorAtHand,
-            DistanceHandGrabHandToInteractable
         }
 
-        protected override bool UsesPrefab => false;
+        [SerializeField][Variant(
+            Behavior = VariantAttribute.VariantBehavior.Constant)]
+        private InteractableTypes type;
 
-        [SerializeField]
-        private InteractableTypes _type;
+        [SerializeField] [Variant(
+            Behavior = VariantAttribute.VariantBehavior.Parameter, 
+            Description = "The behavior of the Distance Grab Interaction",
+            Condition = nameof(NeedsDistanceGrabMode),
+            Default = DistanceGrabWizard.Mode.InteractableToHand)]
+        private DistanceGrabWizard.Mode mode;
+
+        internal bool NeedsDistanceGrabMode()
+        {
+            return type == InteractableTypes.DistanceHandGrab;
+        }
 
         internal InteractableCreationDescriptionBase CreationDescription
         {
             get
             {
-                if(!InteractableCreationDescriptions.TryGetValue(_type, out var creationDescription))
+                if(!InteractableCreationDescriptions.TryGetValue(type, out var creationDescription))
                 {
                     throw new InvalidOperationException(
-                        $"Undefined behavior for type {_type}");
+                        $"Undefined behavior for type {type}");
                 }
 
                 return creationDescription;
@@ -98,27 +110,7 @@ namespace Meta.XR.BuildingBlocks.Editor
                         InteractableType =  typeof(DistanceHandGrabInteractable),
                         InteractorType = typeof(DistanceHandGrabInteractor),
                         CreationDelegate = QuickActionsWizard.CreateWithDefaults,
-                        Injections = wizard => { wizard.InjectMode(DistanceGrabWizard.Mode.InteractableToHand); }
-                    }
-                },
-                {
-                    InteractableTypes.DistanceHandGrabAnchorAtHand,
-                    new InteractableCreationDescription<DistanceGrabWizard>()
-                    {
-                        InteractableType =  typeof(DistanceHandGrabInteractable),
-                        InteractorType = typeof(DistanceHandGrabInteractor),
-                        CreationDelegate = QuickActionsWizard.CreateWithDefaults,
-                        Injections = wizard => { wizard.InjectMode(DistanceGrabWizard.Mode.AnchorAtHand); }
-                    }
-                },
-                {
-                    InteractableTypes.DistanceHandGrabHandToInteractable,
-                    new InteractableCreationDescription<DistanceGrabWizard>()
-                    {
-                        InteractableType =  typeof(DistanceHandGrabInteractable),
-                        InteractorType = typeof(DistanceHandGrabInteractor),
-                        CreationDelegate = QuickActionsWizard.CreateWithDefaults,
-                        Injections = wizard => { wizard.InjectMode(DistanceGrabWizard.Mode.HandToInteractable); }
+                        CreateInjectionsDelegate = (routine) => (wizard) => wizard.InjectMode(routine.mode)
                     }
                 },
                 {
@@ -132,13 +124,13 @@ namespace Meta.XR.BuildingBlocks.Editor
                 }
             };
 
-        protected override List<GameObject> InstallRoutine(GameObject selectedObject)
+        public override async Task<List<GameObject>> InstallAsync(BlockData blockData, GameObject selectedObject)
         {
             if (selectedObject == null)
             {
                 // Install Dummy Cube
                 var cubeBlockData = Utils.GetBlockData(BlockDataIds.Cube);
-                var cubeBlockObjects = cubeBlockData.Install();
+                var cubeBlockObjects = await cubeBlockData.InstallWithDependencies();
 
                 // Install on Dummy Cube
                 selectedObject = cubeBlockObjects.First();
@@ -153,7 +145,7 @@ namespace Meta.XR.BuildingBlocks.Editor
             var creationDescription = CreationDescription;
 
             // Invoke Wizard with Default values
-            var createdObjects = creationDescription.Create(selectedObject);
+            var createdObjects = creationDescription.Create(this, selectedObject);
             var block = createdObjects.FirstOrDefault(obj => obj.GetComponent(creationDescription.InteractableType) != null);
             if (block != null)
             {

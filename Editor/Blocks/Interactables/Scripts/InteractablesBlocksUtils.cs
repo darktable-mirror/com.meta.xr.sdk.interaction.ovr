@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using Oculus.Interaction;
 using Oculus.Interaction.Editor.QuickActions;
 using Oculus.Interaction.Input;
+using Oculus.Interaction.Throw;
 using UnityEngine;
 
 namespace Meta.XR.BuildingBlocks.Editor
@@ -116,12 +117,10 @@ namespace Meta.XR.BuildingBlocks.Editor
 
             obj.GetComponent<TouchHandGrabInteractable>()
                 .InjectAllTouchHandGrabInteractable(_boundsCollider, new List<Collider>() { _collider });
-                
-            obj.GetComponent<Grabbable>()
-                .InjectOptionalTargetTransform(_targetTransform);
 
-            obj.GetComponent<PhysicsGrabbable>()
-                .InjectRigidbody(_rigidbody);
+            Grabbable grabbable = obj.GetComponent<Grabbable>();
+            grabbable.InjectOptionalTargetTransform(_targetTransform);
+            grabbable.InjectOptionalRigidbody(_rigidbody);
 
             AddInteractorsToRig(typeof(TouchHandGrabInteractor), TouchHandGrabInteractor);
         }

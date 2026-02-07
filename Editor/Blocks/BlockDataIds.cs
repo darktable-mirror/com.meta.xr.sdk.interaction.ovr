@@ -27,8 +27,6 @@ namespace Oculus.Interaction.Editor.BuildingBlocks
         public const string SyntheticHandBlockData = "6b67162c-2460-4766-a931-980388647573";
         public const string HandGrab = "f8766c17-aaf8-4b55-9431-de8deea83842";
         public const string DistanceHandGrab = "3f1827c2-c682-46d8-999e-0954e37e833e";
-        public const string DistanceAnchorAtHand = "788e1120-3e25-4391-9a71-2ca30a47d33b";
-        public const string DistanceHandToInteractable = "6d692b2a-6e1e-43c1-bb78-3c528044c5bb";
         public const string TouchHandGrab = "4e14e0ba-51f2-4a5c-a822-e304bf36d48c";
     }
 }
