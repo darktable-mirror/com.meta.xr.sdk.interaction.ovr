@@ -64,6 +64,7 @@ namespace Oculus.Interaction.Input
             {
                 ref var srcPose = ref ovrSkeleton.Bones[i].Pose;
                 int boneIndex = i;
+
                 if (i == (int)HandJointId.HandThumb0)
                 {
                     boneIndex = (int)HandJointId.HandThumb1;

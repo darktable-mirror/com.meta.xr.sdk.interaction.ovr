@@ -20,6 +20,7 @@
 
 using Meta.XR.Util;
 using UnityEngine;
+
 using static OVRSkeleton;
 
 namespace Oculus.Interaction.Input
@@ -80,7 +81,6 @@ namespace Oculus.Interaction.Input
             TrackingToWorldTransformer = _trackingToWorldTransformer as ITrackingToWorldTransformer;
             CameraRigRef = _cameraRigRef as IOVRCameraRigRef;
             HandSkeletonProvider = _handSkeletonProvider as IHandSkeletonProvider;
-
             UpdateConfig();
         }
 
@@ -100,7 +100,6 @@ namespace Oculus.Interaction.Input
             this.AssertField(_ovrHand, nameof(_ovrHand));
 
             UpdateConfig();
-
             this.EndStart(ref _started);
         }
 
@@ -152,6 +151,7 @@ namespace Oculus.Interaction.Input
                 return _config;
             }
         }
+
 
         private void UpdateConfig()
         {

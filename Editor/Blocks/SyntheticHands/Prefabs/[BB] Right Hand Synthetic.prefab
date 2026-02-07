@@ -1206,12 +1206,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9af9ea683544b184083cef283557012d, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   _hand: {fileID: 4655985015963892112}
-  _skinnedMeshRenderer: {fileID: 4655985016919700590}
   _updateRootPose: 1
   _updateRootScale: 1
+  _updateVisibility: 1
+  _skinnedMeshRenderer: {fileID: 4655985016919700590}
   _root: {fileID: 0}
   _handMaterialPropertyBlockEditor: {fileID: 4655985016919700589}
   _jointTransforms:
@@ -1239,6 +1240,10 @@ MonoBehaviour:
   - {fileID: 4655985016274585462}
   - {fileID: 4655985017566429376}
   - {fileID: 4655985017049485333}
+  _openXRSkinnedMeshRenderer: {fileID: 0}
+  _openXRRoot: {fileID: 0}
+  _openXRHandMaterialPropertyBlockEditor: {fileID: 0}
+  _openXRJointTransforms: []
 --- !u!1 &4655985016662276287
 GameObject:
   m_ObjectHideFlags: 0
@@ -1505,8 +1510,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c67033f580359c4581dff1ccffcca91, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   _updateMode: 4
   _updateAfter: {fileID: 0}
   _iModifyDataFromSourceMono: {fileID: 0}
@@ -1746,7 +1751,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 4300000, guid: 0b567a7c6d47e774ca65c81546f02af5, type: 3}
+  m_Mesh: {fileID: 4703312045575268607, guid: 0b567a7c6d47e774ca65c81546f02af5, type: 3}
   m_Bones:
   - {fileID: 4655985017324475306}
   - {fileID: 4655985015902571056}
@@ -1781,8 +1786,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d5e48d93b64a9ae4f9fd5a728c8f51af, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   _renderers:
   - {fileID: 4655985016919700590}
   _vectorProperties:
@@ -2128,7 +2133,7 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_WarningMessage:
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0

@@ -53,20 +53,21 @@ namespace Oculus.Interaction.Editor.BuildingBlocks
             var capsule = visualGameObject.GetComponent<HandPhysicsCapsules>() ??
                           visualGameObject.AddComponent<HandPhysicsCapsules>();
             capsule.InjectAllOVRHandPhysicsCapsules(syntheticHand, false, 0);
-            capsule.InjectMask(HandFingerJointFlags.Index1
-                               | HandFingerJointFlags.Index2
-                               | HandFingerJointFlags.Index3
-                               | HandFingerJointFlags.IndexTip
-                               | HandFingerJointFlags.Thumb0
-                               | HandFingerJointFlags.Thumb1
-                               | HandFingerJointFlags.Thumb2
-                               | HandFingerJointFlags.Thumb3
-                               | HandFingerJointFlags.ThumbTip
-                               | HandFingerJointFlags.Middle1
-                               | HandFingerJointFlags.Middle2
-                               | HandFingerJointFlags.Middle3
-                               | HandFingerJointFlags.MiddleTip
-                               | HandFingerJointFlags.HandMaxSkinnable
+            capsule.InjectMask(
+                               HandFingerJointFlags.Index1 |
+                               HandFingerJointFlags.Index2 |
+                               HandFingerJointFlags.Index3 |
+                               HandFingerJointFlags.IndexTip |
+                               HandFingerJointFlags.Thumb0 |
+                               HandFingerJointFlags.Thumb1 |
+                               HandFingerJointFlags.Thumb2 |
+                               HandFingerJointFlags.Thumb3 |
+                               HandFingerJointFlags.ThumbTip |
+                               HandFingerJointFlags.Middle1 |
+                               HandFingerJointFlags.Middle2 |
+                               HandFingerJointFlags.Middle3 |
+                               HandFingerJointFlags.MiddleTip |
+                               HandFingerJointFlags.HandMaxSkinnable
                                );
             var jointRadiusFeature = hand.transform.parent.gameObject.GetComponentInChildren<JointsRadiusFeature>();
             capsule.InjectJointsRadiusFeature(jointRadiusFeature);

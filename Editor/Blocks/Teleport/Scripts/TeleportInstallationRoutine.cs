@@ -40,10 +40,10 @@ namespace Meta.XR.BuildingBlocks.Editor
         }
 
         [SerializeField]
-        [Variant(Description = "Select the type of Teleport interactable that you want to create:\n" +
-            "[Hotspot]: Creates a Hotspot that snaps the feet of the player upon selection.\n" +
-            "[Nav Mesh]: Allows the player to teleport around the Unity Walkable NavMesh. Bake your NavMesh in the Window/AI/Navigation menu.\n" +
-            "[Physics Layer Blocker]: Prevents the Teleport arc from passing throught any collider in the \"Default\", \"UI\", and \"Ignore Raycast\" layers")]
+        [Variant(Description = "Select the type of Teleport interactable you want to create:\n" +
+            "- Hotspot: Creates a Hotspot that snaps the player's feet upon selection.\n" +
+            "- Nav Mesh: Allows the player to teleport around Unity's Walkable NavMesh. Bake your NavMesh in the Window/AI/Navigation menu.\n" +
+            "- Physics Layer Blocker: Prevents the Teleport arc from passing through any collider in the \"Default\", \"UI\", and \"Ignore Raycast\" layers")]
         public InteractableVariant variant = InteractableVariant.Hotspot;
 
         public override List<GameObject> Install(BlockData blockData, GameObject selectedObject)

@@ -26,51 +26,6 @@ namespace Oculus.Interaction.Input
     [Feature(Feature.Interaction)]
     public class OVRSkeletonData
     {
-#if UNITY_EDITOR
-        // This method can be used to generate a serialized skeleton in C# format.
-        public static string CreateString(OVRPlugin.Skeleton2 skeleton)
-        {
-            string bonesJson = "";
-            for (int i = 0; i < skeleton.NumBones; i++)
-            {
-                var bone = skeleton.Bones[i];
-                bonesJson +=
-                    "new OVRPlugin.Bone() { " +
-                    "Id=OVRPlugin.BoneId." + bone.Id.ToString() + ", " +
-                    "ParentBoneIndex=" + bone.ParentBoneIndex + ", " +
-                    "Pose=new OVRPlugin.Posef() { " +
-                        "Position=new OVRPlugin.Vector3f() {x=" + bone.Pose.Position.x + "f,y=" + bone.Pose.Position.y + "f,z=" + bone.Pose.Position.z + "f}, " +
-                        "Orientation=new OVRPlugin.Quatf(){x=" + bone.Pose.Orientation.x + "f,y=" + bone.Pose.Orientation.y + "f,z=" + bone.Pose.Orientation.z + "f,w=" + bone.Pose.Orientation.w + "f}}}";
-                if (i != skeleton.Bones.Length - 1)
-                {
-                    bonesJson += ",";
-                }
-                bonesJson += "\n";
-            }
-
-            string boneCapsulesJson = "";
-            for (int i = 0; i < skeleton.NumBoneCapsules; i++)
-            {
-                var cap = skeleton.BoneCapsules[i];
-                boneCapsulesJson += "new OVRPlugin.BoneCapsule() { BoneIndex=" + cap.BoneIndex + ", Radius=" + cap.Radius + "f, " +
-                    "StartPoint=new OVRPlugin.Vector3f() {x=" + cap.StartPoint.x + "f,y=" + cap.StartPoint.y + "f,z=" + cap.StartPoint.z + "f}, " +
-                    "EndPoint=new OVRPlugin.Vector3f() {x=" + cap.EndPoint.x + "f,y=" + cap.EndPoint.y + "f,z=" + cap.EndPoint.z + "f}}";
-                if (i != skeleton.Bones.Length - 1)
-                {
-                    boneCapsulesJson += ",";
-                }
-                boneCapsulesJson += "\n";
-            }
-
-            return "new OVRPlugin.Skeleton2() { " +
-                "Type=OVRPlugin.SkeletonType." + skeleton.Type.ToString() + ", " +
-                "NumBones=" + skeleton.NumBones + ", " +
-                "NumBoneCapsules=" + skeleton.NumBoneCapsules + ", " +
-                "Bones=new OVRPlugin.Bone[] {" + bonesJson + "}, " +
-                "BoneCapsules=new OVRPlugin.BoneCapsule[] {" + boneCapsulesJson + "}" +
-                "};";
-        }
-#endif
 
         public static readonly OVRPlugin.Skeleton2 LeftSkeleton = new OVRPlugin.Skeleton2()
         {
@@ -102,7 +57,7 @@ namespace Oculus.Interaction.Input
             new OVRPlugin.Bone() { Id=OVRPlugin.BoneId.Hand_MiddleTip, ParentBoneIndex=11, Pose=new OVRPlugin.Posef() { Position=new OVRPlugin.Vector3f() {x=0.02496492f,y=-0.001137299f,z=0.0003086528f}, Orientation=new OVRPlugin.Quatf(){x=0f,y=0f,z=0f,w=1f}}},
             new OVRPlugin.Bone() { Id=OVRPlugin.BoneId.Hand_RingTip, ParentBoneIndex=14, Pose=new OVRPlugin.Posef() { Position=new OVRPlugin.Vector3f() {x=0.02432613f,y=-0.001608172f,z=0.000257905f}, Orientation=new OVRPlugin.Quatf(){x=0f,y=0f,z=0f,w=1f}}},
             new OVRPlugin.Bone() { Id=OVRPlugin.BoneId.Hand_PinkyTip, ParentBoneIndex=18, Pose=new OVRPlugin.Posef() { Position=new OVRPlugin.Vector3f() {x=0.02192238f,y=-0.001216086f,z=-0.0002464796f}, Orientation=new OVRPlugin.Quatf(){x=0f,y=0f,z=0f,w=1f}}},
-        },
+            },
             BoneCapsules = new OVRPlugin.BoneCapsule[] {
             new OVRPlugin.BoneCapsule() { BoneIndex=0, Radius=0.01822828f, StartPoint=new OVRPlugin.Vector3f() {x=0.02755879f,y=0.01404149f,z=-0.01685145f}, EndPoint=new OVRPlugin.Vector3f() {x=0.07794081f,y=0.009090679f,z=-0.02178327f}},
             new OVRPlugin.BoneCapsule() { BoneIndex=0, Radius=0.02323196f, StartPoint=new OVRPlugin.Vector3f() {x=0.02632602f,y=0.008661013f,z=-0.006531342f}, EndPoint=new OVRPlugin.Vector3f() {x=0.07255958f,y=0.004580691f,z=-0.003326343f}},
@@ -123,7 +78,7 @@ namespace Oculus.Interaction.Input
             new OVRPlugin.BoneCapsule() { BoneIndex=16, Radius=0.008483353f, StartPoint=new OVRPlugin.Vector3f() {x=0f,y=-2.33E-10f,z=1.863E-09f}, EndPoint=new OVRPlugin.Vector3f() {x=0.03072041f,y=-1.164E-09f,z=0f}},
             new OVRPlugin.BoneCapsule() { BoneIndex=17, Radius=0.006764194f, StartPoint=new OVRPlugin.Vector3f() {x=-7.451E-09f,y=-1.717E-09f,z=1.863E-09f}, EndPoint=new OVRPlugin.Vector3f() {x=0.02031137f,y=1.46E-10f,z=1.863E-09f}},
             new OVRPlugin.BoneCapsule() { BoneIndex=18, Radius=0.006425985f, StartPoint=new OVRPlugin.Vector3f() {x=0f,y=0f,z=-1.863E-09f}, EndPoint=new OVRPlugin.Vector3f() {x=0.01507002f,y=-0.0006056242f,z=-2.491474E-05f}},
-        }
+            }
         };
 
         public static readonly OVRPlugin.Skeleton2 RightSkeleton = new OVRPlugin.Skeleton2()
@@ -155,8 +110,9 @@ namespace Oculus.Interaction.Input
             new OVRPlugin.Bone() { Id=OVRPlugin.BoneId.Hand_MiddleTip, ParentBoneIndex=11, Pose=new OVRPlugin.Posef() { Position=new OVRPlugin.Vector3f() {x=-0.02496492f,y=0.001137299f,z=-0.0003086528f}, Orientation=new OVRPlugin.Quatf(){x=0f,y=0f,z=0f,w=1f}}},
             new OVRPlugin.Bone() { Id=OVRPlugin.BoneId.Hand_RingTip, ParentBoneIndex=14, Pose=new OVRPlugin.Posef() { Position=new OVRPlugin.Vector3f() {x=-0.02432613f,y=0.001608172f,z=-0.000257905f}, Orientation=new OVRPlugin.Quatf(){x=0f,y=0f,z=0f,w=1f}}},
             new OVRPlugin.Bone() { Id=OVRPlugin.BoneId.Hand_PinkyTip, ParentBoneIndex=18, Pose=new OVRPlugin.Posef() { Position=new OVRPlugin.Vector3f() {x=-0.02192238f,y=0.001216086f,z=0.0002464796f}, Orientation=new OVRPlugin.Quatf(){x=0f,y=0f,z=0f,w=1f}}},
-        },
-            BoneCapsules = new OVRPlugin.BoneCapsule[] {new OVRPlugin.BoneCapsule() { BoneIndex=0, Radius=0.01822828f, StartPoint=new OVRPlugin.Vector3f() {x=-0.02755879f,y=-0.01404148f,z=0.01685145f}, EndPoint=new OVRPlugin.Vector3f() {x=-0.07794081f,y=-0.009090678f,z=0.02178326f}},
+            },
+            BoneCapsules = new OVRPlugin.BoneCapsule[] {
+            new OVRPlugin.BoneCapsule() { BoneIndex=0, Radius=0.01822828f, StartPoint=new OVRPlugin.Vector3f() {x=-0.02755879f,y=-0.01404148f,z=0.01685145f}, EndPoint=new OVRPlugin.Vector3f() {x=-0.07794081f,y=-0.009090678f,z=0.02178326f}},
             new OVRPlugin.BoneCapsule() { BoneIndex=0, Radius=0.02323196f, StartPoint=new OVRPlugin.Vector3f() {x=-0.02632602f,y=-0.008661013f,z=0.006531343f}, EndPoint=new OVRPlugin.Vector3f() {x=-0.07255958f,y=-0.004580691f,z=0.003326343f}},
             new OVRPlugin.BoneCapsule() { BoneIndex=0, Radius=0.01608828f, StartPoint=new OVRPlugin.Vector3f() {x=-0.0297035f,y=-0.00920606f,z=-0.01111641f}, EndPoint=new OVRPlugin.Vector3f() {x=-0.07271415f,y=-0.007254403f,z=-0.01574543f}},
             new OVRPlugin.BoneCapsule() { BoneIndex=0, Radius=0.02346085f, StartPoint=new OVRPlugin.Vector3f() {x=-0.02844799f,y=-0.008827153f,z=-0.01446979f}, EndPoint=new OVRPlugin.Vector3f() {x=-0.06036392f,y=-0.009573797f,z=-0.02133043f}},
@@ -175,7 +131,7 @@ namespace Oculus.Interaction.Input
             new OVRPlugin.BoneCapsule() { BoneIndex=16, Radius=0.008483353f, StartPoint=new OVRPlugin.Vector3f() {x=0f,y=2.33E-10f,z=-1.863E-09f}, EndPoint=new OVRPlugin.Vector3f() {x=-0.03072041f,y=1.164E-09f,z=0f}},
             new OVRPlugin.BoneCapsule() { BoneIndex=17, Radius=0.006764191f, StartPoint=new OVRPlugin.Vector3f() {x=7.451E-09f,y=1.717E-09f,z=1.863E-09f}, EndPoint=new OVRPlugin.Vector3f() {x=-0.02031137f,y=-1.46E-10f,z=-1.863E-09f}},
             new OVRPlugin.BoneCapsule() { BoneIndex=18, Radius=0.006425982f, StartPoint=new OVRPlugin.Vector3f() {x=0f,y=0f,z=1.863E-09f}, EndPoint=new OVRPlugin.Vector3f() {x=-0.01507004f,y=0.0006056186f,z=2.490915E-05f}},
-        }
+            }
         };
     }
 }

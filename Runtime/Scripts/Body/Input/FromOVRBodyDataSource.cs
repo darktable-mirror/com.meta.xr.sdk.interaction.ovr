@@ -137,7 +137,8 @@ namespace Oculus.Interaction.Body.Input
                     };
 
                 }
-                _bodyDataAsset.JointPoses[(int)jointId] = pose;
+                _bodyDataAsset.JointPoses[(int)jointId] =
+                    PoseUtils.Delta(_bodyDataAsset.Root, pose);
             }
         }
     }
