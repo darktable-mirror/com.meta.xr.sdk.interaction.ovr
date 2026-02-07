@@ -22,12 +22,15 @@ MonoBehaviour:
     - name: Interaction
     - name: Experimental
     - name: Deprecated
+    - name: New
   thumbnail: {fileID: 2800000, guid: 9cd36fa7ed971f145bdd924d2bdb81cf, type: 3}
   order: 0
   prefab: {fileID: 6116536632940550998, guid: a39f14d93fa584432b8f4d312acb98c4, type: 3}
   externalBlockDependencies: []
   dependencies:
-  - 5d47ae98-1ed8-4753-ac7f-c41012479e3d
+  - 4187448e-9c2a-4021-ad92-fb65840f2721
   packageDependencies: []
   isSingleton: 0
   usageInstructions: 
+  featureDocumentationName: 
+  featureDocumentationUrl: 

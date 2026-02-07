@@ -31,7 +31,7 @@ using UnityEngine;
 
 namespace Meta.XR.BuildingBlocks.Editor
 {
-    public class InteractableInstallationRoutine : InstallationRoutine
+    internal class InteractableInstallationRoutine : InstallationRoutine
     {
         protected override bool UsesPrefab => false;
 
@@ -126,7 +126,7 @@ namespace Meta.XR.BuildingBlocks.Editor
                 },
                 {
                     InteractableTypes.TouchHandGrab,
-                    new InteractableCreationDescription<TouchHandGrabBlockWizard>()
+                    new InteractableCreationDescription<TouchGrabWizard>()
                     {
                         InteractableType =  typeof(TouchHandGrabInteractable),
                         InteractorType = typeof(TouchHandGrabInteractor),
@@ -156,14 +156,14 @@ namespace Meta.XR.BuildingBlocks.Editor
             var creationDescription = CreationDescription;
 
             // Invoke Wizard with Default values
-            var createdObjects = creationDescription.Create(this, selectedObject);
-            var block = createdObjects.FirstOrDefault(obj => obj.GetComponent(creationDescription.InteractableType) != null);
-            if (block != null)
+            var blocks = creationDescription.Create(this, selectedObject).ToList();
+            selectedObject = blocks.FirstOrDefault(obj => obj.GetComponent(creationDescription.InteractableType) != null);
+            if (selectedObject != null)
             {
-                block.name = $"{Utils.BlockPublicTag} {name}";
+                selectedObject.name = $"{Utils.BlockPublicTag} {name}";
             }
             Undo.RegisterFullObjectHierarchyUndo(selectedObject, $"Installing {creationDescription.InteractableType} on {selectedObject.name}");
-            return new List<GameObject>() { block };
+            return blocks;
         }
 
 

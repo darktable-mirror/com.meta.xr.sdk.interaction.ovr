@@ -9,14 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2d324028d24dbd4fa1bc36ef8dfc4f0, type: 3}
-  m_Name: TouchHandGrab
+  m_Script: {fileID: 11500000, guid: 9d881f80b2082c34f880c6cd01f764b2, type: 3}
+  m_Name: RayInteractorInstallationRoutine
   m_EditorClassIdentifier: 
-  id: fb25cac7-8f37-455d-ac01-3fa41a1be37d
-  routineName: Touch Hand Grab
-  description: Use the Touch Hand Grab interaction
-  targetBlockDataId: 4e14e0ba-51f2-4a5c-a822-e304bf36d48c
+  id: d3eb34b6-514c-4781-8233-e8255583e445
+  targetBlockDataId: bc3f7b21-a55c-4cf7-b9c6-78d4341573a4
   prefab: {fileID: 0}
   packageDependencies: []
-  type: 2
-  mode: 0
+  _devices: 7
+  _interactors: 4

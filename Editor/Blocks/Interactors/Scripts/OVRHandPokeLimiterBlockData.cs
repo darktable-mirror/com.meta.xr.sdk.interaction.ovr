@@ -27,7 +27,7 @@ using UnityEditor;
 
 namespace Oculus.Interaction.Editor.BuildingBlocks
 {
-    public class OVRHandPokeLimiterBlockData : BlockData
+    internal class OVRHandPokeLimiterBlockData : BlockData
     {
         protected override bool UsesPrefab => false;
         protected override List<GameObject> InstallRoutine(GameObject selectedGameObject)

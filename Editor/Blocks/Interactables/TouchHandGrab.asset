@@ -22,12 +22,15 @@ MonoBehaviour:
     array:
     - name: Interaction
     - name: Experimental
+    - name: ISDK
   thumbnail: {fileID: 2800000, guid: 5f50e59fa71296048b89fefb7bc37448, type: 3}
   order: 0
   prefab: {fileID: 0}
+  selectedGuidedSetupIndex: 0
   externalBlockDependencies: []
   dependencies:
-  - 316c5b1d-a5e4-49f2-a663-15fd22dbcba9
+  - 81f55626-5fad-45e9-a1df-184f330da7ba
+  guidedSetupName: 
   packageDependencies: []
   isSingleton: 0
   usageInstructions: 

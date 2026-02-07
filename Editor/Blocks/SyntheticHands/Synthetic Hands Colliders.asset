@@ -19,13 +19,19 @@ MonoBehaviour:
   tags:
     array:
     - name: Hidden
-    - name: New
+    - name: Deprecated
+    - name: Interaction
+    - name: Experimental
   thumbnail: {fileID: 0}
   order: 0
   prefab: {fileID: 0}
+  selectedGuidedSetupIndex: 0
   externalBlockDependencies: []
   dependencies:
   - 6b67162c-2460-4766-a931-980388647573
+  guidedSetupName: 
   packageDependencies: []
   isSingleton: 1
   usageInstructions: 
+  featureDocumentationName: 
+  featureDocumentationUrl: 

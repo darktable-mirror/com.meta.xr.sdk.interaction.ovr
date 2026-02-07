@@ -28,7 +28,7 @@ using UnityEngine;
 
 namespace Meta.XR.BuildingBlocks.Editor
 {
-    public class TeleportInstallationRoutine : InstallationRoutine
+    internal class TeleportInstallationRoutine : InstallationRoutine
     {
         protected override bool UsesPrefab => false;
 
@@ -64,12 +64,9 @@ namespace Meta.XR.BuildingBlocks.Editor
                 throw new ArgumentNullException(nameof(selectedObject));
             }
 
-            IEnumerable<GameObject> createdObjects = creationData.interactionCreator(selectedObject);
-            List<GameObject> blocks = createdObjects
-                .Where(block => block.GetComponent<TeleportInteractable>() != null)
-                .ToList();
-            blocks.ForEach(block => block.name = $"{Utils.BlockPublicTag} {name}");
-
+            List<GameObject> blocks = creationData.interactionCreator(selectedObject).ToList();
+            blocks.Where(block => block.GetComponent<TeleportInteractable>() != null).ToList()
+                .ForEach(block => block.name = $"{Utils.BlockPublicTag} {name}");
             Undo.RegisterFullObjectHierarchyUndo(selectedObject, $"Installing {nameof(TeleportInteractable)} on {selectedObject.name}");
 
             return blocks;

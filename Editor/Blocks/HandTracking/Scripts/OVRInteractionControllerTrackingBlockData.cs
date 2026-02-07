@@ -18,16 +18,15 @@
  * limitations under the License.
  */
 
-using System.Collections.Generic;
-using UnityEngine;
 using Oculus.Interaction.Editor.QuickActions;
 using Oculus.Interaction.Input;
 using Oculus.Interaction.Input.Visuals;
-using UnityEditor;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Oculus.Interaction.Editor.BuildingBlocks
 {
-    public class OVRInteractionControllerTrackingBlockData : OVRInteractionBaseBlockData
+    internal class OVRInteractionControllerTrackingBlockData : OVRInteractionBaseBlockData
     {
         protected override bool TryGetPreexistingNonBlock(out GameObject nonBlockObject)
         {

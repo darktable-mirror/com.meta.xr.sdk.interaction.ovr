@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a430ea2bca400b540a4897c70ffeb696, type: 3}
+  m_Script: {fileID: 11500000, guid: 81d5758cfb47823489080981979f33be, type: 3}
   m_Name: Ray Interactor
   m_EditorClassIdentifier: 
   id: bc3f7b21-a55c-4cf7-b9c6-78d4341573a4
@@ -20,12 +20,17 @@ MonoBehaviour:
     array:
     - name: Interaction
     - name: Hidden
+    - name: Deprecated
   thumbnail: {fileID: 0}
   order: 0
-  prefab: {fileID: 8030197382645210609, guid: ab143fb33d1c042989fb5b744cd67a2e, type: 3}
+  prefab: {fileID: 0}
+  selectedGuidedSetupIndex: 0
+  externalBlockDependencies: []
   dependencies:
-  - 0393ca30-f2a9-4865-a40f-f9a68d01c3a9
+  - 81f55626-5fad-45e9-a1df-184f330da7ba
+  guidedSetupName: 
+  packageDependencies: []
   isSingleton: 1
   usageInstructions: 
-  _handsBlockId: 0393ca30-f2a9-4865-a40f-f9a68d01c3a9
-  _interactorName: Ray
+  featureDocumentationName: 
+  featureDocumentationUrl: 

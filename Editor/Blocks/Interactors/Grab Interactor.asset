@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a430ea2bca400b540a4897c70ffeb696, type: 3}
+  m_Script: {fileID: 11500000, guid: 81d5758cfb47823489080981979f33be, type: 3}
   m_Name: Grab Interactor
   m_EditorClassIdentifier: 
   id: 4187448e-9c2a-4021-ad92-fb65840f2721
@@ -23,11 +23,12 @@ MonoBehaviour:
     - name: Deprecated
   thumbnail: {fileID: 0}
   order: 0
-  prefab: {fileID: 1528814639904349777, guid: cd2af620b985a894881abfc004e150ec, type: 3}
+  prefab: {fileID: 0}
   externalBlockDependencies: []
   dependencies:
-  - 0393ca30-f2a9-4865-a40f-f9a68d01c3a9
+  - 81f55626-5fad-45e9-a1df-184f330da7ba
   packageDependencies: []
   isSingleton: 1
   usageInstructions: 
-  _interactorName: Grab
+  featureDocumentationName: 
+  featureDocumentationUrl: 

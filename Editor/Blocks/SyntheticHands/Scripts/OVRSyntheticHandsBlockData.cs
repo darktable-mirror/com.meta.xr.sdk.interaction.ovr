@@ -30,7 +30,7 @@ using UnityEngine;
 
 namespace Oculus.Interaction.Editor.BuildingBlocks
 {
-    public class OVRSyntheticHandsBlockData : BlockData
+    internal class OVRSyntheticHandsBlockData : BlockData
     {
         private readonly OVRConfigurationTask[] _rulesToFix = { ISDKBlocksRules.DuplicateHandVisuals };
         internal override IEnumerable<OVRConfigurationTask> GetAssociatedRules(BuildingBlock block)

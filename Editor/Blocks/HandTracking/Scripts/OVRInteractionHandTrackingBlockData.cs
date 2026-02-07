@@ -24,7 +24,7 @@ using Oculus.Interaction.Input;
 
 namespace Oculus.Interaction.Editor.BuildingBlocks
 {
-    public class OVRInteractionHandTrackingBlockData : OVRInteractionBaseBlockData
+    internal class OVRInteractionHandTrackingBlockData : OVRInteractionBaseBlockData
     {
         protected override bool TryGetPreexistingNonBlock(out GameObject nonBlockObject)
         {

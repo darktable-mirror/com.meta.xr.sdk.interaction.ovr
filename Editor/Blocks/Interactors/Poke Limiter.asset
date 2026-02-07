@@ -20,11 +20,17 @@ MonoBehaviour:
     array:
     - name: Interaction
     - name: Hidden
+    - name: Deprecated
   thumbnail: {fileID: 0}
   order: 0
   prefab: {fileID: 0}
+  selectedGuidedSetupIndex: 0
+  externalBlockDependencies: []
   dependencies:
   - f61a01e5-61c7-4589-bd2d-107bccae8f02
+  guidedSetupName: 
+  packageDependencies: []
   isSingleton: 1
   usageInstructions: 
-  _handsBlockId: 0393ca30-f2a9-4865-a40f-f9a68d01c3a9
+  featureDocumentationName: 
+  featureDocumentationUrl: 

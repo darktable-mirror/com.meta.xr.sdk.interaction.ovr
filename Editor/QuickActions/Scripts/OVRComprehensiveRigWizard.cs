@@ -70,11 +70,6 @@ namespace Oculus.Interaction.OVR.Editor.QuickActions
 #endif
 
         [SerializeField]
-        [WizardSetting]
-        [Tooltip("Enables smooth locomotion in the FirstPersonLocomotor, including player velocity and falling.")]
-        private bool _smoothLocomotion = true;
-
-        [SerializeField]
         [Tooltip("The Interaction Rig will be added under this OVRCameraRig and reference its hands, controllers and hmd.")]
         [WizardDependency(Category = Category.Required,
             FindMethod = nameof(AssignExistingCameraRig),
@@ -109,8 +104,6 @@ namespace Oculus.Interaction.OVR.Editor.QuickActions
             {
                 DisableDuplicateVisuals(ovrCameraRigHand);
             }
-
-            UpdateSmoothLocomotion(interactionRig);
 
             UnityObjectAddedBroadcaster.HandleObjectWasAdded(interactionRig);
             Selection.activeObject = interactionRig;
@@ -172,19 +165,6 @@ namespace Oculus.Interaction.OVR.Editor.QuickActions
             Debug.Log("Duplicate hand visual components in OVRCameraRig disabled");
         }
 
-        private void UpdateSmoothLocomotion(GameObject interactionRig)
-        {
-            FirstPersonLocomotor locomotor = interactionRig.GetComponentInChildren<FirstPersonLocomotor>();
-            if (_smoothLocomotion)
-            {
-                locomotor.EnableMovement();
-            }
-            else
-            {
-                locomotor.DisableMovement();
-            }
-        }
-
         internal void AssignExistingCameraRig()
         {
             _cameraRig = FindExistingCameraRig();
@@ -225,5 +205,26 @@ namespace Oculus.Interaction.OVR.Editor.QuickActions
         {
             base.OnGUI();
         }
+
+        #region Injects
+
+        public void InjectCameraRig(OVRCameraRig cameraRig)
+        {
+            _cameraRig = cameraRig;
+        }
+
+#if UNITY_2022_1_OR_NEWER
+        public void InjectOptionalGenerateAsEditableCopy(bool generateAsEditableCopy)
+        {
+            _generateAsEditableCopy = generateAsEditableCopy;
+        }
+
+        public void InjectOptionalPrefabPath(string prefabPath)
+        {
+            _prefabPath = prefabPath;
+        }
+#endif
+
+        #endregion
     }
 }

@@ -9,14 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2d324028d24dbd4fa1bc36ef8dfc4f0, type: 3}
-  m_Name: DistanceHandGrab
+  m_Script: {fileID: 11500000, guid: 2c0ecaf92f8a89c41b94783dcd1f970f, type: 3}
+  m_Name: PokeableInstallationRoutine
   m_EditorClassIdentifier: 
-  id: 20b9ad69-c205-488d-a6b2-d3d7ca6c1e53
-  routineName: Distance Grab
-  description: Use Distance Grab Interaction
-  targetBlockDataId: 3f1827c2-c682-46d8-999e-0954e37e833e
+  id: c88fc9f2-e9d1-41ea-b937-cdaf92a806d0
+  targetBlockDataId: 5838e892-31a4-4f65-a415-dc108aefa14c
   prefab: {fileID: 0}
   packageDependencies: []
-  type: 1
-  mode: 0

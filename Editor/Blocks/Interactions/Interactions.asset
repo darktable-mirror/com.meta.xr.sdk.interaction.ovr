@@ -9,22 +9,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94769140f5c4f1f489bf7c85fb68acba, type: 3}
+  m_Script: {fileID: 11500000, guid: 81d5758cfb47823489080981979f33be, type: 3}
   m_Name: Interactions
   m_EditorClassIdentifier: 
   id: 81f55626-5fad-45e9-a1df-184f330da7ba
   version: 1
-  blockName: Interaction
-  description: Integration SDK internal hooks
+  blockName: Interactions Rig
+  description: Interaction SDK comprehensive  rig that provides fully working Controller
+    and Hands interactors and visuals.
   tags:
     array:
     - name: Interaction
-    - name: Hidden
-  thumbnail: {fileID: 0}
+    - name: ISDK
+  thumbnail: {fileID: 2800000, guid: dc9c74b29db0d8349bc6949f7ddb44c9, type: 3}
   order: 0
-  prefab: {fileID: 4690643509526015020, guid: 7652d8eea2e03a44d9bf9fa63eed745b, type: 3}
+  prefab: {fileID: 0}
+  selectedGuidedSetupIndex: 0
+  externalBlockDependencies: []
   dependencies:
   - e47682b9-c270-40b1-b16d-90b627a5ce1b
+  guidedSetupName: 
+  packageDependencies: []
   isSingleton: 1
   usageInstructions: 
-  _cameraRigBlockId: e47682b9-c270-40b1-b16d-90b627a5ce1b
+  featureDocumentationName: 
+  featureDocumentationUrl: 

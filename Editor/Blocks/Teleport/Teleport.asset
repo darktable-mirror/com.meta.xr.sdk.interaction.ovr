@@ -32,8 +32,7 @@ MonoBehaviour:
   prefab: {fileID: 0}
   externalBlockDependencies: []
   dependencies:
-  - 0393ca30-f2a9-4865-a40f-f9a68d01c3a9
-  - f10154e0-16b2-492f-97d0-6639f69e7df6
+  - 81f55626-5fad-45e9-a1df-184f330da7ba
   packageDependencies: []
   isSingleton: 0
   usageInstructions: 

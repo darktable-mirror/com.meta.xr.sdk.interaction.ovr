@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cf8309fc4dbb82d42b6784ede3e8fc6e, type: 3}
   m_Name: RealHands
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   id: f547fe18-d477-46ec-bdf5-7208df19cb98
   version: 1
   blockName: Real Hands
@@ -26,9 +26,10 @@ MonoBehaviour:
   prefab: {fileID: 9215032166623549228, guid: c1659603b25249a42ac950c013e12970, type: 3}
   externalBlockDependencies: []
   dependencies:
-  - e47682b9-c270-40b1-b16d-90b627a5ce1b
   - f0540b20-dfd6-420e-b20d-c270f88dc77e
-  - 6b67162c-2460-4766-a931-980388647573
+  - 81f55626-5fad-45e9-a1df-184f330da7ba
   packageDependencies: []
   isSingleton: 1
-  usageInstructions: 
+  usageInstructions:
+  featureDocumentationName:
+  featureDocumentationUrl:

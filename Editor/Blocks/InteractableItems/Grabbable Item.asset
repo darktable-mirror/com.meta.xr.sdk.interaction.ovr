@@ -26,7 +26,9 @@ MonoBehaviour:
   prefab: {fileID: 6116536632940550998, guid: 5cff07deb8a11467d99f87d7fc969bdd, type: 3}
   externalBlockDependencies: []
   dependencies:
-  - 4187448e-9c2a-4021-ad92-fb65840f2721
+  - 81f55626-5fad-45e9-a1df-184f330da7ba
   packageDependencies: []
   isSingleton: 0
   usageInstructions: This block is deprecated. We recommend using Hand Grab block.
+  featureDocumentationName: 
+  featureDocumentationUrl: 
