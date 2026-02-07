@@ -1,7 +1,7 @@
 {
   "name": "com.meta.xr.sdk.interaction.ovr",
-  "displayName": "Meta XR Interaction SDK",
-  "version": "69.0.0",
+  "displayName": "Meta XR Interaction \u200bSDK",
+  "version": "69.0.1",
   "description": "This package allows Interaction SDK to interface with OVRPlugin. Use this package if you are using OVRPlugin or the Core SDK package.",
   "samples": [
     {
