@@ -39,7 +39,7 @@ namespace Meta.XR.BuildingBlocks.Editor
 
             var handMeshRenderers = new List<SkinnedMeshRenderer>();
             Utils.GetBlocksWithType<SyntheticHand>().ForEach(block =>
-                handMeshRenderers.Add(block.GetComponentInChildren<SkinnedMeshRenderer>()));
+                handMeshRenderers.AddRange(block.GetComponentsInChildren<SkinnedMeshRenderer>(true)));
 
             foreach (var renderer in handMeshRenderers)
             {

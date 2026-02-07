@@ -53,20 +53,6 @@ namespace Oculus.Interaction.Editor
             );
 
             AutoWiring.Register(
-                typeof(FromOVRControllerHandDataSource),
-                new[] {
-                    new ComponentWiringStrategyConfig("_cameraRigRef", new FieldWiringStrategy[]
-                        {
-                            FieldWiringStrategies.WireFieldToAncestors
-                        }),
-                    new ComponentWiringStrategyConfig("_trackingToWorldTransformer", new FieldWiringStrategy[]
-                        {
-                            FieldWiringStrategies.WireFieldToAncestors
-                        })
-                }
-            );
-
-            AutoWiring.Register(
                 typeof(FromOVRControllerDataSource),
                 new[] {
                     new ComponentWiringStrategyConfig("_cameraRigRef", new FieldWiringStrategy[]

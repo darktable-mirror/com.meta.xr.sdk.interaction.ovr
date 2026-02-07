@@ -35,7 +35,7 @@ namespace Oculus.Interaction.Editor.BuildingBlocks
             var pokeLimiters = new List<GameObject>();
             foreach (var hand in BlocksUtils.GetHands())
             {
-                if(!TryGetSyntheticHand(hand, out var syntheticHand)) continue;
+                if (!TryGetSyntheticHand(hand, out var syntheticHand)) continue;
 
                 var handPokeInteractor = hand.GetComponentInChildren<PokeInteractor>();
                 var handPokeLimiterVisual = hand.GetComponentInChildren<HandPokeLimiterVisual>(true);

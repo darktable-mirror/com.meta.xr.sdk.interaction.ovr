@@ -18,104 +18,102 @@
  * limitations under the License.
  */
 
-using UnityEditor;
 using UnityEngine;
 using Oculus.Interaction.Input;
 using Oculus.Interaction.OVR.Editor.QuickActions;
+using UnityEditor;
 
 namespace Oculus.Interaction.OVR.Editor
 {
     [InitializeOnLoad]
-    public class ISDKBlocksRules
+    internal static class ISDKBlocksRules
     {
-        static ISDKBlocksRules() {
-            OVRProjectSetup.AddTask(
-                level: OVRProjectSetup.TaskLevel.Recommended,
-                group: OVRProjectSetup.TaskGroup.Compatibility,
-                // Should rule be visible
-                conditionalValidity: _ =>
-                {
-                    return !SceneIsCompliant();
-                },
-                // Has rule been satisfied
-                isDone: _ =>
-                {
-                    return SceneIsCompliant();
-                },
-                message: $"Conflicting Hand Visuals are present in the scene",
-                fix: _ =>
-                {
-                    OVRCameraRig cameraRig = OVRComprehensiveRigWizard.FindExistingCameraRig();
-                    if (cameraRig == null)
-                        return;
+        // Constructor is still needed to have InitializeOnLoad work
+        static ISDKBlocksRules() { }
 
-                    OVRHand[] cameraRigHands = cameraRig.trackingSpace.GetComponentsInChildren<OVRHand>();
-                    foreach (OVRHand hand in cameraRigHands)
-                    {
-                        OVRComprehensiveRigWizard.DisableDuplicateVisuals(hand);
-                    }
-                },
-                fixMessage: $"Disable Hand Visuals in OVR Camera Rig"
-            );
-        }
-
-        static bool SceneIsCompliant()
-        {
-                // OVRInteraction* exists, and has hands
-                OVRCameraRigRef interactionRig = OVRComprehensiveRigWizard.FindExistingInteractionRig();
-                if (interactionRig == null)
-                    return true;
-
-                if (interactionRig.GetComponentsInChildren<Hand>().Length == 0)
-                    return true;
-
-                // A Camera Rig exists
+        public static readonly OVRConfigurationTask DuplicateHandVisuals = OVRProjectSetup.RegisterTask(
+            level: OVRProjectSetup.TaskLevel.Recommended,
+            group: OVRProjectSetup.TaskGroup.Compatibility,
+            // Should rule be visible
+            conditionalValidity: _ => !SceneIsCompliant(),
+            // Has rule been satisfied
+            isDone: _ => SceneIsCompliant(),
+            message: "Conflicting Hand Visuals are present in the scene",
+            fix: _ =>
+            {
                 OVRCameraRig cameraRig = OVRComprehensiveRigWizard.FindExistingCameraRig();
                 if (cameraRig == null)
-                    return true;
+                    return;
 
-                // The Camera Rig has hands and enabled hand visuals
                 OVRHand[] cameraRigHands = cameraRig.trackingSpace.GetComponentsInChildren<OVRHand>();
-                if (cameraRigHands.Length == 0)
-                    return true;
-                else
+                foreach (OVRHand hand in cameraRigHands)
                 {
-                    // Camera Rig has hands, but visuals already disabled
-                    foreach (OVRHand hand in cameraRigHands)
-                    {
-                        if (HandVisualsEnabled(hand))
-                        {
-                            return false;
-                        }
-                    }
-                    return true;
+                    OVRComprehensiveRigWizard.DisableDuplicateVisuals(hand);
                 }
+            },
+            fixMessage: "Disable Hand Visuals in OVR Camera Rig"
+        );
+
+        private static bool SceneIsCompliant()
+        {
+            // OVRInteraction* exists, and has hands
+            OVRCameraRigRef interactionRig = OVRComprehensiveRigWizard.FindExistingInteractionRig();
+            if (interactionRig == null)
+                return true;
+
+            if (interactionRig.GetComponentsInChildren<Hand>().Length == 0)
+                return true;
+
+            // A Camera Rig exists
+            OVRCameraRig cameraRig = OVRComprehensiveRigWizard.FindExistingCameraRig();
+            if (cameraRig == null)
+                return true;
+
+            // The Camera Rig has hands and enabled hand visuals
+            OVRHand[] cameraRigHands = cameraRig.trackingSpace.GetComponentsInChildren<OVRHand>();
+            if (cameraRigHands.Length == 0)
+                return true;
+
+            // Camera Rig has hands, but visuals already disabled
+            foreach (OVRHand hand in cameraRigHands)
+            {
+                if (HandVisualsEnabled(hand))
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
-        static bool HandVisualsEnabled(OVRHand hand)
+        private static bool HandVisualsEnabled(OVRHand hand)
         {
             if (hand.TryGetComponent<OVRSkeletonRenderer>(out var skeletonRenderer))
             {
                 if (skeletonRenderer.enabled)
                     return true;
             }
+
             if (hand.TryGetComponent<OVRMesh>(out var mesh))
             {
                 if (mesh.enabled)
                     return true;
             }
+
             if (hand.TryGetComponent<OVRMeshRenderer>(out var meshRenderer))
             {
                 if (meshRenderer.enabled)
                     return true;
             }
+
             if (hand.TryGetComponent<SkinnedMeshRenderer>(out var skinnedMeshRenderer))
             {
                 if (skinnedMeshRenderer.enabled)
                     return true;
             }
+
             return false;
         }
-
     }
+
 }

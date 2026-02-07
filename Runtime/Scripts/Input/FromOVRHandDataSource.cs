@@ -100,7 +100,14 @@ namespace Oculus.Interaction.Input
 
             UpdateConfig();
 
-
+            var globalVersion = OVRRuntimeSettings.GetRuntimeSettings().HandSkeletonVersion;
+#if ISDK_OPENXR_HAND
+            UnityEngine.Assertions.Assert.AreEqual(globalVersion, OVRHandSkeletonVersion.OpenXR,
+                $"Hand Skeleton Version in OVRManager must be set to {OVRHandSkeletonVersion.OpenXR}.");
+#else
+            UnityEngine.Assertions.Assert.AreEqual(globalVersion, OVRHandSkeletonVersion.OVR,
+                $"Hand Skeleton Version in OVRManager must be set to {OVRHandSkeletonVersion.OVR}.");
+#endif
             this.EndStart(ref _started);
         }
 
@@ -152,7 +159,6 @@ namespace Oculus.Interaction.Input
                 return _config;
             }
         }
-
 
         private void UpdateConfig()
         {
@@ -252,6 +258,29 @@ namespace Oculus.Interaction.Input
                 _handDataAsset.PointerPoseOrigin = PoseOrigin.None;
             }
 
+#if ISDK_OPENXR_HAND
+            float scaleFixup = _handDataAsset.HandScale > 0 ?
+                1f / _handDataAsset.HandScale : 0;
+
+            var ovrSkeleton = (_handedness == Handedness.Left)?
+                OVRSkeletonData.LeftSkeleton : OVRSkeletonData.RightSkeleton;
+            for (int i = 0; i < Constants.NUM_HAND_JOINTS; i++)
+            {
+                Pose jointPose = new Pose(
+                    poseData.BoneTranslations[i].FromFlippedZVector3f(),
+                    poseData.BoneRotations[i].FromFlippedZQuatf());
+                Pose fromRoot = PoseUtils.Delta(_handDataAsset.Root, jointPose);
+                fromRoot.position *= scaleFixup;
+                _handDataAsset.JointPoses[i] = fromRoot;
+                _handDataAsset.JointRadii[i] = HandSkeletonOVR.GetBoneRadius(ovrSkeleton, i);
+            }
+
+            // Legacy local rotations
+#pragma warning disable 0618
+            HandJointUtils.WristJointPosesToLocalRotations(_handDataAsset.JointPoses,
+                ref _handDataAsset.Joints);
+#pragma warning restore 0618
+#else
             // Hand joint rotations X axis needs flipping to get to Unity's coordinate system.
             var bones = poseData.BoneRotations;
             for (int i = 0; i < bones.Length; i++)
@@ -264,6 +293,7 @@ namespace Oculus.Interaction.Input
             }
 
             _handDataAsset.Joints[0] = WristFixupRotation;
+#endif
         }
 
         #region Inject

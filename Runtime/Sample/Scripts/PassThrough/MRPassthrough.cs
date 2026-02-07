@@ -39,7 +39,7 @@ public class MRPassthrough : MonoBehaviour
     [SerializeField] private PokeInteractable _locomotionInteractable;
     [SerializeField] private PokeInteractable _passThroughInteractable;
 
-    private OVRPassthroughLayer _layer;    
+    private OVRPassthroughLayer _layer;
     private Camera _camera;
 
     private void Start()
@@ -101,7 +101,7 @@ public class MRPassthrough : MonoBehaviour
         _locomotionInteractable.enabled = false;
         _passThroughText.text = "Passthrough OFF";
         _camera.clearFlags = CameraClearFlags.SolidColor;
-        foreach ( GameObject obj in _objects)
+        foreach (GameObject obj in _objects)
         {
             obj.SetActive(false);
         }

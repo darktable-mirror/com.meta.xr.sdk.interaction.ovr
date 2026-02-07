@@ -34,12 +34,12 @@ namespace Meta.XR.BuildingBlocks.Editor
             new Template(
                 "ISDKBlock_TouchHandGrabInteraction",
                 "99784e1a3225c9841bac1e563e0f92a2");
-        
+
         public static readonly Template TouchHandGrabInteractor =
             new Template(
                 "TouchHandGrabInteractor",
                 "37318c26f22752d4c88f584585c490e5");
-        
+
         [SerializeField]
         [WizardDependency(FindMethod = nameof(FindTransform), FixMethod = nameof(FixTransform))]
         private Transform _targetTransform;
@@ -51,7 +51,7 @@ namespace Meta.XR.BuildingBlocks.Editor
         [SerializeField]
         [WizardDependency(FindMethod = nameof(FindCollider), FixMethod = nameof(FixCollider))]
         private MeshCollider _collider;
-        
+
         [SerializeField]
         [WizardDependency(FindMethod = nameof(FindBoundCollider), FixMethod = nameof(FixBoundCollider))]
         private BoxCollider _boundsCollider;
@@ -89,7 +89,7 @@ namespace Meta.XR.BuildingBlocks.Editor
             _collider.convex = true;
             _collider.isTrigger = false;
         }
-        
+
         private void FindBoundCollider()
         {
             _boundsCollider = Target.GetComponentInChildren<BoxCollider>();
@@ -124,7 +124,7 @@ namespace Meta.XR.BuildingBlocks.Editor
 
             AddInteractorsToRig(typeof(TouchHandGrabInteractor), TouchHandGrabInteractor);
         }
-        
+
         private static void AddInteractorsToRig(Type expectedInteractorType, Template template)
         {
             bool TryGetInteractorParent(Transform root, out Transform parent)
@@ -146,7 +146,7 @@ namespace Meta.XR.BuildingBlocks.Editor
                 }
             }
         }
-        
+
         private static void AddInteractorsToHand(Template template,
             Hand hand, Hmd hmd, Transform parentTransform, InteractorGroup group = null)
         {

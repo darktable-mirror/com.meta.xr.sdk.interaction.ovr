@@ -54,15 +54,23 @@ namespace Oculus.Interaction.Editor.BuildingBlocks
                           visualGameObject.AddComponent<HandPhysicsCapsules>();
             capsule.InjectAllOVRHandPhysicsCapsules(syntheticHand, false, 0);
             capsule.InjectMask(
+#if ISDK_OPENXR_HAND
+                               HandFingerJointFlags.Index0 |
+#endif
                                HandFingerJointFlags.Index1 |
                                HandFingerJointFlags.Index2 |
                                HandFingerJointFlags.Index3 |
                                HandFingerJointFlags.IndexTip |
+#if !ISDK_OPENXR_HAND
                                HandFingerJointFlags.Thumb0 |
+#endif
                                HandFingerJointFlags.Thumb1 |
                                HandFingerJointFlags.Thumb2 |
                                HandFingerJointFlags.Thumb3 |
                                HandFingerJointFlags.ThumbTip |
+#if ISDK_OPENXR_HAND
+                               HandFingerJointFlags.Middle0 |
+#endif
                                HandFingerJointFlags.Middle1 |
                                HandFingerJointFlags.Middle2 |
                                HandFingerJointFlags.Middle3 |

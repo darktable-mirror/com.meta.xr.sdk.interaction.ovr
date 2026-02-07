@@ -18,11 +18,13 @@
  * limitations under the License.
  */
 
+using Meta.XR.BuildingBlocks;
 using System;
 using Oculus.Interaction.Input;
 using System.Collections.Generic;
 using System.Linq;
 using Meta.XR.BuildingBlocks.Editor;
+using Oculus.Interaction.OVR.Editor;
 using UnityEditor;
 using UnityEngine;
 
@@ -30,6 +32,11 @@ namespace Oculus.Interaction.Editor.BuildingBlocks
 {
     public class OVRSyntheticHandsBlockData : BlockData
     {
+        private readonly OVRConfigurationTask[] _rulesToFix = { ISDKBlocksRules.DuplicateHandVisuals };
+        internal override IEnumerable<OVRConfigurationTask> GetAssociatedRules(BuildingBlock block)
+
+            => _rulesToFix;
+
         public GameObject _leftHand;
         public GameObject _rightHand;
 

@@ -68,25 +68,51 @@ namespace Oculus.Interaction.Input
                 {
                     pose = new Pose()
                     {
+#if ISDK_OPENXR_HAND
+                        position = srcPose.Position.FromFlippedZVector3f(),
+                        rotation = srcPose.Orientation.FromFlippedZQuatf()
+#else
                         position = srcPose.Position.FromFlippedXVector3f(),
                         rotation = srcPose.Orientation.FromFlippedXQuatf()
+#endif
                     },
                     parent = ovrSkeleton.Bones[i].ParentBoneIndex,
+#if !ISDK_OPENXR_HAND
                     radius = GetBoneRadius(ovrSkeleton, i)
+#endif
                 };
             }
         }
 
         internal static float GetBoneRadius(in OVRPlugin.Skeleton2 ovrSkeleton, int boneIndex)
         {
-                if (boneIndex == (int)HandJointId.HandThumb0)
-                {
-                    boneIndex = (int)HandJointId.HandThumb1;
-                }
-                else if (boneIndex == (int)HandJointId.HandPinky0)
-                {
-                    boneIndex = (int)HandJointId.HandPinky1;
-                }
+#if ISDK_OPENXR_HAND
+            if (boneIndex == (int)HandJointId.HandIndex0)
+            {
+                boneIndex = (int)HandJointId.HandIndex1;
+            }
+            else if (boneIndex == (int)HandJointId.HandMiddle0)
+            {
+                boneIndex = (int)HandJointId.HandMiddle1;
+            }
+            else if (boneIndex == (int)HandJointId.HandRing0)
+            {
+                boneIndex = (int)HandJointId.HandRing1;
+            }
+            else if (boneIndex == (int)HandJointId.HandPinky0)
+            {
+                boneIndex = (int)HandJointId.HandPinky1;
+            }
+#else
+            if (boneIndex == (int)HandJointId.HandThumb0)
+            {
+                boneIndex = (int)HandJointId.HandThumb1;
+            }
+            else if (boneIndex == (int)HandJointId.HandPinky0)
+            {
+                boneIndex = (int)HandJointId.HandPinky1;
+            }
+#endif
             int capsuleIndex = System.Array.FindIndex(ovrSkeleton.BoneCapsules, c => c.BoneIndex == boneIndex);
             return capsuleIndex < 0 ? 0f : ovrSkeleton.BoneCapsules[capsuleIndex].Radius;
         }

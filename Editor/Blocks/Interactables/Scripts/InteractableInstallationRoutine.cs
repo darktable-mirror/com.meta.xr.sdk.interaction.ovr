@@ -25,6 +25,7 @@ using System.Threading.Tasks;
 using Oculus.Interaction;
 using Oculus.Interaction.Editor.QuickActions;
 using Oculus.Interaction.HandGrab;
+using Oculus.Interaction.OVR.Editor;
 using UnityEditor;
 using UnityEngine;
 
@@ -33,7 +34,12 @@ namespace Meta.XR.BuildingBlocks.Editor
     public class InteractableInstallationRoutine : InstallationRoutine
     {
         protected override bool UsesPrefab => false;
-        
+
+        private readonly OVRConfigurationTask[] _rulesToFix = { ISDKBlocksRules.DuplicateHandVisuals };
+        internal override IEnumerable<OVRConfigurationTask> GetAssociatedRules(BuildingBlock block)
+            => _rulesToFix;
+
+
         internal abstract class InteractableCreationDescriptionBase
         {
             public Type InteractableType;
@@ -61,12 +67,14 @@ namespace Meta.XR.BuildingBlocks.Editor
             TouchHandGrab,
         }
 
-        [SerializeField][Variant(
+        [SerializeField]
+        [Variant(
             Behavior = VariantAttribute.VariantBehavior.Constant)]
         private InteractableTypes type;
 
-        [SerializeField] [Variant(
-            Behavior = VariantAttribute.VariantBehavior.Parameter, 
+        [SerializeField]
+        [Variant(
+            Behavior = VariantAttribute.VariantBehavior.Parameter,
             Description = "The behavior of the Distance Grab Interaction",
             Condition = nameof(NeedsDistanceGrabMode),
             Default = DistanceGrabWizard.Mode.InteractableToHand)]
@@ -81,7 +89,7 @@ namespace Meta.XR.BuildingBlocks.Editor
         {
             get
             {
-                if(!InteractableCreationDescriptions.TryGetValue(type, out var creationDescription))
+                if (!InteractableCreationDescriptions.TryGetValue(type, out var creationDescription))
                 {
                     throw new InvalidOperationException(
                         $"Undefined behavior for type {type}");

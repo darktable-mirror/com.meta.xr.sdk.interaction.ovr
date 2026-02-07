@@ -29,9 +29,38 @@ namespace Oculus.Interaction.OVR.Editor
     {
         static ProjectSetupTasks()
         {
+            CheckHandSkeletonVersion();
             CheckHandTrackingSupportMode();
         }
 
+        private static void CheckHandSkeletonVersion()
+        {
+
+#if ISDK_OPENXR_HAND
+            const OVRHandSkeletonVersion handSkeletonVersion = OVRHandSkeletonVersion.OpenXR;
+#else
+            const OVRHandSkeletonVersion handSkeletonVersion = OVRHandSkeletonVersion.OVR;
+#endif
+            const OVRProjectSetup.TaskGroup Group = OVRProjectSetup.TaskGroup.Compatibility;
+
+            string message = $"When using Interaction SDK with the {handSkeletonVersion} hand skeleton, " +
+                $"the Hand Skeleton Version in OVRManager must be set to {handSkeletonVersion}";
+
+            var runtimeSettings = OVRRuntimeSettings.GetRuntimeSettings();
+
+            OVRProjectSetup.AddTask(
+                    level: OVRProjectSetup.TaskLevel.Required,
+                    group: Group,
+                    isDone: buildTargetGroup => runtimeSettings.HandSkeletonVersion == handSkeletonVersion,
+                    message: message,
+                    fix: buildTargetGroup =>
+                    {
+                        runtimeSettings.HandSkeletonVersion = handSkeletonVersion;
+                        OVRRuntimeSettings.CommitRuntimeSettings(runtimeSettings);
+                    },
+                    fixMessage: $"Set the Hand Skeleton to the required version."
+                );
+        }
 
         private static void CheckHandTrackingSupportMode()
         {

@@ -30,6 +30,5 @@ MonoBehaviour:
   packageDependencies: []
   isSingleton: 0
   usageInstructions: 
-  groupName: 
-  installationRoutineSelection:
-    selection: Variants
+  featureDocumentationName: Distance Hand Grab Interaction
+  featureDocumentationUrl: https://developer.oculus.com/documentation/unity/unity-isdk-distance-hand-grab-interaction/
