@@ -9,24 +9,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c4826b5532d66e4db4bdf87d3e73a7d, type: 3}
-  m_Name: Interaction Hand Tracking
+  m_Script: {fileID: 11500000, guid: 875f737610b02ce4e8f0f40b7e875f6e, type: 3}
+  m_Name: Interaction Controller Tracking
   m_EditorClassIdentifier: 
-  id: 0393ca30-f2a9-4865-a40f-f9a68d01c3a9
+  id: f10154e0-16b2-492f-97d0-6639f69e7df6
   version: 1
-  blockName: Hand Interactions
-  description: Interaction internal hand tracking logic
+  blockName: Controller Interactions
+  description: Interaction internal controller tracking logic
   tags:
     array:
     - name: Interaction
     - name: Hidden
   thumbnail: {fileID: 0}
   order: 0
-  prefab: {fileID: 6388487641241208223, guid: 44ed1c64fbd105143bff979a6c52c4d6, type: 3}
+  prefab: {fileID: 6388487641241208223, guid: 52e5916b0502f9143879ded1ad1aabd6, type: 3}
   externalBlockDependencies: []
   dependencies:
   - 81f55626-5fad-45e9-a1df-184f330da7ba
-  - 8b26b298-7bf4-490e-b245-a039c0184303
+  - 5817f7c0-f2a5-45f9-a5ca-64264e0166e8
   packageDependencies: []
   isSingleton: 1
   usageInstructions: 

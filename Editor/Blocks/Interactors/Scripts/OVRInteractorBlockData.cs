@@ -22,6 +22,7 @@ using Oculus.Interaction.Input;
 using System.Collections.Generic;
 using UnityEngine;
 using Meta.XR.BuildingBlocks.Editor;
+using UnityEditor;
 
 namespace Oculus.Interaction.Editor.BuildingBlocks
 {
@@ -47,6 +48,8 @@ namespace Oculus.Interaction.Editor.BuildingBlocks
             interactor.SetActive(true);
             interactor.name = $"[BuildingBlock] {hand.Handedness} {_interactorName}";
             BlocksUtils.UpdateForAutoWiring(interactor);
+
+            Undo.RegisterCreatedObjectUndo(interactor, $"Instantiate {interactor.name}");
             return interactor;
         }
     }
