@@ -31,7 +31,7 @@ namespace Oculus.Interaction.Editor.BuildingBlocks
         public GameObject _leftHand;
         public GameObject _rightHand;
 
-        protected override List<GameObject> InstallRoutine()
+        protected override List<GameObject> InstallRoutine(GameObject selectedGameObject)
         {
             var syntheticHands = new List<GameObject>();
             foreach (var hand in BlocksUtils.GetHands())

@@ -30,7 +30,7 @@ namespace Oculus.Interaction.Editor.BuildingBlocks
     {
         public string _interactionBlockId;
 
-        protected override List<GameObject> InstallRoutine()
+        protected override List<GameObject> InstallRoutine(GameObject selectedGameObject)
         {
             var interactionBlockData = Meta.XR.BuildingBlocks.Editor.Utils.GetBlockData(_interactionBlockId);
             var interactionBlock = interactionBlockData.GetBlock();

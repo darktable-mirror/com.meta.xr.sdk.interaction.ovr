@@ -30,7 +30,7 @@ namespace Oculus.Interaction.Editor.BuildingBlocks
     {
         public string _cameraRigBlockId;
 
-        protected override List<GameObject> InstallRoutine()
+        protected override List<GameObject> InstallRoutine(GameObject selectedGameObject)
         {
             var cameraRigBlockData = Meta.XR.BuildingBlocks.Editor.Utils.GetBlockData(_cameraRigBlockId);
             var cameraRigBlock = cameraRigBlockData.GetBlock();

@@ -29,7 +29,7 @@ namespace Oculus.Interaction.Editor.BuildingBlocks
     {
         public string _interactorName;
 
-        protected override List<GameObject> InstallRoutine()
+        protected override List<GameObject> InstallRoutine(GameObject selectedGameObject)
         {
             var interactors = new List<GameObject>();
             foreach (var hand in BlocksUtils.GetHands())
