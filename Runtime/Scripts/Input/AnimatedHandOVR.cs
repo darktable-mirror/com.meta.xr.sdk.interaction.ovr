@@ -18,11 +18,13 @@
  * limitations under the License.
  */
 
+using System;
 using UnityEngine;
 
 namespace Oculus.Interaction.Input
 {
-    public class AnimatedHandOVR : MonoBehaviour
+    public class AnimatedHandOVR : MonoBehaviour,
+        IDeltaTimeConsumer
     {
         public enum AllowThumbUp
         {
@@ -70,6 +72,13 @@ namespace Oculus.Interaction.Input
 
         private const float TRIGGER_MAX = 0.95f;
 
+        private Func<float> _deltaTimeProvider = () => Time.deltaTime;
+        public void SetDeltaTimeProvider(Func<float> deltaTimeProvider)
+        {
+            _deltaTimeProvider = deltaTimeProvider;
+        }
+
+
         protected virtual void Start()
         {
             _animLayerIndexPoint = _animator.GetLayerIndex(ANIM_LAYER_NAME_POINT);
@@ -80,9 +89,9 @@ namespace Oculus.Interaction.Input
         {
             UpdateCapTouchStates();
 
-            _pointBlend = Mathf.Lerp(_pointBlend, _pointTarget, _animPointAndThumbsUpGain * Time.deltaTime);
-            _slideBlend = Mathf.Lerp(_slideBlend, _slideTarget, _animPointAndThumbsUpGain * Time.deltaTime);
-            _thumbsUpBlend = Mathf.Lerp(_thumbsUpBlend, _isGivingThumbsUp ? 1 : 0, _animPointAndThumbsUpGain * Time.deltaTime);
+            _pointBlend = Mathf.Lerp(_pointBlend, _pointTarget, _animPointAndThumbsUpGain * _deltaTimeProvider());
+            _slideBlend = Mathf.Lerp(_slideBlend, _slideTarget, _animPointAndThumbsUpGain * _deltaTimeProvider());
+            _thumbsUpBlend = Mathf.Lerp(_thumbsUpBlend, _isGivingThumbsUp ? 1 : 0, _animPointAndThumbsUpGain * _deltaTimeProvider());
 
             UpdateAnimStates();
         }

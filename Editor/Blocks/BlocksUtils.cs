@@ -21,8 +21,6 @@
 using Oculus.Interaction.Input;
 using System.Collections.Generic;
 using UnityEngine;
-using Meta.XR.BuildingBlocks.Editor;
-using Meta.XR.BuildingBlocks;
 
 namespace Oculus.Interaction.Editor.BuildingBlocks
 {

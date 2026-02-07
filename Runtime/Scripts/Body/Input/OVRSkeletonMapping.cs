@@ -69,8 +69,8 @@ namespace Oculus.Interaction.Body.Input
             [BodyJointId.Body_RightHandWristTwist] =            new JointInfo(OVRBoneId.Body_RightHandWristTwist, OVRBoneId.Body_RightArmLower),
 
             // Left Hand
-            [BodyJointId.Body_LeftHandWrist] =                  new JointInfo(OVRBoneId.Body_LeftHandWrist, OVRBoneId.Body_LeftArmLower),
             [BodyJointId.Body_LeftHandPalm] =                   new JointInfo(OVRBoneId.Body_LeftHandPalm, OVRBoneId.Body_LeftHandWrist),
+            [BodyJointId.Body_LeftHandWrist] =                  new JointInfo(OVRBoneId.Body_LeftHandWrist, OVRBoneId.Body_LeftArmLower),
             [BodyJointId.Body_LeftHandThumbMetacarpal] =        new JointInfo(OVRBoneId.Body_LeftHandThumbMetacarpal, OVRBoneId.Body_LeftHandWrist),
             [BodyJointId.Body_LeftHandThumbProximal] =          new JointInfo(OVRBoneId.Body_LeftHandThumbProximal, OVRBoneId.Body_LeftHandThumbMetacarpal),
             [BodyJointId.Body_LeftHandThumbDistal] =            new JointInfo(OVRBoneId.Body_LeftHandThumbDistal, OVRBoneId.Body_LeftHandThumbProximal),
@@ -97,8 +97,8 @@ namespace Oculus.Interaction.Body.Input
             [BodyJointId.Body_LeftHandLittleTip] =              new JointInfo(OVRBoneId.Body_LeftHandLittleTip, OVRBoneId.Body_LeftHandLittleDistal),
 
             // Right Hand
-            [BodyJointId.Body_RightHandWrist] =                 new JointInfo(OVRBoneId.Body_RightHandWrist, OVRBoneId.Body_RightArmLower),
             [BodyJointId.Body_RightHandPalm] =                  new JointInfo(OVRBoneId.Body_RightHandPalm, OVRBoneId.Body_RightHandWrist),
+            [BodyJointId.Body_RightHandWrist] =                 new JointInfo(OVRBoneId.Body_RightHandWrist, OVRBoneId.Body_RightArmLower),
             [BodyJointId.Body_RightHandThumbMetacarpal] =       new JointInfo(OVRBoneId.Body_RightHandThumbMetacarpal, OVRBoneId.Body_RightHandWrist),
             [BodyJointId.Body_RightHandThumbProximal] =         new JointInfo(OVRBoneId.Body_RightHandThumbProximal, OVRBoneId.Body_RightHandThumbMetacarpal),
             [BodyJointId.Body_RightHandThumbDistal] =           new JointInfo(OVRBoneId.Body_RightHandThumbDistal, OVRBoneId.Body_RightHandThumbProximal),

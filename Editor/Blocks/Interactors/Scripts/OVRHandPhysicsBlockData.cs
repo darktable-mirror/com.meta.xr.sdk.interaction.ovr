@@ -47,7 +47,7 @@ namespace Oculus.Interaction.Editor.BuildingBlocks
         {
             var handPhysicsBlock = Instantiate(Prefab, hand.transform, false);
             handPhysicsBlock.SetActive(true);
-            handPhysicsBlock.name = $"[BB] {hand.Handedness} Hand Physics";
+            handPhysicsBlock.name = $"[BuildingBlock] {hand.Handedness} Hand Physics";
             handPhysicsBlock.GetComponent<HandPoseInputDevice>().InjectHand(hand);
             BlocksUtils.UpdateForAutoWiring(handPhysicsBlock);
             return handPhysicsBlock;

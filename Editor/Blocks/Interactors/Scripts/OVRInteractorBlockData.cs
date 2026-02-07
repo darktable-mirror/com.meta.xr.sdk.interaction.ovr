@@ -46,7 +46,7 @@ namespace Oculus.Interaction.Editor.BuildingBlocks
         {
             var interactor = Instantiate(Prefab, hand.transform, false);
             interactor.SetActive(true);
-            interactor.name = $"[BB] {hand.Handedness} {_interactorName}";
+            interactor.name = $"[BuildingBlock] {hand.Handedness} {_interactorName}";
             BlocksUtils.UpdateForAutoWiring(interactor);
             return interactor;
         }

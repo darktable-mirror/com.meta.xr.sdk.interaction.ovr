@@ -24,6 +24,9 @@ using static OVRSkeleton;
 
 namespace Oculus.Interaction.Input
 {
+    /// <summary>
+    /// An implementation of IHand that provides hand tracking data to Interaction SDK from a an OVRHand instance.
+    /// </summary>
     public class FromOVRHandDataSource : DataSource<HandDataAsset>
     {
         [Header("OVR Data Source")]
@@ -59,7 +62,6 @@ namespace Oculus.Interaction.Input
 
         private readonly HandDataAsset _handDataAsset = new HandDataAsset();
         private OVRHand _ovrHand;
-        private OVRInput.Controller _ovrController;
         private float _lastHandScale;
         private HandDataSourceConfig _config;
 
@@ -89,12 +91,10 @@ namespace Oculus.Interaction.Input
             if (_handedness == Handedness.Left)
             {
                 _ovrHand = CameraRigRef.LeftHand;
-                _ovrController = OVRInput.Controller.LHand;
             }
             else
             {
                 _ovrHand = CameraRigRef.RightHand;
-                _ovrController = OVRInput.Controller.RHand;
             }
 
             UpdateConfig();
@@ -160,14 +160,14 @@ namespace Oculus.Interaction.Input
         {
             _handDataAsset.Config = Config;
             _handDataAsset.IsDataValid = true;
-            _handDataAsset.IsConnected =
-                (OVRInput.GetConnectedControllers() & _ovrController) > 0;
+            _handDataAsset.IsConnected = false;
 
-            if (_ovrHand != null)
+            if (_ovrHand != null && _ovrHand.isActiveAndEnabled)
             {
                 IOVRSkeletonDataProvider skeletonProvider = _ovrHand;
                 SkeletonPoseData poseData = skeletonProvider.GetSkeletonPoseData();
-                if (poseData.IsDataValid && poseData.RootScale <= 0.0f)
+                _handDataAsset.IsConnected = poseData.IsDataValid && poseData.RootScale > 0.0f;
+                if (!_handDataAsset.IsConnected)
                 {
                     if (_lastHandScale <= 0.0f)
                     {

@@ -41,7 +41,7 @@ namespace Oculus.Interaction.Editor.BuildingBlocks
 
             var interaction = Instantiate(Prefab, cameraRigBlock.transform, true);
             interaction.SetActive(true);
-            interaction.name = $"[BB] {BlockName}";
+            interaction.name = $"[BuildingBlock] {BlockName}";
             BlocksUtils.UpdateForAutoWiring(interaction);
 
             return  new List<GameObject>() { interaction };

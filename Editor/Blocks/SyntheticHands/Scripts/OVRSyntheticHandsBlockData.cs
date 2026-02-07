@@ -20,8 +20,8 @@
 
 using Oculus.Interaction.Input;
 using System.Collections.Generic;
-using UnityEngine;
 using Meta.XR.BuildingBlocks.Editor;
+using UnityEngine;
 
 namespace Oculus.Interaction.Editor.BuildingBlocks
 {
@@ -53,7 +53,7 @@ namespace Oculus.Interaction.Editor.BuildingBlocks
             var syntheticHand = Instantiate(prefab, hand.transform, false);
             syntheticHand.GetComponent<SyntheticHand>().InjectModifyDataFromSource(hand);
             syntheticHand.SetActive(true);
-            syntheticHand.name = $"[BB] Synthetic {handedness} Hand";
+            syntheticHand.name = $"[BuildingBlock] Synthetic {handedness} Hand";
             BlocksUtils.UpdateForAutoWiring(syntheticHand);
             return syntheticHand;
         }

@@ -41,7 +41,7 @@ namespace Oculus.Interaction.Editor.BuildingBlocks
 
             var hands = Instantiate(Prefab, Vector3.zero, Quaternion.identity);
             hands.SetActive(true);
-            hands.name = $"[BB] {BlockName}";
+            hands.name = $"[SBB] {BlockName}";
             hands.transform.parent = interactionBlock.transform;
             BlocksUtils.UpdateForAutoWiring(hands);
 
