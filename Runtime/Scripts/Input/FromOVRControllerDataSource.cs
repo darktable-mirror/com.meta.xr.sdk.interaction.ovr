@@ -289,7 +289,7 @@ namespace Oculus.Interaction.Input
             _controllerDataAsset.IsDataValid = true;
             _controllerDataAsset.IsConnected =
                 (OVRInput.GetConnectedControllers() & _ovrController) > 0;
-            if (!_controllerDataAsset.IsConnected && !this.isActiveAndEnabled)
+            if (!_controllerDataAsset.IsConnected)
             {
                 // revert state fields to their defaults
                 _controllerDataAsset.IsTracked = default;

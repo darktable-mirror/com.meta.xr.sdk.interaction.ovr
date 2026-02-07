@@ -21,7 +21,6 @@
 using UnityEditor;
 using UnityEngine;
 using Oculus.Interaction.Input;
-using Oculus.Interaction.Locomotion;
 using Oculus.Interaction.Editor.QuickActions;
 
 namespace Oculus.Interaction.OVR.Editor.QuickActions
@@ -76,9 +75,6 @@ namespace Oculus.Interaction.OVR.Editor.QuickActions
                 // Disable existing rig visuals
                 foreach (OVRHand ovrCameraRigHand in existingRig.trackingSpace.GetComponentsInChildren<OVRHand>())
                     DisableDuplicateVisuals(ovrCameraRigHand);
-
-                // Wire up  missing references
-                AutoWire(existingRig);
             }
         }
 
@@ -122,17 +118,6 @@ namespace Oculus.Interaction.OVR.Editor.QuickActions
             if (hand.TryGetComponent<SkinnedMeshRenderer>(out var skinnedMeshRenderer))
                 skinnedMeshRenderer.enabled = false;
             Debug.Log("Duplicate hand visual components in OVRCameraRig disabled");
-        }
-
-        // Fill missing references between Camera Rig and Interaction prefabs
-        private static void AutoWire(OVRCameraRig cameraRig)
-        {
-            // Set locomotion origin
-            if (cameraRig.GetComponentInChildren<PlayerLocomotor>())
-            {
-                cameraRig.GetComponentInChildren<PlayerLocomotor>().InjectPlayerOrigin(cameraRig.transform);
-                Debug.Log("Auto-wiring succeeded: PlayerLocomotor PlayerOrigin was linked to " + cameraRig.transform.name);
-            }
         }
     }
 }

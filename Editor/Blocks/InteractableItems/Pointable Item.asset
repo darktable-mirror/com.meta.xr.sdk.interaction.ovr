@@ -15,7 +15,8 @@ MonoBehaviour:
   id: 76a013d1-7c16-4a60-9c1b-79b3691c0438
   version: 1
   blockName: Ray Interaction
-  description: Select buttons or objects using a ray from hands or controllers
+  description: Ray interactions use a ray emitting from a point defined on the hand
+    or controller to hover and select objects.
   tags:
     array:
     - name: Interaction
@@ -29,3 +30,5 @@ MonoBehaviour:
   packageDependencies: []
   isSingleton: 0
   usageInstructions: 
+  featureDocumentationName: Ray Interactions
+  featureDocumentationUrl: https://developers.meta.com/horizon/documentation/unity/unity-isdk-ray-interaction

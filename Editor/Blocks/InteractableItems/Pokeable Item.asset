@@ -15,7 +15,8 @@ MonoBehaviour:
   id: 5838e892-31a4-4f65-a415-dc108aefa14c
   version: 1
   blockName: Poke Interaction
-  description: Poke buttons or objects an item with hands or controllers
+  description: Poke interactions let you interact with surfaces via direct touch
+    using hands, controller driven hands, and controllers.
   tags:
     array:
     - name: Interaction
@@ -29,3 +30,5 @@ MonoBehaviour:
   packageDependencies: []
   isSingleton: 0
   usageInstructions: 
+  featureDocumentationName: Poke Interactions
+  featureDocumentationUrl: https://developers.meta.com/horizon/documentation/unity/unity-isdk-poke-interaction

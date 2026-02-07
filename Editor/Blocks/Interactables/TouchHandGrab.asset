@@ -15,7 +15,9 @@ MonoBehaviour:
   id: 4e14e0ba-51f2-4a5c-a822-e304bf36d48c
   version: 1
   blockName: Touch Hand Grab
-  description: Grab objects with hands using physics for automatic posing
+  description: "Touch Hand Grab lets you use hands or controller driven hands to
+    grab objects based on their collider configuration and dynamically conform fingers
+    to their surface. This feature isn\u2019t available for controllers.\n\n"
   tags:
     array:
     - name: Interaction
@@ -29,6 +31,5 @@ MonoBehaviour:
   packageDependencies: []
   isSingleton: 0
   usageInstructions: 
-  groupName: 
-  installationRoutineSelection:
-    selection: Variants
+  featureDocumentationName: Touch Hand Grab Interactions
+  featureDocumentationUrl: https://developers.meta.com/horizon/documentation/unity/unity-isdk-touch-hand-grab-interaction

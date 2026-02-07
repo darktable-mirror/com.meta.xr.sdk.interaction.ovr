@@ -18,105 +18,210 @@
  * limitations under the License.
  */
 
-using Oculus.Interaction;
-using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class MRPassthrough : MonoBehaviour
+namespace Oculus.Interaction.Samples
 {
-    public static class PassThrough
+    /// <summary>
+    /// This component maintains the Passthrough mode
+    /// between scenes and listen to a toggle for changes.
+    /// </summary>
+    public class MRPassthrough : MonoBehaviour
     {
-        public static bool _isPassThroughOn;
-        public static bool _isLocomotionSceneOn;
-    }
-
-    [Tooltip("Objects that shouldn't be rendered during passthrough")]
-    [Header("Passthrough Objects To Remove")]
-    [SerializeField] private GameObject[] _objects;
-    [Tooltip("These are UI objects that should be toggled ON/OFF during passthrough")]
-    [Header("UI GameObjects to toggle ON/OFF")]
-    [SerializeField] private TMP_Text _passThroughText;
-    [SerializeField] private PokeInteractable _locomotionInteractable;
-    [SerializeField] private PokeInteractable _passThroughInteractable;
-
-    private OVRPassthroughLayer _layer;
-    private Camera _camera;
-
-    private void Start()
-    {
-        _layer = FindObjectOfType<OVRPassthroughLayer>();
-        _camera = OVRManager.FindMainCamera();
-
-        if (OVRManager.HasInsightPassthroughInitFailed())
+        public static class PassThrough
         {
-            _passThroughInteractable.enabled = false;
+            public static bool IsPassThroughOn;
+            public static bool IsPassThroughCompatible;
         }
-        else
+
+        /// <summary>
+        /// Objects that shouldn't be rendered during passthrough
+        /// </summary>
+        [Tooltip("Objects that shouldn't be rendered during passthrough")]
+        [Header("Passthrough Objects To Remove")]
+        [SerializeField]
+        private GameObject[] _objects;
+
+        /// <summary>
+        /// These are UI objects that should be toggled ON/OFF during passthrough
+        /// </summary>
+        [Header("UI GameObjects to toggle ON/OFF")]
+        [Tooltip("These are UI objects that should be toggled ON/OFF during passthrough Locomotion")]
+        [SerializeField]
+        private Toggle _locomotionScene;
+
+        /// <summary>
+        /// These are UI objects that should be toggled ON/OFF during passthrough
+        /// </summary>
+        [Tooltip("These are UI objects that should be toggled ON/OFF during passthrough button")]
+        [SerializeField]
+        private Toggle _passThroughToggle;
+
+        /// <summary>
+        /// The OVRPassthrough Layer
+        /// </summary>
+        [Tooltip("The OVRPassthrough Layer")]
+        [SerializeField]
+        private OVRPassthroughLayer _layer;
+
+        /// <summary>
+        /// Use the CenterEyeAnchor or Center Camera
+        /// </summary>
+        [Tooltip("Use the CenterEyeAnchor or Center Camera")]
+        [SerializeField]
+        private Camera _camera;
+
+        protected bool _started = false;
+
+        #region Editor Callbacks
+        protected virtual void Reset()
         {
-            if (PassThrough._isPassThroughOn)
+            _layer = FindObjectOfType<OVRPassthroughLayer>();
+            _camera = OVRManager.FindMainCamera();
+        }
+        #endregion
+
+        protected virtual void Start()
+        {
+            this.BeginStart(ref _started);
+
+            this.AssertCollectionItems(_objects, nameof(_objects));
+            this.AssertField(_layer, nameof(_layer));
+            this.AssertField(_camera, nameof(_camera));
+            this.AssertField(_locomotionScene, nameof(_locomotionScene));
+            this.AssertField(_passThroughToggle, nameof(_passThroughToggle));
+
+            this.EndStart(ref _started);
+        }
+
+        protected virtual void OnEnable()
+        {
+            if (_started)
             {
-                TurnPassThroughOn();
+                ValidatePassthrough();
+            }
+        }
+
+        private void ValidatePassthrough()
+        {
+            if (OVRManager.HasInsightPassthroughInitFailed())
+            {
+                _passThroughToggle.enabled = false;
             }
             else
             {
-                TurnPassThroughOff();
-                if (PassThrough._isLocomotionSceneOn)
+                if (PassThrough.IsPassThroughOn)
                 {
-                    _passThroughInteractable.enabled = false;
+                    TurnPassThroughOn();
                 }
                 else
                 {
-                    _passThroughInteractable.enabled = true;
+                    TurnPassThroughOff();
+                    if (PassThrough.IsPassThroughCompatible)
+                    {
+                        _passThroughToggle.enabled = false;
+                    }
+                    else
+                    {
+                        _passThroughToggle.enabled = true;
+                    }
                 }
             }
         }
-    }
 
-    public void TurnLocoMotionSceneOn()
-    {
-        PassThrough._isLocomotionSceneOn = true;
-    }
-
-    public void TurnLocoMotionSceneOff()
-    {
-        PassThrough._isLocomotionSceneOn = false;
-    }
-
-    public void TogglePassThrough()
-    {
-        if (PassThrough._isPassThroughOn)
+        public void TurnLocoMotionSceneOn()
         {
-            TurnPassThroughOff();
+            PassThrough.IsPassThroughCompatible = true;
         }
-        else
-        {
-            TurnPassThroughOn();
-        }
-    }
 
-    private void TurnPassThroughOn()
-    {
-        PassThrough._isPassThroughOn = true;
-        _layer.textureOpacity = 1;
-        _locomotionInteractable.enabled = false;
-        _passThroughText.text = "Passthrough OFF";
-        _camera.clearFlags = CameraClearFlags.SolidColor;
-        foreach (GameObject obj in _objects)
+        public void TurnLocoMotionSceneOff()
         {
-            obj.SetActive(false);
+            PassThrough.IsPassThroughCompatible = false;
         }
-    }
 
-    private void TurnPassThroughOff()
-    {
-        PassThrough._isPassThroughOn = false;
-        _layer.textureOpacity = 0;
-        _locomotionInteractable.enabled = true;
-        _passThroughText.text = "Passthrough ON";
-        _camera.clearFlags = CameraClearFlags.Skybox;
-        foreach (GameObject obj in _objects)
+        public void TogglePassThrough()
         {
-            obj.SetActive(true);
+            if (PassThrough.IsPassThroughOn)
+            {
+                TurnPassThroughOff();
+            }
+            else
+            {
+                TurnPassThroughOn();
+            }
         }
+
+        public void CheckPassthroughToggle()
+        {
+            if (_passThroughToggle.enabled && PassThrough.IsPassThroughOn)
+            {
+                _passThroughToggle.isOn = true;
+                TurnPassThroughOn();
+            }
+        }
+
+        private void TurnPassThroughOn()
+        {
+            PassThrough.IsPassThroughOn = true;
+            _layer.textureOpacity = 1;
+            _locomotionScene.enabled = false;
+            _camera.clearFlags = CameraClearFlags.SolidColor;
+            foreach (GameObject obj in _objects)
+            {
+                obj.SetActive(false);
+            }
+        }
+
+        private void TurnPassThroughOff()
+        {
+            PassThrough.IsPassThroughOn = false;
+            _layer.textureOpacity = 0;
+            _locomotionScene.enabled = true;
+            _camera.clearFlags = CameraClearFlags.Skybox;
+            foreach (GameObject obj in _objects)
+            {
+                obj.SetActive(true);
+            }
+        }
+
+        #region Injects
+
+        public void InjectAllMRPassthrough(GameObject[] objects,
+            Toggle locomotionScene, Toggle passThroughToggle,
+            OVRPassthroughLayer layer, Camera camera)
+        {
+            InjectObjects(objects);
+            InjectLocomotionScene(locomotionScene);
+            InjectPassThroughToggle(passThroughToggle);
+            InjectLayer(layer);
+            InjectCamera(camera);
+        }
+
+        public void InjectObjects(GameObject[] objects)
+        {
+            _objects = objects;
+        }
+
+        public void InjectLocomotionScene(Toggle locomotionScene)
+        {
+            _locomotionScene = locomotionScene;
+        }
+
+        public void InjectPassThroughToggle(Toggle passThroughToggle)
+        {
+            _passThroughToggle = passThroughToggle;
+        }
+
+        public void InjectLayer(OVRPassthroughLayer layer)
+        {
+            _layer = layer;
+        }
+
+        public void InjectCamera(Camera camera)
+        {
+            _camera = camera;
+        }
+        #endregion
     }
 }

@@ -15,11 +15,12 @@ MonoBehaviour:
   id: 3f1827c2-c682-46d8-999e-0954e37e833e
   version: 1
   blockName: Distance Grab
-  description: Grab objects at a distance with hands or controllers
+  description: "Distance Grab lets you use your hands or controllers to grab and
+    move objects that are out of arm\u2019s reach. Typically, this means attracting
+    the object toward the hand and then grabbing like you do in a hand grab interaction."
   tags:
     array:
     - name: Interaction
-    - name: Experimental
   thumbnail: {fileID: 2800000, guid: d2fda77536d4aa742ae024d657e073ed, type: 3}
   order: 0
   prefab: {fileID: 0}

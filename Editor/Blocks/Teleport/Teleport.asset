@@ -15,12 +15,18 @@ MonoBehaviour:
   id: 85906e61-05be-4ea9-bfa6-139215b858df
   version: 1
   blockName: Teleport
-  description: Teleport using Hotspots, Navigation Mesh and other Surfaces
+  description: 'Teleporting is a locomotion interaction that allows the user to select
+    a distant location in the scene and move to it instantly.
+
+    This blocks enables
+    this form of locomotion and lets you add Hotspots, Navigation Mesh and other
+    Surfaces to your scene.'
   tags:
     array:
     - name: Interaction
     - name: Locomotion
     - name: Experimental
+    - name: ISDK
   thumbnail: {fileID: 2800000, guid: aeee651c76cd19f4bbcbf5a471e1114a, type: 3}
   order: 0
   prefab: {fileID: 0}
@@ -31,3 +37,5 @@ MonoBehaviour:
   packageDependencies: []
   isSingleton: 0
   usageInstructions: 
+  featureDocumentationName: Teleport Interaction
+  featureDocumentationUrl: https://developers.meta.com/horizon/documentation/unity/unity-isdk-teleport-interaction

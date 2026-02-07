@@ -15,7 +15,8 @@ MonoBehaviour:
   id: f8766c17-aaf8-4b55-9431-de8deea83842
   version: 1
   blockName: Grab Interaction
-  description: Grab objects with hands or controllers
+  description: Grab Interactions let you grab and release objects with either hands
+    or controllers.
   tags:
     array:
     - name: Interaction
@@ -30,6 +31,5 @@ MonoBehaviour:
   packageDependencies: []
   isSingleton: 0
   usageInstructions: 
-  groupName: 
-  installationRoutineSelection:
-    selection: Variants
+  featureDocumentationName: Hand Grab Interaction
+  featureDocumentationUrl: https://developers.meta.com/horizon/documentation/unity/unity-isdk-hand-grab-interaction

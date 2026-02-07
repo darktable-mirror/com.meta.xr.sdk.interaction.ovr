@@ -75,6 +75,17 @@ namespace Meta.XR.BuildingBlocks.Editor
             return blocks;
         }
 
+        internal override IReadOnlyCollection<InstallationStepInfo> GetInstallationSteps(VariantsSelection selection)
+        {
+            var installationSteps = new List<InstallationStepInfo>();
+            installationSteps.AddRange(base.GetInstallationSteps(selection));
+            if (InteractableInjectors.TryGetValue(variant, out TeleportCreationData creationData) && creationData != null)
+            {
+                installationSteps.Add(new InstallationStepInfo(null, $"Run <b>{creationData.defaultName}</b> on the target object."));
+            }
+            return installationSteps;
+        }
+
         private class TeleportCreationData
         {
             public string defaultName;

@@ -20,29 +20,84 @@
 
 using UnityEngine;
 
-public class MRPassThroughMaterialChanger : MonoBehaviour
+namespace Oculus.Interaction.Samples
 {
-    [Tooltip("Material that should be rendered during passthrough")]
-    [SerializeField] private Material _passThroughMaterial;
-    private Material _material;
-    private Renderer _renderer;
-
-    private void Start()
+    /// <summary>
+    /// When MR Passthrough is toggled to true this will change the current object material
+    /// to a transparent one to fit the aesthetic of Passthrough
+    /// </summary>
+    public class MRPassThroughMaterialChanger : MonoBehaviour
     {
-        _renderer = GetComponent<Renderer>();
-        _material = _renderer.material;
-    }
+        [Header("Passthrough Material")]
+        [Tooltip("Material that should be rendered during passthrough")]
+        [SerializeField]
+        private Material _passThroughMaterial;
 
-    // Update is called once per frame
-    private void Update()
-    {
-        if (_passThroughMaterial != null && MRPassthrough.PassThrough._isPassThroughOn)
+        [Header("Current GameObject Material")]
+        [SerializeField]
+        private Material _material;
+
+        [Tooltip("This current gameobject renderer")]
+        [SerializeField]
+        private Renderer _renderer;
+
+        protected bool _started = false;
+
+        protected virtual void Reset()
         {
-            _renderer.material = _passThroughMaterial;
+            _renderer = gameObject.GetComponent<Renderer>();
+            _material = _renderer.material;
         }
-        else
+
+        protected virtual void Start()
         {
-            _renderer.material = _material;
+            if (_renderer == null)
+            {
+                _renderer = gameObject.GetComponent<Renderer>();
+                _material = _renderer.material;
+            }
+
+            this.BeginStart(ref _started);
+            this.AssertField(_passThroughMaterial, nameof(_passThroughMaterial));
+            this.AssertField(_material, nameof(_material));
+            this.AssertField(_renderer, nameof(_renderer));
+
+            this.EndStart(ref _started);
         }
+
+        private void Update()
+        {
+            if (_passThroughMaterial != null && MRPassthrough.PassThrough.IsPassThroughOn)
+            {
+                _renderer.material = _passThroughMaterial;
+            }
+            else
+            {
+                _renderer.material = _material;
+            }
+        }
+        #region Inject
+        public void InjectAllChanger(Material passthroughMaterial,
+            Renderer render, Material material)
+        {
+            InjectPassthroughMaterial(passthroughMaterial);
+            InjectRenderer(render);
+            InjectMaterial(material);
+        }
+        public void InjectPassthroughMaterial(Material passthroughMaterial)
+        {
+            _passThroughMaterial = passthroughMaterial;
+        }
+
+        public void InjectRenderer(Renderer render)
+        {
+            _renderer = render;
+        }
+
+        public void InjectMaterial(Material material)
+        {
+            _material = material;
+        }
+        #endregion
     }
 }

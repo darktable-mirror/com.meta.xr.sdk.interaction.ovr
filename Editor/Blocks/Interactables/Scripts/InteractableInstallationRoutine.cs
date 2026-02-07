@@ -42,6 +42,7 @@ namespace Meta.XR.BuildingBlocks.Editor
 
         internal abstract class InteractableCreationDescriptionBase
         {
+            public abstract string Name { get; }
             public Type InteractableType;
             public Type InteractorType;
 
@@ -51,6 +52,8 @@ namespace Meta.XR.BuildingBlocks.Editor
         internal class InteractableCreationDescription<TWizard> : InteractableCreationDescriptionBase
             where TWizard : QuickActionsWizard
         {
+            public Type WizardType => typeof(TWizard);
+            public override string Name => ObjectNames.NicifyVariableName(WizardType.Name);
             public Func<GameObject, bool, Action<TWizard>, IEnumerable<GameObject>> CreationDelegate;
             public Func<InteractableInstallationRoutine, Action<TWizard>> CreateInjectionsDelegate;
 
@@ -161,6 +164,15 @@ namespace Meta.XR.BuildingBlocks.Editor
             }
             Undo.RegisterFullObjectHierarchyUndo(selectedObject, $"Installing {creationDescription.InteractableType} on {selectedObject.name}");
             return new List<GameObject>() { block };
+        }
+
+
+        internal override IReadOnlyCollection<InstallationStepInfo> GetInstallationSteps(VariantsSelection selection)
+        {
+            var installationSteps = new List<InstallationStepInfo>();
+            installationSteps.AddRange(base.GetInstallationSteps(selection));
+            installationSteps.Add(new InstallationStepInfo(null, $"Run <b>{CreationDescription.Name}</b> on the target object."));
+            return installationSteps;
         }
     }
 }

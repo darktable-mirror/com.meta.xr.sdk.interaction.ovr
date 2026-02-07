@@ -117,5 +117,23 @@ namespace Oculus.Interaction.Editor.BuildingBlocks
 
         private bool IsNotInsideInteractor(SyntheticHand syntheticHand)
             => syntheticHand.GetComponentInParent<IInteractor>() == null;
+
+        internal override IReadOnlyCollection<InstallationStepInfo> InstallationSteps
+        {
+            get
+            {
+                var handTrackingBlockData = Meta.XR.BuildingBlocks.Editor.Utils.GetBlockData(Meta.XR.BuildingBlocks.Editor.BlockDataIds.HandTracking);
+                var interactionHandTrackingBlockData = Meta.XR.BuildingBlocks.Editor.Utils.GetBlockData(BlockDataIds.InteractionHandTracking);
+                return new List<InstallationStepInfo>
+                {
+                    new(interactionHandTrackingBlockData, "Search for an instance of {0}."),
+                    new(_leftHand, "Instantiates {0} prefab as a child of the instance found, and auto-wires it."),
+                    new(null, $"Renames the instantiated prefab to <b>{Meta.XR.BuildingBlocks.Editor.Utils.BlockPublicTag} Synthetic Left Hand</b>."),
+                    new(_rightHand, "Instantiates {0} prefab as a child of the instance found, and auto-wires it."),
+                    new(null, $"Renames the instantiated prefab to <b>{Meta.XR.BuildingBlocks.Editor.Utils.BlockPublicTag} Synthetic Right Hand</b>."),
+                    new(handTrackingBlockData, "Disable hand visuals from {0}")
+                };
+            }
+        }
     }
 }
