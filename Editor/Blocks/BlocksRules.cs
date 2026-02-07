@@ -31,28 +31,38 @@ namespace Oculus.Interaction.OVR.Editor
         // Constructor is still needed to have InitializeOnLoad work
         static ISDKBlocksRules() { }
 
-        public static readonly OVRConfigurationTask DuplicateHandVisuals = OVRProjectSetup.RegisterTask(
-            level: OVRProjectSetup.TaskLevel.Recommended,
-            group: OVRProjectSetup.TaskGroup.Compatibility,
-            // Should rule be visible
-            conditionalValidity: _ => !SceneIsCompliant(),
-            // Has rule been satisfied
-            isDone: _ => SceneIsCompliant(),
-            message: "Conflicting Hand Visuals are present in the scene",
-            fix: _ =>
-            {
-                OVRCameraRig cameraRig = OVRComprehensiveRigWizard.FindExistingCameraRig();
-                if (cameraRig == null)
-                    return;
+        static OVRConfigurationTask _duplicateHandVisuals;
 
-                OVRHand[] cameraRigHands = cameraRig.trackingSpace.GetComponentsInChildren<OVRHand>();
-                foreach (OVRHand hand in cameraRigHands)
-                {
-                    OVRComprehensiveRigWizard.DisableDuplicateVisuals(hand);
-                }
-            },
-            fixMessage: "Disable Hand Visuals in OVR Camera Rig"
-        );
+        public static OVRConfigurationTask DuplicateHandVisuals
+        {
+            get
+            {
+                _duplicateHandVisuals ??= OVRProjectSetup.RegisterTask(
+                    level: OVRProjectSetup.TaskLevel.Recommended,
+                    group: OVRProjectSetup.TaskGroup.Compatibility,
+                    // Should rule be visible
+                    conditionalValidity: _ => !SceneIsCompliant(),
+                    // Has rule been satisfied
+                    isDone: _ => SceneIsCompliant(),
+                    message: "Conflicting Hand Visuals are present in the scene",
+                    fix: _ =>
+                    {
+                        OVRCameraRig cameraRig = OVRComprehensiveRigWizard.FindExistingCameraRig();
+                        if (cameraRig == null)
+                            return;
+
+                        OVRHand[] cameraRigHands = cameraRig.trackingSpace.GetComponentsInChildren<OVRHand>();
+                        foreach (OVRHand hand in cameraRigHands)
+                        {
+                            OVRComprehensiveRigWizard.DisableDuplicateVisuals(hand);
+                        }
+                    },
+                    fixMessage: "Disable Hand Visuals in OVR Camera Rig"
+                );
+
+                return _duplicateHandVisuals;
+            }
+        }
 
         private static bool SceneIsCompliant()
         {

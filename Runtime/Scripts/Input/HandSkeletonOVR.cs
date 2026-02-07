@@ -113,8 +113,16 @@ namespace Oculus.Interaction.Input
                 boneIndex = (int)HandJointId.HandPinky1;
             }
 #endif
-            int capsuleIndex = System.Array.FindIndex(ovrSkeleton.BoneCapsules, c => c.BoneIndex == boneIndex);
-            return capsuleIndex < 0 ? 0f : ovrSkeleton.BoneCapsules[capsuleIndex].Radius;
+            var boneCapsules = ovrSkeleton.BoneCapsules;
+            for (int i = 0; i < boneCapsules.Length; ++i)
+            {
+                if (boneCapsules[i].BoneIndex == boneIndex)
+                {
+                    return boneCapsules[i].Radius;
+                }
+            }
+
+            return 0f;
         }
     }
 }

@@ -35,9 +35,8 @@ namespace Meta.XR.BuildingBlocks.Editor
     {
         protected override bool UsesPrefab => false;
 
-        private readonly OVRConfigurationTask[] _rulesToFix = { ISDKBlocksRules.DuplicateHandVisuals };
         internal override IEnumerable<OVRConfigurationTask> GetAssociatedRules(BuildingBlock block)
-            => _rulesToFix;
+            => new[] { ISDKBlocksRules.DuplicateHandVisuals };
 
 
         internal abstract class InteractableCreationDescriptionBase

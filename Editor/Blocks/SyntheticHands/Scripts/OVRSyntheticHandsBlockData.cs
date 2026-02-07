@@ -32,10 +32,8 @@ namespace Oculus.Interaction.Editor.BuildingBlocks
 {
     internal class OVRSyntheticHandsBlockData : BlockData
     {
-        private readonly OVRConfigurationTask[] _rulesToFix = { ISDKBlocksRules.DuplicateHandVisuals };
         internal override IEnumerable<OVRConfigurationTask> GetAssociatedRules(BuildingBlock block)
-
-            => _rulesToFix;
+            => new[] { ISDKBlocksRules.DuplicateHandVisuals };
 
         public GameObject _leftHand;
         public GameObject _rightHand;
