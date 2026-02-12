@@ -556,7 +556,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _activeState: {fileID: 5908026783031351099}
   _includeChildrenAsDependents: 0
-  _ignoreDisabledElements: 0
   _gameObjects:
   - {fileID: 4374689931754613518}
   - {fileID: 8682811415313717974}
@@ -588,7 +587,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _activeState: {fileID: 748169726456461343}
   _includeChildrenAsDependents: 0
-  _ignoreDisabledElements: 0
   _gameObjects:
   - {fileID: 5554273881257249875}
   _monoBehaviours: []
@@ -820,7 +818,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _activeState: {fileID: 6888271651240971389}
   _includeChildrenAsDependents: 0
-  _ignoreDisabledElements: 0
   _gameObjects: []
   _monoBehaviours:
   - {fileID: 1199086356070025741}
@@ -1316,6 +1313,16 @@ PrefabInstance:
       propertyPath: _ovrMicrogestureEventSource
       value: 
       objectReference: {fileID: 9005126143510982678}
+    - target: {fileID: 6451723947128383924, guid: ea2ad0c10bee76841b22e34d00134ab3,
+        type: 3}
+      propertyPath: _whenSwipeLeft.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6451723947128383924, guid: ea2ad0c10bee76841b22e34d00134ab3,
+        type: 3}
+      propertyPath: _whenSwipeRight.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6451723947128383930, guid: ea2ad0c10bee76841b22e34d00134ab3,
         type: 3}
       propertyPath: m_Name

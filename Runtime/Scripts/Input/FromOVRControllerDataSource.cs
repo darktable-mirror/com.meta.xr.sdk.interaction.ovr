@@ -115,7 +115,7 @@ namespace Oculus.Interaction.Input
                 Quaternion.Euler(359.209534f, 353.548035f, 353.044556f))
         };
 
-        private static readonly Pose[] QUEST2_POINTERS = new Pose[2]
+        private static readonly Pose[] TOUCH_POINTERS = new Pose[2]
         {
             new Pose(new Vector3(0.00899999961f, -0.00321028521f, 0.030869998f),
                 Quaternion.Euler(359.209534f, 6.45196056f, 6.95544577f)),
@@ -123,21 +123,116 @@ namespace Oculus.Interaction.Input
                 Quaternion.Euler(359.209534f, 353.548035f, 353.044556f))
         };
 
-        public Pose LocalPointerPose { get; private set; }
+        private static readonly Pose[] TOUCHPRO_POINTERS = new Pose[2]
+        {
+            new Pose(new Vector3(0.008f, 0f, 0.03f),
+                Quaternion.AngleAxis(5f, new Vector3(0f, 1f, 0f))),
+            new Pose(new Vector3(-0.008f, 0f, 0.03f),
+                Quaternion.AngleAxis(-5f, new Vector3(0f, 1f, 0f)))
+        };
+
+        private static readonly Pose[] TOUCHPLUS_POINTERS = new Pose[2]
+        {
+            new Pose(new Vector3(0.008f, 0.00014f, 0.03f),
+                Quaternion.AngleAxis(5f, new Vector3(0f, 1f, 0f))),
+            new Pose(new Vector3(-0.008f, 0.00014f, 0.03f),
+                Quaternion.AngleAxis(-5f, new Vector3(0f, 1f, 0f)))
+        };
+
+        private OVRPlugin.SystemHeadset _headset;
+        private OVRPlugin.InteractionProfile _controller;
+        private bool _found;
+        private Pose _cachedPose;
+        private OVRPlugin.Hand _handedness;
+        private int _handIndex;
 
         public OVRPointerPoseSelector(Handedness handedness)
         {
-            OVRPlugin.SystemHeadset headset = OVRPlugin.GetSystemHeadsetType();
-            switch (headset)
+            _handedness = handedness == Handedness.Left ? OVRPlugin.Hand.HandLeft : OVRPlugin.Hand.HandRight;
+            _handIndex = (int)handedness;
+            _controller = OVRPlugin.InteractionProfile.None;
+            _headset = OVRPlugin.SystemHeadset.None;
+            _cachedPose = Pose.identity;
+            _found = false;
+        }
+
+        public Pose GetPointerPose()
+        {
+            if (_found)
             {
-                case OVRPlugin.SystemHeadset.Oculus_Quest_2:
-                case OVRPlugin.SystemHeadset.Oculus_Link_Quest_2:
-                    LocalPointerPose = QUEST2_POINTERS[(int)handedness];
+                return _cachedPose;
+            }
+
+            TryRetrieveCachedController(_handedness);
+            TryRetrieveCachedHeadset();
+
+            switch (_controller)
+            {
+                case OVRPlugin.InteractionProfile.Touch:
+                    _cachedPose = TOUCH_POINTERS[_handIndex]; _found = true; break;
+                case OVRPlugin.InteractionProfile.TouchPro:
+                    _cachedPose = TOUCHPRO_POINTERS[_handIndex]; _found = true; break;
+                case OVRPlugin.InteractionProfile.TouchPlus:
+                    _cachedPose = TOUCHPLUS_POINTERS[_handIndex]; _found = true; break;
+                case OVRPlugin.InteractionProfile.None:
+                    switch (_headset)
+                    {
+                        case OVRPlugin.SystemHeadset.Rift_DK1:
+                        case OVRPlugin.SystemHeadset.Rift_DK2:
+                        case OVRPlugin.SystemHeadset.Rift_CB:
+                        case OVRPlugin.SystemHeadset.Rift_CV1:
+                        case OVRPlugin.SystemHeadset.Rift_S:
+                        case OVRPlugin.SystemHeadset.Oculus_Quest:
+                        case OVRPlugin.SystemHeadset.Oculus_Link_Quest:
+                            _cachedPose = QUEST1_POINTERS[_handIndex]; _found = true; break;
+                        //Beyond this point, we will assume the default controller until
+                        //we find the real interaction profile.
+                        case OVRPlugin.SystemHeadset.Oculus_Quest_2:
+                        case OVRPlugin.SystemHeadset.Oculus_Link_Quest_2:
+                            _cachedPose = TOUCH_POINTERS[_handIndex]; break;
+                        case OVRPlugin.SystemHeadset.Meta_Quest_Pro:
+                        case OVRPlugin.SystemHeadset.Meta_Link_Quest_Pro:
+                            _cachedPose = TOUCHPRO_POINTERS[_handIndex]; break;
+                        case OVRPlugin.SystemHeadset.Meta_Quest_3:
+                        case OVRPlugin.SystemHeadset.Meta_Quest_3S:
+                        case OVRPlugin.SystemHeadset.Meta_Link_Quest_3:
+                        case OVRPlugin.SystemHeadset.Meta_Link_Quest_3S:
+                            _cachedPose = TOUCHPLUS_POINTERS[_handIndex]; break;
+                        case OVRPlugin.SystemHeadset.None:
+                        default:
+                            _cachedPose = TOUCHPLUS_POINTERS[_handIndex]; break;
+                    }
                     break;
                 default:
-                    LocalPointerPose = QUEST1_POINTERS[(int)handedness];
-                    break;
+                    _cachedPose = TOUCHPLUS_POINTERS[_handIndex]; break;
             }
+            return _cachedPose;
+        }
+
+        private bool TryRetrieveCachedController(OVRPlugin.Hand hand)
+        {
+            if (_controller == OVRPlugin.InteractionProfile.None)
+            {
+                _controller = OVRPlugin.GetCurrentInteractionProfile(hand);
+                if (_controller == OVRPlugin.InteractionProfile.None
+                    && OVRPlugin.IsMultimodalHandsControllersSupported())
+                {
+                    _controller = OVRPlugin.GetCurrentDetachedInteractionProfile(hand);
+                }
+            }
+
+            return _controller != OVRPlugin.InteractionProfile.None;
+        }
+
+
+        private bool TryRetrieveCachedHeadset()
+        {
+            if (_headset == OVRPlugin.SystemHeadset.None)
+            {
+                _headset = OVRPlugin.GetSystemHeadsetType();
+            }
+
+            return _headset != OVRPlugin.SystemHeadset.None;
         }
     }
 
@@ -324,12 +419,14 @@ namespace Oculus.Interaction.Input
             _controllerDataAsset.RootPoseOrigin = PoseOrigin.RawTrackedPose;
 
             // Convert controller pointer pose from local to tracking space.
+            Pose localPointerPose = _pointerPoseSelector.GetPointerPose();
             Matrix4x4 controllerModelToTracking = Matrix4x4.TRS(
-                _controllerDataAsset.RootPose.position, _controllerDataAsset.RootPose.rotation,
+                _controllerDataAsset.RootPose.position,
+                _controllerDataAsset.RootPose.rotation,
                 Vector3.one);
             _controllerDataAsset.PointerPose =
-                new Pose(controllerModelToTracking.MultiplyPoint3x4(_pointerPoseSelector.LocalPointerPose.position),
-                    _controllerDataAsset.RootPose.rotation * _pointerPoseSelector.LocalPointerPose.rotation);
+                new Pose(controllerModelToTracking.MultiplyPoint3x4(localPointerPose.position),
+                    _controllerDataAsset.RootPose.rotation * localPointerPose.rotation);
 
             _controllerDataAsset.PointerPoseOrigin = PoseOrigin.RawTrackedPose;
         }

@@ -379,7 +379,17 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1477225208416875705, guid: fac1b34d244291e409464389de307e81,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1675685142253777449, guid: fac1b34d244291e409464389de307e81,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1804664176901660288, guid: fac1b34d244291e409464389de307e81,
         type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -409,16 +419,6 @@ PrefabInstance:
       propertyPath: _hmd
       value: 
       objectReference: {fileID: 2922565180446635899}
-    - target: {fileID: 4302339535688480838, guid: fac1b34d244291e409464389de307e81,
-        type: 3}
-      propertyPath: _whenSwipeUp.m_PersistentCalls.m_Calls.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4302339535688480840, guid: fac1b34d244291e409464389de307e81,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4871089835330585555, guid: fac1b34d244291e409464389de307e81,
         type: 3}
       propertyPath: m_IsActive
@@ -592,21 +592,6 @@ PrefabInstance:
     - target: {fileID: 8945518246439380565, guid: fac1b34d244291e409464389de307e81,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9034888068714139609, guid: fac1b34d244291e409464389de307e81,
-        type: 3}
-      propertyPath: _whenSwipeDown.m_PersistentCalls.m_Calls.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9034888068714139609, guid: fac1b34d244291e409464389de307e81,
-        type: 3}
-      propertyPath: _whenSwipeLeft.m_PersistentCalls.m_Calls.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9034888068714139609, guid: fac1b34d244291e409464389de307e81,
-        type: 3}
-      propertyPath: _whenSwipeRight.m_PersistentCalls.m_Calls.Array.size
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1561,17 +1546,17 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1477225208416875705, guid: fac1b34d244291e409464389de307e81,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1804664176901660288, guid: fac1b34d244291e409464389de307e81,
         type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2017662319688186209, guid: fac1b34d244291e409464389de307e81,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2312978158887747273, guid: fac1b34d244291e409464389de307e81,
         type: 3}
       propertyPath: m_IsActive
       value: 0

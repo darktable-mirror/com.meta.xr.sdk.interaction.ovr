@@ -11,11 +11,11 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f17dcb37095e3d54b8cdae1da5ac87db, type: 3}
   m_Name: Teleport Interactable
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   id: 5c49fca3-fb86-46fe-8728-fe25eb009af8
   routineName: Use Teleport
   description: Use Teleport interaction
   targetBlockDataId: 85906e61-05be-4ea9-bfa6-139215b858df
   prefab: {fileID: 0}
   packageDependencies: []
-  variant: 1
+  variant: 0
