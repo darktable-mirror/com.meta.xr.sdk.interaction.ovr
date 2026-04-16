@@ -21,7 +21,8 @@ MonoBehaviour:
     - name: Interaction
     - name: Passthrough
     - name: Internal
-  thumbnail: {fileID: 2800000, guid: 2e087a8001f865242823f8742e642c58, type: 3}
+  thumbnail: {fileID: 0}
+  remoteThumbnailContentId: 25621121387543334
   order: 9
   prefab: {fileID: 9215032166623549228, guid: c1659603b25249a42ac950c013e12970, type: 3}
   externalBlockDependencies: []

@@ -30,5 +30,6 @@ namespace Oculus.Interaction.Editor.BuildingBlocks
         public const string DistanceHandGrab = "3f1827c2-c682-46d8-999e-0954e37e833e";
         public const string TouchHandGrab = "4e14e0ba-51f2-4a5c-a822-e304bf36d48c";
         public const string Teleport = "85906e61-05be-4ea9-bfa6-139215b858df";
+        public const string Gaze = "35d414fb-a907-4cb1-849e-fc7af7bca9ad";
     }
 }

@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 81d5758cfb47823489080981979f33be, type: 3}
   m_Name: DistanceHandGrab
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   id: 3f1827c2-c682-46d8-999e-0954e37e833e
   version: 1
   blockName: Distance Grab
@@ -22,16 +22,17 @@ MonoBehaviour:
     array:
     - name: Interaction
     - name: ISDK
-  thumbnail: {fileID: 2800000, guid: d2fda77536d4aa742ae024d657e073ed, type: 3}
+  thumbnail: {fileID: 0}
+  remoteThumbnailContentId: 33528303743434903
   order: 0
   prefab: {fileID: 0}
   selectedGuidedSetupIndex: 0
   externalBlockDependencies: []
   dependencies:
   - 81f55626-5fad-45e9-a1df-184f330da7ba
-  guidedSetupName: 
+  guidedSetupName:
   packageDependencies: []
   isSingleton: 0
-  usageInstructions: 
+  usageInstructions:
   featureDocumentationName: Distance Hand Grab Interaction
   featureDocumentationUrl: https://developer.oculus.com/documentation/unity/unity-isdk-distance-hand-grab-interaction/

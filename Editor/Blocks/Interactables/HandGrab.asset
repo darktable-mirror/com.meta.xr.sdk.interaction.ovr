@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 81d5758cfb47823489080981979f33be, type: 3}
   m_Name: HandGrab
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   id: f8766c17-aaf8-4b55-9431-de8deea83842
   version: 1
   blockName: Grab Interaction
@@ -21,16 +21,17 @@ MonoBehaviour:
     array:
     - name: Interaction
     - name: ISDK
-  thumbnail: {fileID: 2800000, guid: eb96e698da89d06478d1386a9e8140aa, type: 3}
+  thumbnail: {fileID: 0}
+  remoteThumbnailContentId: 25873673952258716
   order: 0
   prefab: {fileID: 0}
   selectedGuidedSetupIndex: 0
   externalBlockDependencies: []
   dependencies:
   - 81f55626-5fad-45e9-a1df-184f330da7ba
-  guidedSetupName: 
+  guidedSetupName:
   packageDependencies: []
   isSingleton: 0
-  usageInstructions: 
+  usageInstructions:
   featureDocumentationName: Hand Grab Interaction
   featureDocumentationUrl: https://developers.meta.com/horizon/documentation/unity/unity-isdk-hand-grab-interaction
