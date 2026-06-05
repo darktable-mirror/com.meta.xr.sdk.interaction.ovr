@@ -66,8 +66,14 @@ namespace Oculus.Interaction.Input
 
         protected void Awake()
         {
-            CameraRigRef = _cameraRigRef as IOVRCameraRigRef;
-            TrackingToWorldTransformer = _trackingToWorldTransformer as ITrackingToWorldTransformer;
+            if (CameraRigRef == null)
+            {
+                CameraRigRef = _cameraRigRef as IOVRCameraRigRef;
+            }
+            if (TrackingToWorldTransformer == null)
+            {
+                TrackingToWorldTransformer = _trackingToWorldTransformer as ITrackingToWorldTransformer;
+            }
         }
 
         protected override void Start()
@@ -182,6 +188,16 @@ namespace Oculus.Interaction.Input
         #region Inject
 
         public void InjectAllFromOVRHmdDataSource(UpdateModeFlags updateMode, IDataSource updateAfter,
+            bool useOvrManagerEmulatedPose, IOVRCameraRigRef cameraRigRef, ITrackingToWorldTransformer trackingToWorldTransformer)
+        {
+            base.InjectAllDataSource(updateMode, updateAfter);
+            InjectCameraRigRef(cameraRigRef);
+            InjectUseOvrManagerEmulatedPose(useOvrManagerEmulatedPose);
+            InjectTrackingToWorldTransformer(trackingToWorldTransformer);
+        }
+
+        [Obsolete("Use version with `cameraRigRef` parameter")]
+        public void InjectAllFromOVRHmdDataSource(UpdateModeFlags updateMode, IDataSource updateAfter,
             bool useOvrManagerEmulatedPose, ITrackingToWorldTransformer trackingToWorldTransformer)
         {
             base.InjectAllDataSource(updateMode, updateAfter);
@@ -198,6 +214,12 @@ namespace Oculus.Interaction.Input
         {
             _trackingToWorldTransformer = trackingToWorldTransformer as UnityEngine.Object;
             TrackingToWorldTransformer = trackingToWorldTransformer;
+        }
+
+        public void InjectCameraRigRef(IOVRCameraRigRef cameraRigRef)
+        {
+            _cameraRigRef = cameraRigRef as UnityEngine.Object;
+            CameraRigRef = cameraRigRef;
         }
 
         #endregion

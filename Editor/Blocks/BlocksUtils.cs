@@ -45,20 +45,14 @@ namespace Oculus.Interaction.Editor.BuildingBlocks
                 yield break;
             }
 
-            var handActiveStates = handsBlock.GetComponentsInChildren<HandActiveState>();
-            if (handActiveStates == null || handActiveStates.Length == 0)
+            var hands = handsBlock.GetComponentsInChildren<Hand>();
+            if (hands == null || hands.Length == 0)
             {
                 yield break;
             }
 
-            foreach (var handActiveState in handActiveStates)
+            foreach (var hand in hands)
             {
-                if (handActiveState == null)
-                {
-                    continue;
-                }
-
-                var hand = handActiveState.GetComponent<Hand>();
                 if (hand == null)
                 {
                     continue;

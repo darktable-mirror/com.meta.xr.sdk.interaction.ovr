@@ -116,7 +116,9 @@ namespace Oculus.Interaction.Editor
             }
 
             OVRHand hand = Object.FindObjectsByType<OVRHand>(FindObjectsSortMode.InstanceID)
+                 .Where(hand => hand.gameObject.scene == monoBehaviour.gameObject.scene)
                  .FirstOrDefault(hand => hand.GetHand() == ovrHandedness);
+
             if (hand != null)
             {
                 field.SetValue(monoBehaviour, hand);

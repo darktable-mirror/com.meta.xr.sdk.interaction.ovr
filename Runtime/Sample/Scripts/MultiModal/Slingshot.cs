@@ -143,7 +143,7 @@ namespace Oculus.Interaction.Samples
             Quaternion desiredRotation = grabPoint.rotation * _grabDeltaInLocalSpace.rotation;
             Pose desiredLocalPose = PoseUtils.Delta(targetTransform.parent, new Pose(desiredPosition, desiredRotation));
 
-            Vector3 aimVector = (desiredLocalPose.position - _neutralPose.position);
+            Vector3 aimVector = desiredLocalPose.position - _neutralPose.position;
 
             float tension = Vector3.Distance(currentPosition, _neutralPose.position);
             float desiredTension = aimVector.magnitude;
@@ -154,18 +154,48 @@ namespace Oculus.Interaction.Samples
                 desiredTension = Mathf.MoveTowards(tension, desiredTension, translationResistance);
             }
 
-            Vector3 idealAim = Vector3.ProjectOnPlane(aimVector, Vector3.right).normalized;
-            aimVector = Vector3.Slerp(aimVector, idealAim, _aimingResistance.Evaluate(tension)).normalized;
+            Vector3 aimNormalized = aimVector.sqrMagnitude > 0.0001f
+                ? aimVector.normalized
+                : Vector3.back;
+
+            float aimingResistance = _aimingResistance.Evaluate(tension);
+
+            // Constrain aim direction to a cone around backward.
+            // This mimics a real slingshot band restricting extreme lateral movement.
+            float maxAngleFromBack = Mathf.Lerp(60f, 45f, aimingResistance);
+            float angleFromBack = Vector3.Angle(aimNormalized, Vector3.back);
+
+            if (angleFromBack > maxAngleFromBack)
+            {
+                Vector3 axis = Vector3.Cross(Vector3.back, aimNormalized);
+                if (axis.sqrMagnitude < 0.0001f)
+                {
+                    axis = Vector3.up;
+                }
+                aimNormalized = Quaternion.AngleAxis(maxAngleFromBack, axis.normalized) * Vector3.back;
+            }
+
+            // Apply aiming resistance to pull toward center
+            aimVector = Vector3.Slerp(aimNormalized, Vector3.back, aimingResistance * 0.5f).normalized;
 
             Vector3 targetPosition = _neutralPose.position + aimVector * desiredTension;
-
             targetTransform.localPosition = targetPosition;
 
+            // Constrain rotation to prevent extreme tilting
             tension = Tension(targetPosition);
             float rotationResistance = _aimingResistance.Evaluate(tension);
-            Quaternion aimingDirection = Quaternion.LookRotation(-aimVector, desiredLocalPose.up);
 
-            targetTransform.localRotation = Quaternion.SlerpUnclamped(desiredLocalPose.rotation, aimingDirection, rotationResistance);
+            Quaternion aimingDirection = Quaternion.LookRotation(-aimVector, Vector3.up);
+            Quaternion targetRotation = Quaternion.SlerpUnclamped(desiredLocalPose.rotation, aimingDirection, rotationResistance);
+
+            const float maxRotationAngle = 45f;
+            float rotationAngle = Quaternion.Angle(Quaternion.identity, targetRotation);
+            if (rotationAngle > maxRotationAngle)
+            {
+                targetRotation = Quaternion.Slerp(Quaternion.identity, targetRotation, maxRotationAngle / rotationAngle);
+            }
+
+            targetTransform.localRotation = targetRotation;
 
             OnStretch(tension);
         }
@@ -173,6 +203,7 @@ namespace Oculus.Interaction.Samples
         public void EndTransform()
         {
             _isGrabbed = false;
+
             if (_loadedPellet != null)
             {
                 Vector3 force = SlingshotLaunchForce();

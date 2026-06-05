@@ -77,9 +77,18 @@ namespace Oculus.Interaction.Input
 
         protected virtual void Awake()
         {
-            TrackingToWorldTransformer = _trackingToWorldTransformer as ITrackingToWorldTransformer;
-            CameraRigRef = _cameraRigRef as IOVRCameraRigRef;
-            HandSkeletonProvider = _handSkeletonProvider as IHandSkeletonProvider;
+            if (TrackingToWorldTransformer == null)
+            {
+                TrackingToWorldTransformer = _trackingToWorldTransformer as ITrackingToWorldTransformer;
+            }
+            if (CameraRigRef == null)
+            {
+                CameraRigRef = _cameraRigRef as IOVRCameraRigRef;
+            }
+            if (HandSkeletonProvider == null)
+            {
+                HandSkeletonProvider = _handSkeletonProvider as IHandSkeletonProvider;
+            }
             UpdateConfig();
         }
 

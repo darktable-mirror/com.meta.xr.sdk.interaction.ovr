@@ -299,8 +299,14 @@ namespace Oculus.Interaction.Input
 
         protected void Awake()
         {
-            TrackingToWorldTransformer = _trackingToWorldTransformer as ITrackingToWorldTransformer;
-            CameraRigRef = _cameraRigRef as IOVRCameraRigRef;
+            if (TrackingToWorldTransformer == null)
+            {
+                TrackingToWorldTransformer = _trackingToWorldTransformer as ITrackingToWorldTransformer;
+            }
+            if (CameraRigRef == null)
+            {
+                CameraRigRef = _cameraRigRef as IOVRCameraRigRef;
+            }
 
             UpdateConfig();
         }
@@ -436,6 +442,16 @@ namespace Oculus.Interaction.Input
         #region Inject
 
         public void InjectAllFromOVRControllerDataSource(UpdateModeFlags updateMode, IDataSource updateAfter,
+            Handedness handedness, IOVRCameraRigRef cameraRigRef, ITrackingToWorldTransformer trackingToWorldTransformer)
+        {
+            base.InjectAllDataSource(updateMode, updateAfter);
+            InjectHandedness(handedness);
+            InjectCameraRigRef(cameraRigRef);
+            InjectTrackingToWorldTransformer(trackingToWorldTransformer);
+        }
+
+        [System.Obsolete("Use version with `cameraRigRef` parameter")]
+        public void InjectAllFromOVRControllerDataSource(UpdateModeFlags updateMode, IDataSource updateAfter,
             Handedness handedness, ITrackingToWorldTransformer trackingToWorldTransformer)
         {
             base.InjectAllDataSource(updateMode, updateAfter);
@@ -454,6 +470,11 @@ namespace Oculus.Interaction.Input
             TrackingToWorldTransformer = trackingToWorldTransformer;
         }
 
+        public void InjectCameraRigRef(IOVRCameraRigRef cameraRigRef)
+        {
+            _cameraRigRef = cameraRigRef as UnityEngine.Object;
+            CameraRigRef = cameraRigRef;
+        }
         #endregion
     }
 }

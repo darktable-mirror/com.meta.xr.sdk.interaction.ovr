@@ -34,7 +34,7 @@ namespace Meta.XR.BuildingBlocks.Editor
         public override List<GameObject> Install(BlockData blockData, GameObject selectedObject)
         {
             IEnumerable<GameObject> createdObjects =
-                QuickActionsWizard.CreateWithDefaults<OVRComprehensiveRigWizard>(null, true,
+                QuickActionsWizard.CreateWithDefaults<OVRComprehensiveInteractionRigWizard>(null, true,
                 (wizard) =>
                 {
 #if UNITY_2022_1_OR_NEWER
@@ -46,7 +46,7 @@ namespace Meta.XR.BuildingBlocks.Editor
             selectedObject = blocks.First();
             selectedObject.name = $"{Utils.BlockPublicTag} {selectedObject.name}";
 
-            Undo.RegisterFullObjectHierarchyUndo(selectedObject, $"Installing {nameof(OVRComprehensiveRigWizard)} on {selectedObject.name}");
+            Undo.RegisterFullObjectHierarchyUndo(selectedObject, $"Installing {nameof(OVRComprehensiveInteractionRigWizard)} on {selectedObject.name}");
 
             return blocks;
         }

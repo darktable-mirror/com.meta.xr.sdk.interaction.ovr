@@ -60,18 +60,25 @@ namespace Oculus.Interaction.Body.Input
 
         protected void Awake()
         {
-            CameraRigRef = _cameraRigRef as IOVRCameraRigRef;
-            DataProvider = _dataProvider as IOVRSkeletonDataProvider;
+            if (CameraRigRef == null)
+            {
+                CameraRigRef = _cameraRigRef as IOVRCameraRigRef;
+            }
+            if (DataProvider == null)
+            {
+                DataProvider = _dataProvider as IOVRSkeletonDataProvider;
+            }
         }
 
         protected override void Start()
         {
-            base.Start();
+            this.BeginStart(ref _started, () => base.Start());
             this.AssertField(DataProvider, nameof(DataProvider));
             this.AssertField(CameraRigRef, nameof(CameraRigRef));
 
             _mapping = new OVRSkeletonMapping(GetJointSet(DataProvider));
             _bodyDataAsset.SkeletonMapping = _mapping;
+            this.EndStart(ref _started);
         }
 
         protected override void OnEnable()
@@ -141,5 +148,35 @@ namespace Oculus.Interaction.Body.Input
                     PoseUtils.Delta(_bodyDataAsset.Root, pose);
             }
         }
+
+        #region Inject
+
+        public void InjectAllFromOVRBodyDataSource(UpdateModeFlags updateMode, IDataSource updateAfter,
+           IOVRCameraRigRef cameraRigRef, IOVRSkeletonDataProvider skeletonDataProvider, bool processLateUpdates)
+        {
+            base.InjectAllDataSource(updateMode, updateAfter);
+            InjectCameraRigRef(cameraRigRef);
+            InjectSkeletonDataProvider(skeletonDataProvider);
+            InjectProcessLateUpdates(processLateUpdates);
+        }
+
+        public void InjectSkeletonDataProvider(IOVRSkeletonDataProvider skeletonDataProvider)
+        {
+            _dataProvider = skeletonDataProvider as UnityEngine.Object;
+            DataProvider = skeletonDataProvider;
+        }
+
+        public void InjectProcessLateUpdates(bool processLateUpdates)
+        {
+            _processLateUpdates = processLateUpdates;
+        }
+
+        public void InjectCameraRigRef(IOVRCameraRigRef cameraRigRef)
+        {
+            _cameraRigRef = cameraRigRef as UnityEngine.Object;
+            CameraRigRef = cameraRigRef;
+        }
+
+        #endregion
     }
 }

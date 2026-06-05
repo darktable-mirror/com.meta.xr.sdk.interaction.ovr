@@ -23,7 +23,6 @@ using Oculus.Interaction.Editor.QuickActions;
 using Oculus.Interaction.Input;
 using UnityEditor;
 using UnityEngine;
-using Oculus.Interaction.Locomotion;
 
 #if UNITY_2022_1_OR_NEWER
 using System.IO;
@@ -31,27 +30,27 @@ using System.IO;
 
 namespace Oculus.Interaction.OVR.Editor.QuickActions
 {
-    internal class OVRComprehensiveRigWizard : QuickActionsWizard
+    internal class OVRComprehensiveInteractionRigWizard : QuickActionsWizard
     {
         private const string MENU_NAME_ADD_NEW_RIG = MENU_FOLDER +
-            "Add OVR Interaction Rig";
+            "Add OVR Comprehensive Interaction Rig";
 
-        private const string LEFT_INTERACTIONS_NAME = "LeftInteractions";
-        private const string RIGHT_INTERACTIONS_NAME = "RightInteractions";
+        private const string LEFT_INTERACTIONS_NAME = "ComprehensiveInteractorsLeft";
+        private const string RIGHT_INTERACTIONS_NAME = "ComprehensiveInteractorsRight";
 
         public static readonly Template OVRCameraRig =
             new Template(
                 "OVRCameraRig",
                 "126d619cf4daa52469682f85c1378b4a");
 
-        public static readonly Template OVRInteractionComprehensive =
+        public static readonly Template OVRComprehensiveInteractionRig =
             new Template(
-                "OVRInteractionComprehensive",
+                "OVRComprehensiveInteractionRig",
                 "0a7d2469f24041c4284c66706f84c45e");
 
-        public static readonly Template ComprehensiveInteractions =
+        public static readonly Template ComprehensiveInteractors =
            new Template(
-               "ComprehensiveInteractions",
+               "ComprehensiveInteractors",
                "fac1b34d244291e409464389de307e81");
 
 #if UNITY_2022_1_OR_NEWER
@@ -66,7 +65,7 @@ namespace Oculus.Interaction.OVR.Editor.QuickActions
         [Tooltip("Path within Assets/ to store the editable variant if GenerateAsEditableCopy is selected")]
         [ConditionalHide(nameof(_generateAsEditableCopy), true,
             ConditionalHideAttribute.DisplayMode.ShowIfTrue)]
-        private string _prefabPath = "InteractionSDK/ComprehensiveInteraction.prefab";
+        private string _prefabPath = "InteractionSDK/ComprehensiveInteractors.prefab";
 #endif
 
         [SerializeField]
@@ -79,7 +78,7 @@ namespace Oculus.Interaction.OVR.Editor.QuickActions
         [MenuItem(MENU_NAME_ADD_NEW_RIG, priority = 100)]
         internal static void OpenWizard()
         {
-            ShowWindow<OVRComprehensiveRigWizard>(null);
+            ShowWindow<OVRComprehensiveInteractionRigWizard>(null);
         }
 
         protected override void Create()
@@ -89,7 +88,7 @@ namespace Oculus.Interaction.OVR.Editor.QuickActions
 
         internal GameObject CreateInteractionRig()
         {
-            Template comprehensiveRigTemplate = OVRInteractionComprehensive;
+            Template comprehensiveRigTemplate = OVRComprehensiveInteractionRig;
 
             GameObject interactionRig = Templates.CreateFromTemplate(
                 _cameraRig.transform, comprehensiveRigTemplate, asPrefab: true);
@@ -127,14 +126,14 @@ namespace Oculus.Interaction.OVR.Editor.QuickActions
             }
 
             //generate an editable prefab variant out of the comprehensive prefab in the package
-            Object comprehensiveInteractionsSource = AssetDatabase.LoadMainAssetAtPath(
-                AssetDatabase.GUIDToAssetPath(ComprehensiveInteractions.AssetGUID));
-            GameObject comprehensiveInteractionsPrefab = PrefabUtility.InstantiatePrefab(comprehensiveInteractionsSource) as GameObject;
-            GameObject comprehensiveInteractionsVariant = PrefabUtility.SaveAsPrefabAsset(comprehensiveInteractionsPrefab, savePath);
-            GameObject.DestroyImmediate(comprehensiveInteractionsPrefab);
+            Object comprehensiveInteractorsSource = AssetDatabase.LoadMainAssetAtPath(
+                AssetDatabase.GUIDToAssetPath(ComprehensiveInteractors.AssetGUID));
+            GameObject comprehensiveInteractorsPrefab = PrefabUtility.InstantiatePrefab(comprehensiveInteractorsSource) as GameObject;
+            GameObject comprehensiveInteractorsVariant = PrefabUtility.SaveAsPrefabAsset(comprehensiveInteractorsPrefab, savePath);
+            GameObject.DestroyImmediate(comprehensiveInteractorsPrefab);
 
-            GameObject leftInteractions = interactionRig.transform.Find(LEFT_INTERACTIONS_NAME).gameObject;
-            GameObject rightInteractions = interactionRig.transform.Find(RIGHT_INTERACTIONS_NAME).gameObject;
+            GameObject leftInteractors = interactionRig.transform.Find(LEFT_INTERACTIONS_NAME).gameObject;
+            GameObject rightInteractors = interactionRig.transform.Find(RIGHT_INTERACTIONS_NAME).gameObject;
 
             PrefabReplacingSettings replaceSettings = new PrefabReplacingSettings()
             {
@@ -144,10 +143,10 @@ namespace Oculus.Interaction.OVR.Editor.QuickActions
                 prefabOverridesOptions = PrefabOverridesOptions.KeepAllPossibleOverrides
             };
 
-            PrefabUtility.ReplacePrefabAssetOfPrefabInstance(leftInteractions,
-                comprehensiveInteractionsVariant, replaceSettings, InteractionMode.AutomatedAction);
-            PrefabUtility.ReplacePrefabAssetOfPrefabInstance(rightInteractions,
-                comprehensiveInteractionsVariant, replaceSettings, InteractionMode.AutomatedAction);
+            PrefabUtility.ReplacePrefabAssetOfPrefabInstance(leftInteractors,
+                comprehensiveInteractorsVariant, replaceSettings, InteractionMode.AutomatedAction);
+            PrefabUtility.ReplacePrefabAssetOfPrefabInstance(rightInteractors,
+                comprehensiveInteractorsVariant, replaceSettings, InteractionMode.AutomatedAction);
         }
 #endif
 

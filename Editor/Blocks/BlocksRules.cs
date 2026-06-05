@@ -47,14 +47,14 @@ namespace Oculus.Interaction.OVR.Editor
                     message: "Conflicting Hand Visuals are present in the scene",
                     fix: _ =>
                     {
-                        OVRCameraRig cameraRig = OVRComprehensiveRigWizard.FindExistingCameraRig();
+                        OVRCameraRig cameraRig = OVRComprehensiveInteractionRigWizard.FindExistingCameraRig();
                         if (cameraRig == null)
                             return;
 
                         OVRHand[] cameraRigHands = cameraRig.trackingSpace.GetComponentsInChildren<OVRHand>();
                         foreach (OVRHand hand in cameraRigHands)
                         {
-                            OVRComprehensiveRigWizard.DisableDuplicateVisuals(hand);
+                            OVRComprehensiveInteractionRigWizard.DisableDuplicateVisuals(hand);
                         }
                     },
                     fixMessage: "Disable Hand Visuals in OVR Camera Rig"
@@ -67,7 +67,7 @@ namespace Oculus.Interaction.OVR.Editor
         private static bool SceneIsCompliant()
         {
             // OVRInteraction* exists, and has hands
-            OVRCameraRigRef interactionRig = OVRComprehensiveRigWizard.FindExistingInteractionRig();
+            OVRCameraRigRef interactionRig = OVRComprehensiveInteractionRigWizard.FindExistingInteractionRig();
             if (interactionRig == null)
                 return true;
 
@@ -75,7 +75,7 @@ namespace Oculus.Interaction.OVR.Editor
                 return true;
 
             // A Camera Rig exists
-            OVRCameraRig cameraRig = OVRComprehensiveRigWizard.FindExistingCameraRig();
+            OVRCameraRig cameraRig = OVRComprehensiveInteractionRigWizard.FindExistingCameraRig();
             if (cameraRig == null)
                 return true;
 

@@ -44,16 +44,22 @@ namespace Oculus.Interaction.Body.PoseDetection
         private OVRPlugin.Vector3f[] _boneTranslations = new OVRPlugin.Vector3f[OVR_NUM_JOINTS];
 
         private OVRSkeletonMapping _mapping;
+        protected bool _started;
 
         protected virtual void Awake()
         {
-            BodyPose = _bodyPose as IBodyPose;
+            if (BodyPose == null)
+            {
+                BodyPose = _bodyPose as IBodyPose;
+            }
         }
 
         protected virtual void Start()
         {
+            this.BeginStart(ref _started);
             this.AssertField(BodyPose, nameof(BodyPose));
             _mapping = new OVRSkeletonMapping(_bodyJointSet);
+            this.EndStart(ref _started);
         }
 
         OVRSkeleton.SkeletonPoseData OVRSkeleton.IOVRSkeletonDataProvider.GetSkeletonPoseData()
@@ -110,5 +116,27 @@ namespace Oculus.Interaction.Body.PoseDetection
                 _ => OVRSkeleton.SkeletonType.None,
             };
         }
+
+        #region Inject
+
+        public void InjectAllOVRBodyPoseSkeletonProvider(IBodyPose bodyPose,
+            OVRPlugin.BodyJointSet bodyJointSet)
+        {
+            InjectBodyPose(bodyPose);
+            InjectBodyJointSet(bodyJointSet);
+        }
+
+        public void InjectBodyPose(IBodyPose bodyPose)
+        {
+            _bodyPose = bodyPose as UnityEngine.Object;
+            BodyPose = bodyPose;
+        }
+
+        public void InjectBodyJointSet(OVRPlugin.BodyJointSet bodyJointSet)
+        {
+            _bodyJointSet = bodyJointSet;
+        }
+
+        #endregion
     }
 }

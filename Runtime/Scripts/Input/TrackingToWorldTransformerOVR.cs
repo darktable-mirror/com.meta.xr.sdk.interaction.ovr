@@ -63,7 +63,10 @@ namespace Oculus.Interaction.Input
 
         protected virtual void Awake()
         {
-            CameraRigRef = _cameraRigRef as IOVRCameraRigRef;
+            if (CameraRigRef == null)
+            {
+                CameraRigRef = _cameraRigRef as IOVRCameraRigRef;
+            }
         }
 
         protected virtual void Start()

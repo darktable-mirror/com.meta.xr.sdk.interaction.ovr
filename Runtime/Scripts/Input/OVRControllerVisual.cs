@@ -41,7 +41,10 @@ namespace Oculus.Interaction.Input.Visuals
 
         protected virtual void Awake()
         {
-            Controller = _controller as IController;
+            if (Controller == null)
+            {
+                Controller = _controller as IController;
+            }
         }
 
         protected virtual void Start()
@@ -66,6 +69,10 @@ namespace Oculus.Interaction.Input.Visuals
             if (_started)
             {
                 Controller.WhenUpdated += HandleUpdated;
+                if (Controller.IsConnected)
+                {
+                    HandleUpdated();
+                }
             }
         }
 
