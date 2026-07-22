@@ -28,6 +28,7 @@ MonoBehaviour:
     - name: Experimental
     - name: ISDK
   thumbnail: {fileID: 0}
+  remoteThumbnailContentId: 26016515744638710
   order: 0
   prefab: {fileID: 0}
   selectedGuidedSetupIndex: 0

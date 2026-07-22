@@ -40,8 +40,8 @@ namespace Oculus.Interaction.Body.PoseDetection
         [SerializeField]
         private OVRPlugin.BodyJointSet _bodyJointSet;
 
-        private OVRPlugin.Quatf[] _boneRotations = new OVRPlugin.Quatf[OVR_NUM_JOINTS];
-        private OVRPlugin.Vector3f[] _boneTranslations = new OVRPlugin.Vector3f[OVR_NUM_JOINTS];
+        private readonly OVRPlugin.Quatf[] _boneRotations = new OVRPlugin.Quatf[OVR_NUM_JOINTS];
+        private readonly OVRPlugin.Vector3f[] _boneTranslations = new OVRPlugin.Vector3f[OVR_NUM_JOINTS];
 
         private OVRSkeletonMapping _mapping;
         protected bool _started;
@@ -64,12 +64,6 @@ namespace Oculus.Interaction.Body.PoseDetection
 
         OVRSkeleton.SkeletonPoseData OVRSkeleton.IOVRSkeletonDataProvider.GetSkeletonPoseData()
         {
-            T[] EnsureLength<T>(T[] array, int length) => array?.Length == length ? array : new T[length];
-
-            // Make sure arrays have been allocated
-            _boneRotations = EnsureLength(_boneRotations, OVR_NUM_JOINTS);
-            _boneTranslations = EnsureLength(_boneTranslations, OVR_NUM_JOINTS);
-
             // Copy joint poses into bone arrays
             for (int i = 0; i < OVR_NUM_JOINTS; ++i)
             {
