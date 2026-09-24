@@ -25,25 +25,14 @@ using UnityEngine.UI;
 namespace Oculus.Interaction
 {
     /// <summary>
-    /// Enables scrolling of UI ScrollRects using microgestures combined with the
-    /// interaction event pipeline for target detection.
-    ///
-    /// <para>
-    /// Subscribes to <see cref="InteractionBroadcaster.OnEventRaised"/> for UI hover
-    /// events to track which ScrollRect the user is targeting, then applies scroll
-    /// velocity when swipe microgestures are detected. This decouples scrolling from
-    /// any specific interactor type, it works with any pointer that feeds the interaction event pipeline.
-    /// </para>
-    ///
-    /// <para>
-    /// Key behaviors:
-    /// <list type="bullet">
-    ///   <item><description>Leverages ScrollRect's native physics for momentum and elastic bounce</description></item>
-    ///   <item><description>Repeated swipes in the same direction accumulate velocity for faster scrolling</description></item>
-    ///   <item><description>Stops momentum when the hovered target changes to a different ScrollRect or nothing</description></item>
-    /// </list>
-    /// </para>
+    /// Deprecated pipeline-wide microgesture scroll provider. Subscribes to
+    /// <see cref="InteractionBroadcaster.OnEventRaised"/> for UI hover events to track the
+    /// targeted <see cref="ScrollRect"/> and applies scroll velocity on swipe microgestures, so
+    /// it responds to any pointer feeding the interaction event pipeline. Use
+    /// <see cref="DiscreteScrollInputProvider"/> instead, which couples scrolling to a
+    /// single interactor.
     /// </summary>
+    [System.Obsolete("Use " + nameof(DiscreteScrollInputProvider) + " instead.")]
     public class MicrogestureScrollProvider : MonoBehaviour
     {
 

@@ -24,18 +24,12 @@ using UnityEngine.UI;
 namespace Oculus.Interaction
 {
     /// <summary>
-    /// Per-ScrollRect settings for microgesture scrolling. Attach this component
-    /// to a <see cref="ScrollRect"/> to override <see cref="MicrogestureScrollProvider"/>
-    /// defaults or to opt out of microgesture scrolling entirely.
+    /// Deprecated per-ScrollRect settings for microgesture scrolling.
+    /// <see cref="DiscreteScrollInputProvider"/> no longer consults this component: it now accepts
+    /// discrete directional scroll commands from any source and does not apply per-element strength
+    /// overrides or axis/enable gating. This type is retained only for backward compatibility.
     /// </summary>
-    /// <remarks>
-    /// When <see cref="MicrogestureScrollProvider"/> resolves a ScrollRect from a
-    /// UI hover event, it checks for this component. If present, the settings here
-    /// take precedence over the provider's global defaults.
-    ///
-    /// To disable microgesture scrolling on a specific ScrollRect, add this component
-    /// and uncheck <see cref="EnableMicrogestureScroll"/>.
-    /// </remarks>
+    [System.Obsolete("MicrogestureScrollSettings is deprecated. DiscreteScrollInputProvider no longer consults it for strength overrides or axis/enable gating.")]
     [RequireComponent(typeof(ScrollRect))]
     public class MicrogestureScrollSettings : MonoBehaviour
     {
@@ -44,7 +38,7 @@ namespace Oculus.Interaction
         private bool _enableMicrogestureScroll = true;
 
         [SerializeField, Range(-1f, 5f)]
-        [Tooltip("Override scroll strength for this ScrollRect. -1 uses the global default from MicrogestureScrollProvider.")]
+        [Tooltip("Override scroll strength for this ScrollRect. -1 uses the global default from DiscreteScrollInputProvider.")]
         private float _scrollStrengthOverride = -1f;
 
         [SerializeField]
@@ -124,4 +118,3 @@ namespace Oculus.Interaction
         }
     }
 }
-

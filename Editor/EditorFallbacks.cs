@@ -21,6 +21,13 @@
 // @generated
 using UnityEditor;
 using Oculus.Interaction.Editor;
+using Oculus.Interaction.Input;
+
+namespace Oculus.Interaction.Editor.Generated
+{
+    [CustomEditor(typeof(OVREyeTrackingActiveState), false, isFallback = true), CanEditMultipleObjects]
+    public class OVREyeTrackingActiveStateEditorFallback : SimplifiedEditor { }
+}
 
 namespace Oculus.Interaction.Editor.Generated
 {
@@ -80,6 +87,12 @@ namespace Oculus.Interaction.Input.Editor.Generated
 {
     [CustomEditor(typeof(FromOVRControllerDataSource), false, isFallback = true), CanEditMultipleObjects]
     public class FromOVRControllerDataSourceEditorFallback : SimplifiedEditor { }
+}
+
+namespace Oculus.Interaction.Input.Editor.Generated
+{
+    [CustomEditor(typeof(FromOVREyeGazeDataSource), false, isFallback = true), CanEditMultipleObjects]
+    public class FromOVREyeGazeDataSourceEditorFallback : SimplifiedEditor { }
 }
 
 namespace Oculus.Interaction.Input.Editor.Generated

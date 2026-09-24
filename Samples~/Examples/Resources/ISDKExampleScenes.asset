@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e7f04c07ecd6ce84aab090677fb9d914, type: 3}
   m_Name: ISDKExampleScenes
-  m_EditorClassIdentifier:
+  m_EditorClassIdentifier: 
   _groupName: Samples
   _groupEnabled: 1
   _groupDisplayOrder: -1
@@ -36,6 +36,10 @@ MonoBehaviour:
     SceneName: RayExamples
     SceneGuid: 1b2d3f90c0f50b94cb910c66c773d00d
     Thumbnail: {fileID: 21300000, guid: 25f8c026e84ba6e4186ef5c2868f05be, type: 3}
+  - DisplayName: Gaze
+    SceneName: GazeExamples
+    SceneGuid: 812b614e5c84e0a46933df07d9215ea0
+    Thumbnail: {fileID: 21300000, guid: 2e9f995369f811648a9de7d1eb042ddf, type: 3}
   - DisplayName: Distance Grab
     SceneName: DistanceGrabExamples
     SceneGuid: e1c1f1d4144ac8849ac1833b99bdfd23
@@ -96,6 +100,9 @@ MonoBehaviour:
   - DisplayName: Ray
     SceneAsset: {fileID: 102900000, guid: 1b2d3f90c0f50b94cb910c66c773d00d, type: 3}
     Thumbnail: {fileID: 21300000, guid: 25f8c026e84ba6e4186ef5c2868f05be, type: 3}
+  - DisplayName: Gaze
+    SceneAsset: {fileID: 102900000, guid: 812b614e5c84e0a46933df07d9215ea0, type: 3}
+    Thumbnail: {fileID: 21300000, guid: 2e9f995369f811648a9de7d1eb042ddf, type: 3}
   - DisplayName: Distance Grab
     SceneAsset: {fileID: 102900000, guid: e1c1f1d4144ac8849ac1833b99bdfd23, type: 3}
     Thumbnail: {fileID: 21300000, guid: e3264794d9076b544acc21c001eb349d, type: 3}

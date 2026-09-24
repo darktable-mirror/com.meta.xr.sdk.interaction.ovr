@@ -86,6 +86,27 @@ namespace Oculus.Interaction.Editor
                         })
                 }
             );
+
+            #region Gaze
+
+            AutoWiring.Register(
+                typeof(FromOVREyeGazeDataSource),
+                new[] {
+                    new ComponentWiringStrategyConfig("_cameraRigRef", new FieldWiringStrategy[]
+                        {
+                            FieldWiringStrategies.WireFieldToAncestors
+                        }),
+                    new ComponentWiringStrategyConfig("_centerEyeCamera", new FieldWiringStrategy[]
+                        {
+                            (monoBehaviour, field, targetType) =>
+                                FieldWiringStrategies.WireFieldToPathComponent(monoBehaviour, field, targetType, "TrackingSpace/CenterEyeAnchor"),
+                            (monoBehaviour, field, targetType) =>
+                                FieldWiringStrategies.WireFieldToPathComponent(monoBehaviour, field, targetType,  Camera.main)
+                        })
+                }
+            );
+
+            #endregion Gaze
         }
 
         public static bool WireToOVRHandWithHandedness(MonoBehaviour monoBehaviour,

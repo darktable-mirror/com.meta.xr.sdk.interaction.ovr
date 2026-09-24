@@ -26,7 +26,6 @@ namespace Oculus.Interaction.Input
     [Feature(Feature.Interaction)]
     public class OVRSkeletonData
     {
-
 #if ISDK_OPENXR_HAND
 
         public static readonly OVRPlugin.Skeleton2 LeftSkeleton = new OVRPlugin.Skeleton2()
